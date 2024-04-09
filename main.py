@@ -34,6 +34,7 @@ class Club:
 
     def afficher_statistiques_club(self):
         print(f"Statistiques pour le club {self.nom}:")
+        print(f"Nombre de matchs joués: {self.statistique.matchs_joues}")
         print(f"Matchs score: {self.statistique.score}")
         print(f"Victoires à domicile: {self.statistique.victoires_domicile}")
         print(f"Victoires à l'extérieur: {self.statistique.victoires_exterieur}")
@@ -70,6 +71,10 @@ class Match:
         else:
             self.equipe_exterieur.statistique.incrementer_matchs_nuls()
             self.equipe_domicile.statistique.incrementer_matchs_nuls()
+
+        # Incrementer le nombre de matchs joués pour les deux équipes
+        self.equipe_domicile.statistique.incrementer_matchs_joues()
+        self.equipe_exterieur.statistique.incrementer_matchs_joues()
 
 
 class Tour:
@@ -155,6 +160,15 @@ class Statistiques:
         self._matchs_nuls = 0
         self._score = 0
         self._goal_average = 0
+        self._matchs_joues = 0
+
+    @property
+    def matchs_joues(self):
+        return self._matchs_joues
+
+    def incrementer_matchs_joues(self):
+        self._matchs_joues += 1
+
 
     @property
     def victoires_domicile(self):

@@ -150,6 +150,20 @@ class Championnat:
         # Ajouter les tours retour au championnat
         for tour in feuille_matchs_retour:
             self.ajouter_tour(tour)
+        
+    def classement(self):
+        # Calculer le score de championnat, goal average et nombre de victoires pour chaque club
+        scores_clubs = {}
+        for club in self.participants:
+            score = club.statistique.score
+            goal_average = club.statistique.goal_average
+            victoires = club.statistique.victoires_domicile + club.statistique.victoires_exterieur
+            scores_clubs[club] = (score, goal_average, victoires)
+
+        # Trier les clubs en fonction de leur score, goal average et nombre de victoires
+        classement = sorted(scores_clubs.items(), key=lambda x: (x[1][0], x[1][1], x[1][2]), reverse=True)
+
+        return classement
 
 
 
@@ -257,17 +271,13 @@ if __name__ == "__main__":
         print("\n")
         club.afficher_statistiques_club()
 
-    # Calculer le score de championnat de chaque club
-    scores_clubs = {}
-    for club in championnat.participants:
-        score = club.statistique.score
-        scores_clubs[club] = score
+    # Utiliser la méthode classement de Championnat pour obtenir le classement
+    classement_championnat = championnat.classement()
 
-    # Trier les clubs en fonction de leur score
-    classement = sorted(scores_clubs.items(), key=lambda x: x[1], reverse=True)
-
-    # Afficher le classement de chaque équipe
+    # Afficher le classement des clubs
     print("\nClassement des clubs:")
-    for i, (club, score) in enumerate(classement, 1):
-        print(f"{i}. {club.nom} - Score : {score}")
+    for i, (club, _) in enumerate(classement_championnat, 1):
+        print(f"{i}. {club.nom} - Score : {club.statistique.score}")
+
+    # Votre code existant...
 

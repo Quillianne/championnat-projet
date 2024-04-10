@@ -1,6 +1,6 @@
 from itertools import combinations
 import random
-
+import numpy
 class Club:
     def __init__(self, nom, emplacement, entraineur):
         self._nom = nom

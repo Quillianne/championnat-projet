@@ -287,5 +287,3 @@ if __name__ == "__main__":
     for i, (club, _) in enumerate(classement_championnat, 1):
         print(f"{i}. {club.nom} - Victoires : {club.statistique.victoires_domicile + club.statistique.victoires_exterieur} - Nuls : {club.statistique.matchs_nuls} - Défaites : {club.statistique.defaites} -  Score : {club.statistique.score} - Goalaverage : {club.statistique.goal_average}")
 
-    # Votre code existant...
-

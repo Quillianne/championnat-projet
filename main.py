@@ -64,9 +64,11 @@ class Match:
         difference_goals = resultat[0] - resultat[1]
         if resultat[0] > resultat[1]:
             self.equipe_domicile.statistique.incrementer_victoires_domicile()
+            self.equipe_exterieur.statistique.incrementer_defaites()
             self.equipe_domicile.statistique.mettre_a_jour_goal_average(difference_goals)
         elif resultat[0] < resultat[1]:
             self.equipe_exterieur.statistique.incrementer_victoires_exterieur()
+            self.equipe_domicile.statistique.incrementer_defaites()
             self.equipe_exterieur.statistique.mettre_a_jour_goal_average(-difference_goals)
         else:
             self.equipe_exterieur.statistique.incrementer_matchs_nuls()
@@ -172,6 +174,7 @@ class Statistiques:
         self._victoires_domicile = 0
         self._victoires_exterieur = 0
         self._matchs_nuls = 0
+        self._defaites = 0
         self._score = 0
         self._goal_average = 0
         self._matchs_joues = 0
@@ -203,6 +206,12 @@ class Statistiques:
     @property
     def matchs_nuls(self):
         return self._matchs_nuls
+    @property
+    def defaites(self):
+        return self._defaites
+
+    def incrementer_defaites(self):
+        self._defaites += 1
     
     @property
     def score(self):
@@ -218,7 +227,6 @@ class Statistiques:
 
     def mettre_a_jour_goal_average(self, difference_goals):
         self._goal_average += difference_goals
-
 
 
 
@@ -277,7 +285,7 @@ if __name__ == "__main__":
     # Afficher le classement des clubs
     print("\nClassement des clubs:")
     for i, (club, _) in enumerate(classement_championnat, 1):
-        print(f"{i}. {club.nom} - Score : {club.statistique.score}")
+        print(f"{i}. {club.nom} - Victoires : {club.statistique.victoires_domicile + club.statistique.victoires_exterieur} - Nuls : {club.statistique.matchs_nuls} - Défaites : {club.statistique.defaites} -  Score : {club.statistique.score} - Goalaverage : {club.statistique.goal_average}")
 
     # Votre code existant...
 

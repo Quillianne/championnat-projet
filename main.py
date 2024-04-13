@@ -2,10 +2,11 @@ from itertools import combinations
 import random
 import numpy
 class Club:
-    def __init__(self, nom, emplacement, entraineur):
+    def __init__(self, nom, emplacement, entraineur, logo):
         self._nom = nom
         self._emplacement = emplacement
         self._entraineur = entraineur
+        self.logo = logo
         self.statistique = Statistiques()
 
     @property
@@ -236,22 +237,22 @@ if __name__ == "__main__":
 
     # Ajout de participants au championnat
     clubs = [
-        Club("Paris Saint-Germain", "Paris", "Mauricio Pochettino"),
-        Club("Olympique de Marseille", "Marseille", "Jorge Sampaoli"),
-        Club("AS Monaco", "Monaco", "Niko Kovač"),
-        Club("FC EnstApagnan", "Brest", "Quentin Dutailly"),
-        Club("Lille OSC", "Lille", "Christophe Galtier"),
-        Club("Olympique Lyonnais", "Lyon", "Rudi Garcia"),
-        Club("Stade Rennais FC", "Rennes", "Kilian Barantal"),
-        Club("RC Lens", "Lens", "Franck Haise"),
-        Club("Stade de Reims", "Reims", "David Guion"),
-        Club("OGC Nice", "Nice", "Adrian Ursea"),
-        Club("Montpellier HSC", "Montpellier", "Michel Der Zakarian"),
-        Club("Angers SCO", "Angers", "Gérald Baticle"),
-        Club("FC Metz", "Metz", "Frédéric Antonetti"),
-        Club("RC Strasbourg Alsace", "Strasbourg", "Thierry Laurey"),
-        Club("FC Nantes", "Nantes", "Antoine Kombouaré"),
-        Club("Dijon FCO", "Dijon", "David Linarès")
+        Club("Paris Saint-Germain", "Paris", "Mauricio Pochettino", "logo_psg.png"),
+        Club("Olympique de Marseille", "Marseille", "Jorge Sampaoli", "logo_psg.png"),
+        Club("AS Monaco", "Monaco", "Niko Kovač", "logo_psg.png"),
+        Club("FC EnstApagnan", "Brest", "Quentin Dutailly", "logo_psg.png"),
+        Club("Lille OSC", "Lille", "Christophe Galtier", "logo_psg.png"),
+        Club("Olympique Lyonnais", "Lyon", "Rudi Garcia", "logo_psg.png"),
+        Club("Stade Rennais FC", "Rennes", "Kilian Barantal", "logo_psg.png"),
+        Club("RC Lens", "Lens", "Franck Haise", "logo_psg.png"),
+        Club("Stade de Reims", "Reims", "David Guion", "logo_psg.png"),
+        Club("OGC Nice", "Nice", "Adrian Ursea", "logo_psg.png"),
+        Club("Montpellier HSC", "Montpellier", "Michel Der Zakarian", "logo_psg.png"),
+        Club("Angers SCO", "Angers", "Gérald Baticle", "logo_psg.png"),
+        Club("FC Metz", "Metz", "Frédéric Antonetti", "logo_psg.png"),
+        Club("RC Strasbourg Alsace", "Strasbourg", "Thierry Laurey", "logo_psg.png"),
+        Club("FC Nantes", "Nantes", "Antoine Kombouaré", "logo_psg.png"),
+        Club("Dijon FCO", "Dijon", "David Linarès", "logo_psg.png")
     ]
 
     for club in clubs:

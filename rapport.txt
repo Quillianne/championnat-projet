@@ -12,7 +12,7 @@
    - Principales classes et méthodes
 
 3. Conclusion
-   - Table recensant les 7 figures imposées avec les liens vers le code correspondant
+   - Tableau des 8 figures imposées
    - Tests effectués
    - Limitations
    - Apports personnels par rapport au sujet initial

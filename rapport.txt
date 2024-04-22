@@ -1,0 +1,85 @@
+
+
+**Sommaire**
+
+1. Description générale du problème
+   - Introduction
+   - Pistes envisagées
+   - Hypothèses réductrices
+
+2. Description de l'application
+   - Présentation générale du programme
+   - Principales classes et méthodes
+
+3. Conclusion
+   - Table recensant les 7 figures imposées avec les liens vers le code correspondant
+   - Tests effectués
+   - Limitations
+   - Apports personnels par rapport au sujet initial
+   - Perspectives et améliorations
+
+
+
+
+
+**1. Description générale du problème**
+
+**Introduction**
+
+Le projet informatique dont il est question vise à modéliser un championnat de football en utilisant des concepts de programmation orientée objet. L'objectif principal est de créer un système capable de générer un calendrier de matchs pour un ensemble d'équipes données, de simuler ces matchs avec des résultats aléatoires, et de calculer les statistiques des clubs participants.
+
+**Pistes envisagées**
+
+Pour aborder ce projet, plusieurs pistes ont été envisagées quant à la manière de structurer le système et de modéliser les entités impliquées. Parmi les approches considérées, il était important de déterminer la meilleure façon de représenter les clubs, les matchs et les tours du championnat. Le choix des structures de données et des algorithmes était crucial pour assurer la flexibilité et l'efficacité du système.
+
+**Hypothèses réductrices**
+
+Dans le cadre de ce projet, certaines hypothèses ont été faites pour simplifier la modélisation du championnat. Par exemple, nous avons supposé que chaque équipe jouerait exactement deux fois contre toutes les autres équipes, une fois à domicile et une fois à l'extérieur. De plus, nous avons considéré des résultats de matchs aléatoires pour simuler les rencontres, sans prendre en compte les performances individuelles des équipes.
+
+Cette première partie du rapport pose les bases du projet en exposant les objectifs, les différentes approches envisagées et les simplifications adoptées pour faciliter la conception du système. Elle offre ainsi un aperçu clair du contexte dans lequel s'inscrit le travail réalisé.
+
+
+
+
+
+
+
+**2. Description de l'application**
+
+**Présentation générale du programme**
+
+L'application développée consiste en un système de modélisation et de simulation d'un championnat de football. Elle est conçue en utilisant le paradigme de la programmation orientée objet (POO) afin de représenter de manière efficace les différentes entités impliquées dans le championnat, telles que les clubs, les matchs et les tours de jeu. L'objectif principal de l'application est de permettre la génération automatique du calendrier de matchs, la simulation de ces matchs avec des résultats aléatoires et le calcul des statistiques des clubs participants.
+
+**Description des principales classes/méthodes**
+
+L'application est structurée autour de plusieurs classes principales :
+
+1. **Club :** Cette classe représente un club de football avec des attributs tels que le nom du club, son emplacement et l'entraîneur en chef. Chaque club contient également une instance de la classe Statistiques pour suivre ses performances.
+
+2. **Match :** Cette classe représente un match entre deux clubs. Elle contient des références aux clubs participants ainsi qu'aux résultats du match.
+
+3. **Tour :** Cette classe représente un tour de jeu dans le championnat. Elle contient une liste de matchs qui auront lieu pendant ce tour.
+
+4. **Championnat :** Cette classe est responsable de la gestion globale du championnat. Elle permet d'ajouter des clubs participants, de générer le calendrier des matchs et de suivre les tours de jeu.
+
+5. **Statistiques :** Cette classe est utilisée pour suivre les statistiques de chaque club, telles que le nombre de victoires à domicile, le nombre de victoires à l'extérieur, le nombre de matchs nuls et le goal average.
+
+Les principales méthodes de ces classes incluent l'ajout de participants au championnat, la génération du calendrier des matchs, la simulation des matchs avec des résultats aléatoires, le calcul des statistiques des clubs et l'affichage des résultats.
+
+Cette section fournit une vue d'ensemble de l'application, en mettant en lumière ses principaux composants et leurs fonctionnalités respectives. Elle constitue un guide essentiel pour comprendre la structure et le fonctionnement de l'application développée.
+
+
+
+
+
+**3. Conclusion**
+
+Dans le cadre de ce projet, nous avons développé une application de modélisation et de simulation d'un championnat de football. À travers l'utilisation de la programmation orientée objet, nous avons pu concevoir une structure flexible et modulaire pour représenter les différents éléments du championnat, tels que les clubs, les matchs et les tours de jeu. 
+
+L'application permet de générer automatiquement le calendrier des matchs, de simuler les rencontres avec des résultats aléatoires et de calculer les statistiques des clubs participants. En mettant l'accent sur la facilité d'utilisation et la clarté du code, nous avons créé une solution robuste et efficace pour la modélisation de championnats de football virtuels.
+
+Au cours du développement, nous avons rencontré plusieurs défis, notamment la gestion des tours de jeu, la manipulation des résultats des matchs et le suivi des statistiques des clubs. Cependant, grâce à une conception réfléchie et à une approche itérative, nous avons surmonté ces obstacles pour aboutir à une application fonctionnelle et performante.
+
+En termes de tests, nous avons effectué des simulations avec différents paramètres pour vérifier la cohérence des résultats et l'exactitude des statistiques générées. Bien que l'application réponde aux besoins de base spécifiés, il existe toujours des possibilités d'amélioration et d'extension. Parmi les pistes d'amélioration futures, on pourrait envisager l'ajout de fonctionnalités telles que la prise en compte des règles spécifiques à chaque championnat, la visualisation graphique des résultats et l'implémentation de stratégies avancées d'intelligence artificielle pour simuler le comportement des équipes.
+
+En conclusion, ce projet nous a permis de mettre en pratique nos compétences en programmation orientée objet et de créer une application fonctionnelle pour la modélisation de championnats de football. Il représente une première étape vers des projets plus complexes dans le domaine de la simulation sportive et offre des perspectives intéressantes pour l'exploration de nouvelles fonctionnalités et l'amélioration continue de l'application.

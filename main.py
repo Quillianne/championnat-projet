@@ -1,6 +1,8 @@
 from itertools import combinations
 import random
 import numpy
+from tools import transform_list
+
 
 class Club:
     def __init__(self, nom, emplacement, entraineur, logo):
@@ -9,6 +11,9 @@ class Club:
         self._entraineur = entraineur
         self.logo = logo
         self.statistique = Statistiques()
+
+    def __str__(self):
+        return self.nom
 
     @property
     def nom(self):
@@ -49,6 +54,9 @@ class Match:
         self._equipe_exterieur = equipe_exterieur
         self._resultat = None
 
+    def __str__(self):
+        return f"Match: {self._equipe_domicile} VS {self.equipe_exterieur}, résultat: {self.resultat}"
+
     @property
     def equipe_domicile(self):
         return self._equipe_domicile
@@ -86,6 +94,9 @@ class Tour:
     def __init__(self, numero):
         self._numero = numero
         self._matchs = []
+
+    def __str__(self):
+        return f"Tour numéro {self.numero}, matchs: {' | '.join(map(str, self.matchs))}"
 
     @property
     def numero(self):
@@ -134,26 +145,33 @@ class Championnat:
     def generer_calendrier(self):
         all_teams = self._participants[:]
         num_teams = len(all_teams)
-
-        for _ in range(num_teams - 1):
-            tour = Tour(len(self._tours) + 1)
+        feuille_matchs_aller = []
+        for j in range(num_teams - 1):
+            tour = Tour(j + 1)
             for i in range(num_teams // 2):
                 match = Match(all_teams[i], all_teams[num_teams - i - 1])
                 tour.ajouter_match(match)
-            self.ajouter_tour(tour)
+            feuille_matchs_aller.append(tour)
+            #self.ajouter_tour(tour)
             all_teams.insert(1, all_teams.pop())
 
+
         feuille_matchs_retour = []
-        nb_tours = len(self._tours)
-        for tour in self._tours:
+        nb_tours = len(feuille_matchs_aller)
+        for tour in feuille_matchs_aller:
             nouveau_tour = Tour(tour.numero + nb_tours)
             for match in tour.matchs:
                 match_retour = Match(match.equipe_exterieur, match.equipe_domicile)
                 nouveau_tour.ajouter_match(match_retour)
             feuille_matchs_retour.append(nouveau_tour)
 
+        feuille_matchs = feuille_matchs_aller + feuille_matchs_retour
+        feuille_matchs = transform_list(feuille_matchs)
+
+        for t in range(len(feuille_matchs)):
+            feuille_matchs[t].numero = t+1
         # Ajouter les tours retour au championnat
-        for tour in feuille_matchs_retour:
+        for tour in feuille_matchs:
             self.ajouter_tour(tour)
         
     def classement(self):

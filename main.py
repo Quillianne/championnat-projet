@@ -67,15 +67,16 @@ class Match:
         if resultat[0] > resultat[1]:
             self.equipe_domicile.statistique.incrementer_victoires_domicile()
             self.equipe_exterieur.statistique.incrementer_defaites()
-            self.equipe_domicile.statistique.mettre_a_jour_goal_average(difference_goals)
+
         elif resultat[0] < resultat[1]:
             self.equipe_exterieur.statistique.incrementer_victoires_exterieur()
             self.equipe_domicile.statistique.incrementer_defaites()
-            self.equipe_exterieur.statistique.mettre_a_jour_goal_average(-difference_goals)
+
         else:
             self.equipe_exterieur.statistique.incrementer_matchs_nuls()
             self.equipe_domicile.statistique.incrementer_matchs_nuls()
-
+        self.equipe_domicile.statistique.mettre_a_jour_goal_average(difference_goals)
+        self.equipe_exterieur.statistique.mettre_a_jour_goal_average(-difference_goals)
         # Incrementer le nombre de matchs joués pour les deux équipes
         self.equipe_domicile.statistique.incrementer_matchs_joues()
         self.equipe_exterieur.statistique.incrementer_matchs_joues()

@@ -7,7 +7,7 @@ from tkinter import Tk
 
 
 class Club:
-    def __init__(self, nom, emplacement, entraineur, logo):
+    def __init__(self, nom, emplacement, entraineur, logo, surnom = None):
         self._nom = nom
         self._emplacement = emplacement
         self._entraineur = entraineur
@@ -259,22 +259,22 @@ if __name__ == "__main__":
 
     # Ajout de participants au championnat
     clubs = [
-        Club("Paris Saint-Germain", "Paris", "Mauricio Pochettino", "logo_club1.png"),
-        Club("Olympique de Marseille", "Marseille", "Jorge Sampaoli", "logo_club2.png"),
-        Club("AS Monaco", "Monaco", "Niko Kovač", "logo_club3.png"),
-        Club("FC EnstApagnan", "Brest", "Quentin Dutailly", "logo_club4.png"),
-        Club("Lille OSC", "Lille", "Christophe Galtier", "logo_club5.png"),
-        Club("Olympique Lyonnais", "Lyon", "Rudi Garcia", "logo_club6.png"),
-        Club("Stade Rennais FC", "Rennes", "Kilian Barantal", "logo_club7.png"),
-        Club("RC Lens", "Lens", "Franck Haise", "logo_club8.png"),
-        Club("Stade de Reims", "Reims", "David Guion", "logo_club9.png"),
-        Club("OGC Nice", "Nice", "Adrian Ursea", "logo_club10.png"),
-        Club("Montpellier HSC", "Montpellier", "Michel Der Zakarian", "logo_club11.png"),
-        Club("Angers SCO", "Angers", "Gérald Baticle", "logo_club12.png"),
-        Club("FC Metz", "Metz", "Frédéric Antonetti", "logo_club13.png"),
-        Club("RC Strasbourg Alsace", "Strasbourg", "Thierry Laurey", "logo_club14.png"),
-        Club("FC Nantes", "Nantes", "Antoine Kombouaré", "logo_club15.png"),
-        Club("Dijon FCO", "Dijon", "David Linarès", "logo_club16.png")
+        Club("Paris Saint-Germain", "Paris", "Mauricio Pochettino", "logo_club1.png", "PSG"),
+        Club("Olympique de Marseille", "Marseille", "Jorge Sampaoli", "logo_club2.png", "OM"),
+        Club("AS Monaco", "Monaco", "Niko Kovač", "logo_club3.png", "ASM"),
+        Club("Stade Brestois", "Brest", "Quentin Dutailly", "logo_club4.png", "SB29"),
+        Club("Lille OSC", "Lille", "Christophe Galtier", "logo_club5.png", "LOSC"),
+        Club("Olympique Lyonnais", "Lyon", "Rudi Garcia", "logo_club6.png", "OL"),
+        Club("Stade Rennais FC", "Rennes", "Kilian Barantal", "logo_club7.png", "SRFC"),
+        Club("RC Lens", "Lens", "Franck Haise", "logo_club8.png", "RCL"),
+        Club("Stade de Reims", "Reims", "David Guion", "logo_club9.png", "SDR"),
+        Club("OGC Nice", "Nice", "Adrian Ursea", "logo_club10.png", "OGCN"),
+        Club("Montpellier HSC", "Montpellier", "Michel Der Zakarian", "logo_club11.png", "MHSC"),
+        Club("Angers SCO", "Angers", "Gérald Baticle", "logo_club12.png", "SCO"),
+        Club("FC Metz", "Metz", "Frédéric Antonetti", "logo_club13.png", "FCM"),
+        Club("RC Strasbourg Alsace", "Strasbourg", "Thierry Laurey", "logo_club14.png", "RCSA"),
+        Club("FC Nantes", "Nantes", "Antoine Kombouaré", "logo_club15.png", "FCN"),
+        Club("Dijon FCO", "Dijon", "David Linarès", "logo_club16.png", "DFCO")
     ]
 
     for club in clubs:

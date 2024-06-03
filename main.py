@@ -56,7 +56,6 @@ class Match:
         self._equipe_exterieur = equipe_exterieur
         self._resultat = None
         self.date = None
-        self.heure = "20h"
 
     def __str__(self):
         date_str = self.date.strftime("%d/%m/%Y") if self.date else "Date non définie"
@@ -124,7 +123,7 @@ class Championnat:
         self._nom = nom
         self._participants = []
         self._tours = []
-        self.date_debut = datetime(2024, 9, 1)
+        self.date_debut = datetime(2024, 9, 1, 20)
 
     @property
     def nom(self):
@@ -157,8 +156,6 @@ class Championnat:
             tour = Tour(j + 1)
             for i in range(num_teams // 2):
                 match = Match(all_teams[i], all_teams[num_teams - i - 1])
-                match.date = current_date
-                current_date += timedelta(days=7)  # En supposant un match par semaine
                 tour.ajouter_match(match)
             feuille_matchs_aller.append(tour)
             #self.ajouter_tour(tour)
@@ -170,8 +167,6 @@ class Championnat:
             nouveau_tour = Tour(tour.numero + nb_tours)
             for match in tour.matchs:
                 match_retour = Match(match.equipe_exterieur, match.equipe_domicile)
-                match_retour.date = current_date
-                current_date += timedelta(days=7)
                 nouveau_tour.ajouter_match(match_retour)
             feuille_matchs_retour.append(nouveau_tour)
 
@@ -182,7 +177,10 @@ class Championnat:
             feuille_matchs[t].numero = t + 1
         # Ajouter les tours retour au championnat
         for tour in feuille_matchs:
+            for match in tour.matchs:
+                match.date=current_date
             self.ajouter_tour(tour)
+            current_date += timedelta(days=7)
 
     def classement(self):
         # Calculer le score de championnat, goal average et nombre de victoires pour chaque club
@@ -318,7 +316,7 @@ if __name__ == "__main__":
             match.jouer_match((score_equipe_domicile, score_equipe_exterieur))
 
             # Afficher le match avec les résultats simulés
-            print(match.equipe_domicile.nom, score_equipe_domicile, "-", score_equipe_exterieur, match.equipe_exterieur.nom)
+            print(match.equipe_domicile.nom, score_equipe_domicile, "-", score_equipe_exterieur, match.equipe_exterieur.nom, match.date)
 
     print("\nStatistiques des clubs:")
     for club in championnat.participants:

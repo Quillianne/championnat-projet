@@ -1,10 +1,10 @@
-Championnat -> Date de debut
+Championnat -> Date de debut - ok
 
-               Generer Calendrier: journée de match toutes les semaines 20h
+               Generer Calendrier: journée de match toutes les semaines 20h - ok
 
-               reset calendrier (self.tours = [])
+               reset calendrier (self.tours = []) - ok
 
-               supprimer(club) -> reset calendrier et enlever club de liste_participants
+               supprimer(club) -> reset calendrier et enlever club de self.participants - ok
 
 
 Match -> date et heure

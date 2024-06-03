@@ -1,10 +1,9 @@
 from itertools import combinations
 import random
-import numpy
 from tools import transform_list
 
 from tkinter import Tk
-
+from datetime import datetime, timedelta
 
 class Club:
     def __init__(self, nom, emplacement, entraineur, logo, surnom = None):
@@ -56,9 +55,12 @@ class Match:
         self._equipe_domicile = equipe_domicile
         self._equipe_exterieur = equipe_exterieur
         self._resultat = None
+        self.date = None
+        self.heure = "20h"
 
     def __str__(self):
-        return f"Match: {self._equipe_domicile} VS {self.equipe_exterieur}, résultat: {self.resultat}"
+        date_str = self.date.strftime("%d/%m/%Y") if self.date else "Date non définie"
+        return f"Match: {self._equipe_domicile} VS {self._equipe_exterieur}, résultat: {self._resultat}, date: {date_str}"
 
     @property
     def equipe_domicile(self):
@@ -99,7 +101,7 @@ class Tour:
         self._matchs = []
 
     def __str__(self):
-        return f"Tour numéro {self.numero}, matchs: {' | '.join(map(str, self.matchs))}"
+        return f"Tour numéro {self._numero}, matchs: {' | '.join(map(str, self._matchs))}"
 
     @property
     def numero(self):
@@ -122,6 +124,7 @@ class Championnat:
         self._nom = nom
         self._participants = []
         self._tours = []
+        self.date_debut = datetime(2024, 9, 1)
 
     @property
     def nom(self):
@@ -149,15 +152,17 @@ class Championnat:
         all_teams = self._participants[:]
         num_teams = len(all_teams)
         feuille_matchs_aller = []
+        current_date = self.date_debut
         for j in range(num_teams - 1):
             tour = Tour(j + 1)
             for i in range(num_teams // 2):
                 match = Match(all_teams[i], all_teams[num_teams - i - 1])
+                match.date = current_date
+                current_date += timedelta(days=7)  # En supposant un match par semaine
                 tour.ajouter_match(match)
             feuille_matchs_aller.append(tour)
             #self.ajouter_tour(tour)
             all_teams.insert(1, all_teams.pop())
-
 
         feuille_matchs_retour = []
         nb_tours = len(feuille_matchs_aller)
@@ -165,6 +170,8 @@ class Championnat:
             nouveau_tour = Tour(tour.numero + nb_tours)
             for match in tour.matchs:
                 match_retour = Match(match.equipe_exterieur, match.equipe_domicile)
+                match_retour.date = current_date
+                current_date += timedelta(days=7)
                 nouveau_tour.ajouter_match(match_retour)
             feuille_matchs_retour.append(nouveau_tour)
 
@@ -172,11 +179,11 @@ class Championnat:
         feuille_matchs = transform_list(feuille_matchs)
 
         for t in range(len(feuille_matchs)):
-            feuille_matchs[t].numero = t+1
+            feuille_matchs[t].numero = t + 1
         # Ajouter les tours retour au championnat
         for tour in feuille_matchs:
             self.ajouter_tour(tour)
-        
+
     def classement(self):
         # Calculer le score de championnat, goal average et nombre de victoires pour chaque club
         scores_clubs = {}
@@ -191,6 +198,15 @@ class Championnat:
 
         return classement
 
+    def reset_calendrier(self):
+        self._tours = []
+
+    def supprimer_club(self, club):
+        if club in self._participants:
+            self._participants.remove(club)
+            self.reset_calendrier()
+        else:
+            print(f"Le club {club.nom} n'est pas un participant du championnat.")
 
 
 class Statistiques:
@@ -202,6 +218,8 @@ class Statistiques:
         self._score = 0
         self._goal_average = 0
         self._matchs_joues = 0
+        self.historique = []
+        self.classement = None
 
     @property
     def matchs_joues(self):
@@ -210,14 +228,13 @@ class Statistiques:
     def incrementer_matchs_joues(self):
         self._matchs_joues += 1
 
-
     @property
     def victoires_domicile(self):
         return self._victoires_domicile
 
     def incrementer_victoires_domicile(self):
         self._victoires_domicile += 1
-        self._score +=3
+        self._score += 3
 
     @property
     def victoires_exterieur(self):
@@ -225,25 +242,26 @@ class Statistiques:
 
     def incrementer_victoires_exterieur(self):
         self._victoires_exterieur += 1
-        self._score +=3
+        self._score += 3
 
     @property
     def matchs_nuls(self):
         return self._matchs_nuls
+
+    def incrementer_matchs_nuls(self):
+        self._matchs_nuls += 1
+        self._score += 1
+
     @property
     def defaites(self):
         return self._defaites
 
     def incrementer_defaites(self):
         self._defaites += 1
-    
+
     @property
     def score(self):
         return self._score
-
-    def incrementer_matchs_nuls(self):
-        self._matchs_nuls += 1
-        self._score += 1
 
     @property
     def goal_average(self):
@@ -252,6 +270,8 @@ class Statistiques:
     def mettre_a_jour_goal_average(self, difference_goals):
         self._goal_average += difference_goals
 
+    def historique_tour_par_tour(self):
+        self.historique.append((self.classement, self.score))
 
 
 if __name__ == "__main__":
@@ -260,7 +280,7 @@ if __name__ == "__main__":
 
     # Ajout de participants au championnat
     clubs = [
-        Club("Paris Saint-Germain", "Paris", "Mauricio Pochettino", "logo_club1.png", "PSG"),
+        Club("Paris Saint-Germain", "Paris", "Lucas Lefevre", "logo_club1.png", "PSG"),
         Club("Olympique de Marseille", "Marseille", "Jorge Sampaoli", "logo_club2.png", "OM"),
         Club("AS Monaco", "Monaco", "Niko Kovač", "logo_club3.png", "ASM"),
         Club("Stade Brestois", "Brest", "Quentin Dutailly", "logo_club4.png", "SB29"),

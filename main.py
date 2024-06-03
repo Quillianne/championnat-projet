@@ -3,6 +3,8 @@ import random
 import numpy
 from tools import transform_list
 
+from tkinter import Tk
+
 
 class Club:
     def __init__(self, nom, emplacement, entraineur, logo):
@@ -281,30 +283,44 @@ if __name__ == "__main__":
     # Génération du calendrier
     championnat.generer_calendrier()
 
-    for tour in championnat.tours:
-        print("\n")
-        print("Tour", tour.numero)
-        for match in tour.matchs:
-            # Simuler les scores aléatoires
-            score_equipe_domicile = random.randint(0, 5)
-            score_equipe_exterieur = random.randint(0, 5)
+
+    window = Tk()
+
+    window.geometry("900x650")
+    window.configure(bg = "#FFFFFF")
+
+    tour_gui = tour.Tour_gui(window)
+
+    tour.tour_box(championnat.tours[0],tour_gui.tour_frame)
+
+    window.resizable(False, False)
+    window.mainloop()
+
+
+    # for tour in championnat.tours:
+    #     print("\n")
+    #     print("Tour", tour.numero)
+    #     for match in tour.matchs:
+    #         # Simuler les scores aléatoires
+    #         score_equipe_domicile = random.randint(0, 5)
+    #         score_equipe_exterieur = random.randint(0, 5)
             
-            # Jouer le match
-            match.jouer_match((score_equipe_domicile, score_equipe_exterieur))
+    #         # Jouer le match
+    #         match.jouer_match((score_equipe_domicile, score_equipe_exterieur))
 
-            # Afficher le match avec les résultats simulés
-            print(match.equipe_domicile.nom, score_equipe_domicile, "-", score_equipe_exterieur, match.equipe_exterieur.nom)
+    #         # Afficher le match avec les résultats simulés
+    #         print(match.equipe_domicile.nom, score_equipe_domicile, "-", score_equipe_exterieur, match.equipe_exterieur.nom)
 
-    print("\nStatistiques des clubs:")
-    for club in championnat.participants:
-        print("\n")
-        club.afficher_statistiques_club()
+    # print("\nStatistiques des clubs:")
+    # for club in championnat.participants:
+    #     print("\n")
+    #     club.afficher_statistiques_club()
 
-    # Utiliser la méthode classement de Championnat pour obtenir le classement
-    classement_championnat = championnat.classement()
+    # # Utiliser la méthode classement de Championnat pour obtenir le classement
+    # classement_championnat = championnat.classement()
 
-    # Afficher le classement des clubs
-    print("\nClassement des clubs:")
-    for i, (club, _) in enumerate(classement_championnat, 1):
-        print(f"{i}. {club.nom} - Victoires : {club.statistique.victoires_domicile + club.statistique.victoires_exterieur} - Nuls : {club.statistique.matchs_nuls} - Défaites : {club.statistique.defaites} -  Score : {club.statistique.score} - Goalaverage : {club.statistique.goal_average}")
+    # # Afficher le classement des clubs
+    # print("\nClassement des clubs:")
+    # for i, (club, _) in enumerate(classement_championnat, 1):
+    #     print(f"{i}. {club.nom} - Victoires : {club.statistique.victoires_domicile + club.statistique.victoires_exterieur} - Nuls : {club.statistique.matchs_nuls} - Défaites : {club.statistique.defaites} -  Score : {club.statistique.score} - Goalaverage : {club.statistique.goal_average}")
 

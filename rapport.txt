@@ -1,3 +1,28 @@
+Championnat -> Date de debut
+
+               Generer Calendrier: journée de match toutes les semaines 20h
+
+               reset calendrier (self.tours = [])
+
+               supprimer(club) -> reset calendrier et enlever club de liste_participants
+
+
+Match -> date et heure
+
+Statistiques -> histoire tour par tour (classement, nombre de points) liste de type [(classement t1,points t1),(classement t2,points t2),(classement t3,points t3), ...]
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 **Sommaire**

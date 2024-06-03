@@ -5,13 +5,11 @@ from pathlib import Path
 
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"assets/frame1")
+ASSETS_PATH = OUTPUT_PATH / Path(r"assets")
 
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
-
-
 
 
 
@@ -43,15 +41,8 @@ class MatchBox(BoxBox):
         self.match = match
         self.place(x=x, y=y)
 
-        self.image_image_1 = PhotoImage(
-            file=relative_to_assets("box.png"))
-        self.image_1 = self.create_image(
-            110,
-            100,
-            image=self.image_image_1
-        )
 
-        self.create_text(30, 30, anchor="nw", text=f"{match.equipe_domicile.nom} VS {match.equipe_exterieur.nom}", fill="#000000", font=("DelaGothicOne Regular", 12 * -1))
+        self.create_text(40, 30, anchor="nw", text=f"{match.equipe_domicile.surnom} VS {match.equipe_exterieur.surnom}", fill="#000000", font=("DelaGothicOne Regular", 12 * -1))
         self.create_text(30, 70, anchor="nw", text="Date: 16/04/2024", fill="#000000", font=("DelaGothicOne Regular", 12 * -1))
         self.create_text(30, 100, anchor="nw", text="Time: 20H", fill="#000000", font=("DelaGothicOne Regular", 12 * -1))
 
@@ -62,15 +53,8 @@ class ClubBox(BoxBox):
         self.club = club
         self.place(x=x, y=y)
 
-        self.image_image_1 = PhotoImage(
-            file=relative_to_assets("box.png"))
-        self.image_1 = self.create_image(
-            110,
-            100,
-            image=self.image_image_1
-        )
 
-        self.create_text(30, 30, anchor="nw", text=f"{club.nom}", fill="#000000", font=("DelaGothicOne Regular", 12 * -1))
+        self.create_text(30, 30, anchor="nw", text=f"{club.surnom}", fill="#000000", font=("DelaGothicOne Regular", 12 * -1))
 
 
 
@@ -109,7 +93,7 @@ class ClubGui(Canvas):
 
         self.create_rectangle(0, 0, 900, 650, fill="#3485FF", outline="")
 
-        self.create_text(20, 10, anchor="nw", text="CLUBS", fill="#FFFFFF", font=("DelaGothicOne Regular", 21 * -1))
+        self.create_text(20, 10, anchor="nw", text=self.championnat.nom, fill="#FFFFFF", font=("DelaGothicOne Regular", 21 * -1))
 
         #On place aussi la ligne en dessous du titre
         self.line = self.create_rectangle(
@@ -128,15 +112,15 @@ class ClubGui(Canvas):
 
 
         # Store reference to the image
-        self.button_image_9 = PhotoImage(file=relative_to_assets("button_9.png"))
-        button_9 = Button(self,
-            image=self.button_image_9,
+        self.button_export = PhotoImage(file=relative_to_assets("exporter.png"))
+        button_export = Button(self,
+            image=self.button_export,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_9 clicked"),
+            command=lambda: print("exporter clicked"),
             relief="flat"
         )
-        button_9.place(
+        button_export.place(
             x=600.0,
             y=15.0,
             width=250.0,
@@ -144,7 +128,7 @@ class ClubGui(Canvas):
         )
 
 
-        self.button_image_10 = PhotoImage(file=relative_to_assets("button_10.png"))
+        self.button_image_10 = PhotoImage(file=relative_to_assets("lancer.png"))
         button_10 = Button(self,
             image=self.button_image_10,
             borderwidth=0,
@@ -159,79 +143,67 @@ class ClubGui(Canvas):
             height=35.0
         )
 
-        self.button_image_5 = PhotoImage(file=relative_to_assets("button_5.png"))
-        button_5 = Button(self,
-            image=self.button_image_5,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: print("button_5 clicked"),
-            relief="flat"
-        )
-        button_5.place(
-            x=320.0,
-            y=590.0,
-            width=110.0,
-            height=35.0
-        )
 
-        self.button_image_8 = PhotoImage(file=relative_to_assets("button_8.png"))
-        button_8 = Button(self,
-            image=self.button_image_8,
+
+        self.button_club_image = PhotoImage(file=relative_to_assets("club_activated.png"))
+        button_club = Button(self,
+            image=self.button_club_image,
             borderwidth=0,
             highlightthickness=0,
             command=lambda: print("button_8 clicked"),
             relief="flat"
         )
-        button_8.place(
+        button_club.place(
             x=525.0,
             y=590.0,
             width=55.0,
             height=35.0
         )
 
-        self.button_image_7 = PhotoImage(file=relative_to_assets("button_7.png"))
-        button_7 = Button(self,
-            image=self.button_image_7,
+        self.button_match_image = PhotoImage(file=relative_to_assets("match.png"))
+        button_match = Button(self,
+            image=self.button_match_image,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_7 clicked"),
+            command=lambda: (tour_gui.pack(), club_gui.pack_forget()),
             relief="flat"
         )
-        button_7.place(
+        button_match.place(
             x=450.0,
             y=590.0,
             width=75.0,
             height=33.0
         )
 
-        self.button_image_6 = PhotoImage(file=relative_to_assets("button_6.png"))
-        button_6 = Button(self,
-            image=self.button_image_6,
+        self.button_add_image = PhotoImage(file=relative_to_assets("ajouter_equipe.png"))
+        button_add = Button(self,
+            image=self.button_add_image,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_6 clicked"),
+            command=lambda: print("ajouter equipe"),
             relief="flat"
         )
-        button_6.place(
+        button_add.place(
             x=600.0,
             y=590.0,
             width=250.0,
             height=35.0
         )
 
-
-        self.update_idletasks()  # Forcer la mise à jour de la géométrie
+        self.club_canvas = Canvas(self.club_frame.scrollable_frame, bg="#3485FF", height=500, width=900, bd=0, highlightthickness=0, relief="ridge")
+        self.club_canvas.pack(pady=0)
+        self.club_canvas.update_idletasks()  # Forcer la mise à jour de la géométrie
 
         x, y = 10, 40
-        for club in championnat.participants:
-
-            ClubBox(self.club_frame, club, x, y)
+        for club in self.championnat.participants:
+            #MatchBox(self, match, x, y)
+            ClubBox(self.club_canvas, club, x, y)
             x += 220
-            if x + 220 > self.winfo_width():  # Nouvelle ligne si la largeur est dépassée
+            if x + 220 > self.club_canvas.winfo_width():  # Nouvelle ligne si la largeur est dépassée
                 x = 10
                 y += 220
                 
-        self.club_frame.configure(height=y)
+        self.club_canvas.configure(height=y)
 
 
 
@@ -240,12 +212,13 @@ class TourGui(Canvas):
         super().__init__(window, bg="#3485FF", height=650, width=900, bd=0, highlightthickness=0, relief="ridge")
         self.window = window
         self.championnat = championnat
+        self.boxes = []
 
         self.pack()
 
         self.create_rectangle(0, 0, 900, 650, fill="#3485FF", outline="")
 
-        self.create_text(20, 10, anchor="nw", text="TOURS", fill="#FFFFFF", font=("DelaGothicOne Regular", 21 * -1))
+        self.create_text(20, 10, anchor="nw", text=self.championnat.nom, fill="#FFFFFF", font=("DelaGothicOne Regular", 21 * -1))
 
         #On place aussi la ligne en dessous du titre
         self.line = self.create_rectangle(
@@ -259,20 +232,20 @@ class TourGui(Canvas):
         self.scroll_canvas = Canvas(self,bg="#3485FF", height=450, width=900, bd=0, highlightthickness=0, relief="ridge")
         self.scroll_canvas.place(x=0,y=100)
 
-        tour_frame = scrollableframe.ScrollableFrame(self.scroll_canvas, bg="#3485FF")
-        tour_frame.place(x=0, y=0, relwidth=1, relheight=1)
+        self.tour_frame = scrollableframe.ScrollableFrame(self.scroll_canvas, bg="#3485FF")
+        self.tour_frame.place(x=0, y=0, relwidth=1, relheight=1)
 
 
         # Store reference to the image
-        self.button_image_9 = PhotoImage(file=relative_to_assets("button_9.png"))
-        button_9 = Button(self,
-            image=self.button_image_9,
+        self.button_export = PhotoImage(file=relative_to_assets("exporter.png"))
+        button_export = Button(self,
+            image=self.button_export,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_9 clicked"),
+            command=lambda: print("exporter clicked"),
             relief="flat"
         )
-        button_9.place(
+        button_export.place(
             x=600.0,
             y=15.0,
             width=250.0,
@@ -280,7 +253,7 @@ class TourGui(Canvas):
         )
 
 
-        self.button_image_10 = PhotoImage(file=relative_to_assets("button_10.png"))
+        self.button_image_10 = PhotoImage(file=relative_to_assets("lancer.png"))
         button_10 = Button(self,
             image=self.button_image_10,
             borderwidth=0,
@@ -295,68 +268,84 @@ class TourGui(Canvas):
             height=35.0
         )
 
-        self.button_image_5 = PhotoImage(file=relative_to_assets("button_5.png"))
-        button_5 = Button(self,
-            image=self.button_image_5,
+        self.button_reset_image = PhotoImage(file=relative_to_assets("reset.png"))
+        button_reset = Button(self,
+            image=self.button_reset_image,
             borderwidth=0,
             highlightthickness=0,
             command=lambda: print("button_5 clicked"),
             relief="flat"
         )
-        button_5.place(
+        button_reset.place(
             x=320.0,
             y=590.0,
             width=110.0,
             height=35.0
         )
 
-        self.button_image_8 = PhotoImage(file=relative_to_assets("button_8.png"))
-        button_8 = Button(self,
-            image=self.button_image_8,
+        self.button_club_image = PhotoImage(file=relative_to_assets("club.png"))
+        button_club = Button(self,
+            image=self.button_club_image,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_8 clicked"),
+            command=lambda: (tour_gui.pack_forget(), club_gui.pack()),
             relief="flat"
         )
-        button_8.place(
+        button_club.place(
             x=525.0,
             y=590.0,
             width=55.0,
             height=35.0
         )
 
-        self.button_image_7 = PhotoImage(file=relative_to_assets("button_7.png"))
-        button_7 = Button(self,
-            image=self.button_image_7,
+        self.button_match_image = PhotoImage(file=relative_to_assets("match_activated.png"))
+        button_match = Button(self,
+            image=self.button_match_image,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_7 clicked"),
+            command=lambda: self.update(),
             relief="flat"
         )
-        button_7.place(
+        button_match.place(
             x=450.0,
             y=590.0,
             width=75.0,
             height=33.0
         )
 
-        self.button_image_6 = PhotoImage(file=relative_to_assets("button_6.png"))
-        button_6 = Button(self,
-            image=self.button_image_6,
+        self.button_generate_image = PhotoImage(file=relative_to_assets("generer.png"))
+        button_generate = Button(self,
+            image=self.button_generate_image,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_6 clicked"),
+            command=lambda: self.generer_calendrier_et_update(),
             relief="flat"
         )
-        button_6.place(
+        button_generate.place(
             x=600.0,
             y=590.0,
             width=250.0,
             height=35.0
         )
 
-        for tour in championnat.tours:
-            TourBox(tour_frame.scrollable_frame, tour)
+
+    def update(self):
+        for box in self.boxes:
+            box.pack_forget()
+            box.destroy()
+        self.boxes.clear()
+
+        # Ajouter les nouveaux éléments
+        for tour in self.championnat.tours:
+            self.boxes.append(TourBox(self.tour_frame.scrollable_frame, tour))
+
+
+    def generer_calendrier_et_update(self):
+        self.championnat.generer_calendrier()
+        self.update()
+
+
+
 
 
 if __name__ == "__main__":
@@ -368,30 +357,31 @@ if __name__ == "__main__":
     championnat = champ.Championnat("Ligue 1")
 
     clubs = [
-        champ.Club("Paris Saint-Germain", "Paris", "Mauricio Pochettino", "logo_club1.png"),
-        champ.Club("Olympique de Marseille", "Marseille", "Jorge Sampaoli", "logo_club2.png"),
-        champ.Club("AS Monaco", "Monaco", "Niko Kovač", "logo_club3.png"),
-        champ.Club("FC EnstApagnan", "Brest", "Quentin Dutailly", "logo_club4.png"),
-        champ.Club("Lille OSC", "Lille", "Christophe Galtier", "logo_club5.png"),
-        champ.Club("Olympique Lyonnais", "Lyon", "Rudi Garcia", "logo_club6.png"),
-        champ.Club("Stade Rennais FC", "Rennes", "Kilian Barantal", "logo_club7.png"),
-        champ.Club("RC Lens", "Lens", "Franck Haise", "logo_club8.png"),
-        champ.Club("Stade de Reims", "Reims", "David Guion", "logo_club9.png"),
-        champ.Club("OGC Nice", "Nice", "Adrian Ursea", "logo_club10.png"),
-        champ.Club("Montpellier HSC", "Montpellier", "Michel Der Zakarian", "logo_club11.png"),
-        champ.Club("Angers SCO", "Angers", "Gérald Baticle", "logo_club12.png"),
-        champ.Club("FC Metz", "Metz", "Frédéric Antonetti", "logo_club13.png"),
-        champ.Club("RC Strasbourg Alsace", "Strasbourg", "Thierry Laurey", "logo_club14.png"),
-        champ.Club("FC Nantes", "Nantes", "Antoine Kombouaré", "logo_club15.png"),
-        champ.Club("Dijon FCO", "Dijon", "David Linarès", "logo_club16.png")
+        champ.Club("Paris Saint-Germain", "Paris", "Mauricio Pochettino", "logo_club1.png", "PSG"),
+        champ.Club("Olympique de Marseille", "Marseille", "Jorge Sampaoli", "logo_club2.png", "OM"),
+        champ.Club("AS Monaco", "Monaco", "Niko Kovač", "logo_club3.png", "ASM"),
+        champ.Club("Stade Brestois", "Brest", "Quentin Dutailly", "logo_club4.png", "SB29"),
+        champ.Club("Lille OSC", "Lille", "Christophe Galtier", "logo_club5.png", "LOSC"),
+        champ.Club("Olympique Lyonnais", "Lyon", "Rudi Garcia", "logo_club6.png", "OL"),
+        champ.Club("Stade Rennais FC", "Rennes", "Kilian Barantal", "logo_club7.png", "SRFC"),
+        champ.Club("RC Lens", "Lens", "Franck Haise", "logo_club8.png", "RCL"),
+        champ.Club("Stade de Reims", "Reims", "David Guion", "logo_club9.png", "SDR"),
+        champ.Club("OGC Nice", "Nice", "Adrian Ursea", "logo_club10.png", "OGCN"),
+        champ.Club("Montpellier HSC", "Montpellier", "Michel Der Zakarian", "logo_club11.png", "MHSC"),
+        champ.Club("Angers SCO", "Angers", "Gérald Baticle", "logo_club12.png", "SCO"),
+        champ.Club("FC Metz", "Metz", "Frédéric Antonetti", "logo_club13.png", "FCM"),
+        champ.Club("RC Strasbourg Alsace", "Strasbourg", "Thierry Laurey", "logo_club14.png", "RCSA"),
+        champ.Club("FC Nantes", "Nantes", "Antoine Kombouaré", "logo_club15.png", "FCN"),
+        champ.Club("Dijon FCO", "Dijon", "David Linarès", "logo_club16.png", "DFCO")
     ]
 
     for club in clubs:
         championnat.ajouter_participant(club)
 
-    championnat.generer_calendrier()
+    
 
     tour_gui = TourGui(window, championnat)
-    #tour_gui.pack_forget()
+    club_gui = ClubGui(window, championnat)
+    tour_gui.pack_forget()
 
     window.mainloop()

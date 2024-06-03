@@ -12,6 +12,7 @@ class Club:
         self._emplacement = emplacement
         self._entraineur = entraineur
         self.logo = logo
+        self.surnom = surnom
         self.statistique = Statistiques()
 
     def __str__(self):

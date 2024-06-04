@@ -1,4 +1,4 @@
-from tkinter import Tk, Canvas, Button, PhotoImage
+from tkinter import Tk, Canvas, Button, PhotoImage, Entry
 import main as champ
 import scrollableframe
 from pathlib import Path
@@ -90,6 +90,7 @@ class TourBox(Canvas):
         x, y = 10, 40
         for match in tour.matchs:
             MatchBox(self, match, x, y)
+            #TextEntryBox(self, x, y)
             #ClubBox(self, match.equipe_domicile, x, y)
             x += 220
             if x + 220 > self.winfo_width():  # Nouvelle ligne si la largeur est dépassée
@@ -101,6 +102,103 @@ class TourBox(Canvas):
 
 
 
+class TextEntryBox(Canvas):
+    def __init__(self, parent, x, y, text, default_text=""):
+        super().__init__(parent, bg="#3485FF", height=80, width=365, bd=0, highlightthickness=0, relief="ridge")
+        self.place(x=x, y=y)
+
+        self.text_box_bg = PhotoImage(file=relative_to_assets("TextBox_Bg.png"))
+        self.create_image(180, 40, image=self.text_box_bg)
+        
+        self.token_entry = Entry(self, bd=0, bg="#F6F7F9", fg="#000716", highlightthickness=0)
+        self.token_entry.place(x=20, y=30, width=321.0, height=35)
+        self.token_entry.insert(0, default_text)  # Insérer le texte prérempli ici
+
+        self.create_text(
+            20, 20.0, text=text, fill="#515486",
+            font=("Arial-BoldMT", int(13.0)), anchor="w")
+        
+        self.token_entry.focus()
+
+    def get(self):
+        return self.token_entry.get()
+
+
+
+class NewClubGui(Canvas):
+    def __init__(self, window, championnat):
+        super().__init__(window, bg="#3485FF", height=650, width=900, bd=0, highlightthickness=0, relief="ridge")
+
+        self.window = window
+        self.championnat = championnat
+
+        self.pack()
+
+        self.create_rectangle(0, 0, 900, 650, fill="#3485FF", outline="")
+
+        self.create_text(20, 10, anchor="nw", text=self.championnat.nom, fill="#FFFFFF", font=("DelaGothicOne Regular", 21 * -1))
+
+        #On place aussi la ligne en dessous du titre
+        self.line = self.create_rectangle(
+            20.0,
+            40.0,
+            147.0,
+            44.0,
+            fill="#FFFFFF",
+            outline="")
+    
+        
+        self.club_surname = TextEntryBox(self,270,180,"SURNOM")
+        self.club_city = TextEntryBox(self,270,260,"VILLE")
+        self.club_entraineur = TextEntryBox(self,270,340,"ENTRAINEUR")
+        self.club_logo = TextEntryBox(self,270,420,"LOGO")
+        self.club_name = TextEntryBox(self,270,100,"NOM DU CLUB")
+
+                # Store reference to the image
+        self.button_ok_image = PhotoImage(file=relative_to_assets("ok.png"))
+        button_ok = Button(self,
+            image=self.button_ok_image,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.create_club(),
+            relief="flat"
+        )
+        button_ok.place(
+            x=320.0,
+            y=565.0,
+            width=250.0,
+            height=35.0
+        )
+
+        self.button_cancel_image = PhotoImage(file=relative_to_assets("cancel.png"))
+        button_cancel = Button(self,
+            image=self.button_cancel_image,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.cancel_creation(),
+            relief="flat"
+        )
+        button_cancel.place(
+            x=320.0,
+            y=605.0,
+            width=250.0,
+            height=35.0
+        )
+
+    def create_club(self):
+        self.club = champ.Club(self.club_name.get(), self.club_city.get(), self.club_entraineur.get(), self.club_logo.get(), self.club_surname.get())
+        self.championnat.ajouter_participant(self.club)
+        print(len(self.championnat.participants))
+        self.pack_forget()
+        club_gui.update()
+        #self.destroy()
+
+    def cancel_creation(self):
+        self.pack_forget()
+        #self.destroy()
+
+
+
 
 class ClubGui(Canvas):
     def __init__(self, window, championnat):
@@ -108,7 +206,7 @@ class ClubGui(Canvas):
         self.window = window
         self.championnat = championnat
 
-        self.pack()
+        self.place(x=0,y=0)
 
         self.create_rectangle(0, 0, 900, 650, fill="#3485FF", outline="")
 
@@ -169,7 +267,7 @@ class ClubGui(Canvas):
             image=self.button_club_image,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_8 clicked"),
+            command=lambda: self.update(),
             relief="flat"
         )
         button_club.place(
@@ -184,7 +282,7 @@ class ClubGui(Canvas):
             image=self.button_match_image,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: (tour_gui.update(),tour_gui.pack(), club_gui.pack_forget()),
+            command=lambda: (tour_gui.update(),tour_gui.place(x=0,y=0), club_gui.place_forget()),
             relief="flat"
         )
         button_match.place(
@@ -199,7 +297,7 @@ class ClubGui(Canvas):
             image=self.button_add_image,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("ajouter equipe"),
+            command=lambda: self.ajouter_equipe(),
             relief="flat"
         )
         button_add.place(
@@ -226,6 +324,11 @@ class ClubGui(Canvas):
                 y += 220
                 
         self.club_canvas.configure(height=y)
+
+    def ajouter_equipe(self):
+        #self.pack_forget()
+        self.new_club_gui = NewClubGui(self.window, self.championnat)
+
 
     def update(self):
         for box in self.boxes:
@@ -255,7 +358,7 @@ class TourGui(Canvas):
         self.championnat = championnat
         self.boxes = []
 
-        self.pack()
+        self.place(x=0,y=0)
 
         self.create_rectangle(0, 0, 900, 650, fill="#3485FF", outline="")
 
@@ -329,7 +432,7 @@ class TourGui(Canvas):
             image=self.button_club_image,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: (club_gui.update(), tour_gui.pack_forget(), club_gui.pack()),
+            command=lambda: (club_gui.update(), tour_gui.place_forget(), club_gui.place(x=0,y=0)),
             relief="flat"
         )
         button_club.place(
@@ -420,9 +523,11 @@ if __name__ == "__main__":
         championnat.ajouter_participant(club)
 
     
-
-    tour_gui = TourGui(window, championnat)
     club_gui = ClubGui(window, championnat)
-    tour_gui.pack_forget()
+    tour_gui = TourGui(window, championnat)
+    
+    tour_gui.place_forget()
+    
+    #TextEntryBox(window, 100, 200)
 
     window.mainloop()

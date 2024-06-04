@@ -4,6 +4,7 @@ from tools import transform_list
 
 from tkinter import Tk
 from datetime import datetime, timedelta
+import json
 
 class Club:
     def __init__(self, nom, emplacement, entraineur, logo, surnom = None):
@@ -206,6 +207,93 @@ class Championnat:
         else:
             print(f"Le club {club.nom} n'est pas un participant du championnat.")
 
+    def exporter_championnat(self, filename):
+        championnat_data = {
+            "nom": self.nom,
+            "date_debut": self.date_debut.strftime("%Y-%m-%d %H:%M:%S"),
+            "participants": [
+                {
+                    "nom": club.nom,
+                    "emplacement": club.emplacement,
+                    "entraineur": club.entraineur,
+                    "logo": club.logo,
+                    "surnom": club.surnom,
+                    "statistiques": {
+                        "victoires_domicile": club.statistique.victoires_domicile,
+                        "victoires_exterieur": club.statistique.victoires_exterieur,
+                        "matchs_nuls": club.statistique.matchs_nuls,
+                        "defaites": club.statistique.defaites,
+                        "score": club.statistique.score,
+                        "goal_average": club.statistique.goal_average,
+                        "matchs_joues": club.statistique.matchs_joues
+                    }
+                }
+                for club in self.participants
+            ],
+            "tours": [
+                {
+                    "numero": tour.numero,
+                    "matchs": [
+                        {
+                            "equipe_domicile": match.equipe_domicile.nom,
+                            "equipe_exterieur": match.equipe_exterieur.nom,
+                            "resultat": match.resultat,
+                            "date": match.date.strftime("%Y-%m-%d") if match.date else None
+                        }
+                        for match in tour.matchs
+                    ]
+                }
+                for tour in self.tours
+            ]
+        }
+
+        with open(filename, 'w') as file:
+            json.dump(championnat_data, file, indent=4, ensure_ascii=False)
+
+    def importer_championnat(self, filename):
+        with open(filename, 'r') as file:
+            data = json.load(file)
+
+        self._nom = data["nom"]
+        self.date_debut = datetime.strptime(data["date_debut"], "%Y-%m-%d %H:%M:%S")
+
+        # Réinitialiser les participants et les tours actuels
+        self._participants = []
+        self._tours = []
+
+        # Importer les participants
+        for club_data in data["participants"]:
+            club = Club(
+                nom=club_data["nom"],
+                emplacement=club_data["emplacement"],
+                entraineur=club_data["entraineur"],
+                logo=club_data["logo"],
+                surnom=club_data["surnom"]
+            )
+            club.statistique = Statistiques()
+            club.statistique._victoires_domicile = club_data["statistiques"]["victoires_domicile"]
+            club.statistique._victoires_exterieur = club_data["statistiques"]["victoires_exterieur"]
+            club.statistique._matchs_nuls = club_data["statistiques"]["matchs_nuls"]
+            club.statistique._defaites = club_data["statistiques"]["defaites"]
+            club.statistique._score = club_data["statistiques"]["score"]
+            club.statistique._goal_average = club_data["statistiques"]["goal_average"]
+            club.statistique._matchs_joues = club_data["statistiques"]["matchs_joues"]
+            self.ajouter_participant(club)
+
+        # Dictionnaire pour retrouver les clubs par leur nom
+        clubs_by_nom = {club.nom: club for club in self._participants}
+
+        # Importer les tours et les matchs
+        for tour_data in data["tours"]:
+            tour = Tour(tour_data["numero"])
+            for match_data in tour_data["matchs"]:
+                equipe_domicile = clubs_by_nom[match_data["equipe_domicile"]]
+                equipe_exterieur = clubs_by_nom[match_data["equipe_exterieur"]]
+                match = Match(equipe_domicile, equipe_exterieur)
+                match._resultat = match_data["resultat"]
+                match.date = datetime.strptime(match_data["date"], "%Y-%m-%d") if match_data["date"] else None
+                tour.ajouter_match(match)
+            self.ajouter_tour(tour)
 
 class Statistiques:
     def __init__(self):
@@ -331,3 +419,23 @@ if __name__ == "__main__":
     for i, (club, _) in enumerate(classement_championnat, 1):
         print(f"{i}. {club.nom} - Victoires : {club.statistique.victoires_domicile + club.statistique.victoires_exterieur} - Nuls : {club.statistique.matchs_nuls} - Défaites : {club.statistique.defaites} -  Score : {club.statistique.score} - Goalaverage : {club.statistique.goal_average}")
 
+
+
+    # Exporter les données du championnat
+    championnat.exporter_championnat("championnat.json")
+
+    # Importer les données du championnat
+    nouveau_championnat = Championnat("Ligue 1")
+    nouveau_championnat.importer_championnat("championnat.json")
+
+    # Afficher les informations importées pour vérifier
+    print("\nStatistiques des clubs importés:")
+    for club in nouveau_championnat.participants:
+        print("\n")
+        club.afficher_statistiques_club()
+
+    print("\nClassement des clubs importés:")
+    classement_nouveau_championnat = nouveau_championnat.classement()
+    for i, (club, _) in enumerate(classement_nouveau_championnat, 1):
+        print(
+            f"{i}. {club.nom} - Victoires : {club.statistique.victoires_domicile + club.statistique.victoires_exterieur} - Nuls : {club.statistique.matchs_nuls} - Défaites : {club.statistique.defaites} - Score : {club.statistique.score} - Goalaverage : {club.statistique.goal_average}")

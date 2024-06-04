@@ -2,6 +2,7 @@ from tkinter import Tk, Canvas, Button, PhotoImage
 import main as champ
 import scrollableframe
 from pathlib import Path
+import choose_date
 
 
 OUTPUT_PATH = Path(__file__).parent
@@ -10,6 +11,8 @@ ASSETS_PATH = OUTPUT_PATH / Path(r"assets")
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
+
+
 
 
 
@@ -37,24 +40,39 @@ class BoxBox(Canvas):
 
 class MatchBox(BoxBox):
     def __init__(self, parent, match, x, y):
-        super().__init__(parent, x,y, ["modifier.png"], [lambda: print("modifier clicked")])
+        super().__init__(parent, x,y, ["modifier.png"], [lambda: self.modifier_horaire()])
         self.match = match
         self.place(x=x, y=y)
 
 
-        self.create_text(40, 30, anchor="nw", text=f"{match.equipe_domicile.surnom} VS {match.equipe_exterieur.surnom}", fill="#000000", font=("DelaGothicOne Regular", 12 * -1))
-        self.create_text(30, 70, anchor="nw", text="Date: 16/04/2024", fill="#000000", font=("DelaGothicOne Regular", 12 * -1))
-        self.create_text(30, 100, anchor="nw", text="Time: 20H", fill="#000000", font=("DelaGothicOne Regular", 12 * -1))
+        self.VS = self.create_text(60, 30, anchor="nw", text=f"{match.equipe_domicile.surnom} VS {match.equipe_exterieur.surnom}", fill="#000000", font=("DelaGothicOne Regular", 12 * -1))
+        self.date = self.create_text(50, 70, anchor="nw", text=f"{match.date.strftime('%d/%m/%Y')}", fill="#000000", font=("DelaGothicOne Regular", 12 * -1))
+        #self.hour = self.create_text(50, 100, anchor="nw", text=f"{match.date.strftime('%HH%M')}", fill="#000000", font=("DelaGothicOne Regular", 12 * -1))
+
+    def modifier_horaire(self):
+        new_date = choose_date.DateDialog(window, 'Choisir horaire', self.match.date).selected_date
+        self.match.date = new_date
+        self.itemconfig(self.date, text=f"{self.match.date.strftime('%d/%m/%Y')}")
+        #self.itemconfig(self.hour, text=f"{self.match.date.strftime('%HH%M')}")
+
+    
 
 
 class ClubBox(BoxBox):
-    def __init__(self, parent, club, x, y):
-        super().__init__(parent, x,y, ["supprimer.png","modifier.png"], [lambda: print("supprimer clicked"),lambda: print("modifier clicked")])
+    def __init__(self, parent, club, x, y, clubgui):
+        super().__init__(parent, x,y, ["supprimer.png","modifier.png"], [lambda: self.delete(),lambda: print("modifier clicked")])
         self.club = club
         self.place(x=x, y=y)
+        self.clubgui = clubgui
 
 
         self.create_text(30, 30, anchor="nw", text=f"{club.surnom}", fill="#000000", font=("DelaGothicOne Regular", 12 * -1))
+
+    def delete(self):
+        self.clubgui.championnat.supprimer_club(self.club)
+        self.clubgui.update()
+    
+
 
 
 
@@ -79,6 +97,7 @@ class TourBox(Canvas):
                 y += 220
                 
         self.configure(height=y)
+
 
 
 
@@ -165,7 +184,7 @@ class ClubGui(Canvas):
             image=self.button_match_image,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: (tour_gui.pack(), club_gui.pack_forget()),
+            command=lambda: (tour_gui.update(),tour_gui.pack(), club_gui.pack_forget()),
             relief="flat"
         )
         button_match.place(
@@ -195,15 +214,37 @@ class ClubGui(Canvas):
         self.club_canvas.update_idletasks()  # Forcer la mise à jour de la géométrie
 
         x, y = 10, 40
+
+        self.boxes = []
+
         for club in self.championnat.participants:
             #MatchBox(self, match, x, y)
-            ClubBox(self.club_canvas, club, x, y)
+            self.boxes.append(ClubBox(self.club_canvas, club, x, y, self))
             x += 220
             if x + 220 > self.club_canvas.winfo_width():  # Nouvelle ligne si la largeur est dépassée
                 x = 10
                 y += 220
                 
         self.club_canvas.configure(height=y)
+
+    def update(self):
+        for box in self.boxes:
+            box.pack_forget()
+            box.destroy()
+        self.boxes.clear()
+        print(len(self.championnat.participants))
+
+        x, y = 10, 40
+
+        for club in self.championnat.participants:
+            #MatchBox(self, match, x, y)
+            self.boxes.append(ClubBox(self.club_canvas, club, x, y, self))
+            x += 220
+            if x + 220 > self.club_canvas.winfo_width():  # Nouvelle ligne si la largeur est dépassée
+                x = 10
+                y += 220
+                
+        self.club_canvas.configure(height=y+450)
 
 
 
@@ -273,7 +314,7 @@ class TourGui(Canvas):
             image=self.button_reset_image,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_5 clicked"),
+            command=lambda: (self.championnat.reset_calendrier(),self.update()),
             relief="flat"
         )
         button_reset.place(
@@ -288,7 +329,7 @@ class TourGui(Canvas):
             image=self.button_club_image,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: (tour_gui.pack_forget(), club_gui.pack()),
+            command=lambda: (club_gui.update(), tour_gui.pack_forget(), club_gui.pack()),
             relief="flat"
         )
         button_club.place(

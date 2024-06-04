@@ -119,11 +119,11 @@ class Tour:
 
 
 class Championnat:
-    def __init__(self, nom):
+    def __init__(self, nom, date = datetime(2024, 9, 1, 20)):
         self._nom = nom
         self._participants = []
         self._tours = []
-        self.date_debut = datetime(2024, 9, 1, 20)
+        self.date_debut = date
 
     @property
     def nom(self):

@@ -4,6 +4,7 @@ from tools import transform_list
 
 from tkinter import Tk
 from datetime import datetime, timedelta
+import sqlite3
 import json
 
 class Club:
@@ -207,7 +208,60 @@ class Championnat:
         else:
             print(f"Le club {club.nom} n'est pas un participant du championnat.")
 
-    def exporter_championnat(self, filename):
+    def exporter_championnat_bd(self, db_filename):
+        conn = sqlite3.connect(db_filename)
+        cursor = conn.cursor()
+
+        # Insérer le championnat
+        cursor.execute("INSERT INTO championnat (nom, date_debut) VALUES (?, ?)", (self.nom, self.date_debut.strftime("%Y-%m-%d %H:%M:%S")))
+        championnat_id = cursor.lastrowid
+
+        # Insérer les clubs et leurs statistiques
+        club_ids = {}
+        for club in self.participants:
+            cursor.execute(
+                "INSERT INTO club (nom, emplacement, entraineur, logo, surnom, championnat_id) VALUES (?, ?, ?, ?, ?, ?)",
+                (club.nom, club.emplacement, club.entraineur, club.logo, club.surnom, championnat_id)
+            )
+            club_id = cursor.lastrowid
+            club_ids[club.nom] = club_id
+            cursor.execute(
+                "INSERT INTO statistiques (club_id, victoires_domicile, victoires_exterieur, matchs_nuls, defaites, score, goal_average, matchs_joues) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                (
+                    club_id,
+                    club.statistique.victoires_domicile,
+                    club.statistique.victoires_exterieur,
+                    club.statistique.matchs_nuls,
+                    club.statistique.defaites,
+                    club.statistique.score,
+                    club.statistique.goal_average,
+                    club.statistique.matchs_joues
+                )
+            )
+
+        # Insérer les tours et les matchs
+        for tour in self.tours:
+            cursor.execute("INSERT INTO tour (numero, championnat_id) VALUES (?, ?)", (tour.numero, championnat_id))
+            tour_id = cursor.lastrowid
+            for match in tour.matchs:
+                resultat_domicile, resultat_exterieur = match.resultat if match.resultat else (None, None)
+                cursor.execute(
+                    "INSERT INTO match (equipe_domicile_id, equipe_exterieur_id, resultat_domicile, resultat_exterieur, date, tour_id) VALUES (?, ?, ?, ?, ?, ?)",
+                    (
+                        club_ids[match.equipe_domicile.nom],
+                        club_ids[match.equipe_exterieur.nom],
+                        resultat_domicile,
+                        resultat_exterieur,
+                        match.date.strftime("%Y-%m-%d") if match.date else None,
+                        tour_id
+                    )
+                )
+
+        conn.commit()
+        conn.close()
+
+
+    def exporter_championnat_json(self, filename):
         championnat_data = {
             "nom": self.nom,
             "date_debut": self.date_debut.strftime("%Y-%m-%d %H:%M:%S"),
@@ -250,7 +304,7 @@ class Championnat:
         with open(filename, 'w') as file:
             json.dump(championnat_data, file, indent=4, ensure_ascii=False)
 
-    def importer_championnat(self, filename):
+    def importer_championnat_json(self, filename):
         with open(filename, 'r') as file:
             data = json.load(file)
 
@@ -361,6 +415,9 @@ class Statistiques:
 
 
 if __name__ == "__main__":
+    # Créer les tables
+
+
     # Création d'une instance de Championnat
     championnat = Championnat("Ligue 1")
 
@@ -390,8 +447,6 @@ if __name__ == "__main__":
     # Génération du calendrier
     championnat.generer_calendrier()
 
-
-
     for tour in championnat.tours:
         print("\n")
         print("Tour", tour.numero)
@@ -399,34 +454,24 @@ if __name__ == "__main__":
             # Simuler les scores aléatoires
             score_equipe_domicile = random.randint(0, 5)
             score_equipe_exterieur = random.randint(0, 5)
-            
+
             # Jouer le match
             match.jouer_match((score_equipe_domicile, score_equipe_exterieur))
+            match.date = datetime.now() + timedelta(days=1)
 
             # Afficher le match avec les résultats simulés
-            print(match.equipe_domicile.nom, score_equipe_domicile, "-", score_equipe_exterieur, match.equipe_exterieur.nom, match.date)
+            print(match.equipe_domicile.nom, score_equipe_domicile, "-", score_equipe_exterieur,
+                  match.equipe_exterieur.nom)
 
-    print("\nStatistiques des clubs:")
-    for club in championnat.participants:
-        print("\n")
-        club.afficher_statistiques_club()
-
-    # Utiliser la méthode classement de Championnat pour obtenir le classement
-    classement_championnat = championnat.classement()
-
-    # Afficher le classement des clubs
-    print("\nClassement des clubs:")
-    for i, (club, _) in enumerate(classement_championnat, 1):
-        print(f"{i}. {club.nom} - Victoires : {club.statistique.victoires_domicile + club.statistique.victoires_exterieur} - Nuls : {club.statistique.matchs_nuls} - Défaites : {club.statistique.defaites} -  Score : {club.statistique.score} - Goalaverage : {club.statistique.goal_average}")
-
-
+    # Exporter le championnat dans la base de données
+    championnat.exporter_championnat_bd("championnat.db")
 
     # Exporter les données du championnat
-    championnat.exporter_championnat("championnat.json")
+    championnat.exporter_championnat_json("championnat.json")
 
     # Importer les données du championnat
     nouveau_championnat = Championnat("Ligue 1")
-    nouveau_championnat.importer_championnat("championnat.json")
+    nouveau_championnat.importer_championnat_json("championnat.json")
 
     # Afficher les informations importées pour vérifier
     print("\nStatistiques des clubs importés:")

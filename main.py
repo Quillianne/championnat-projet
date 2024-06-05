@@ -107,7 +107,6 @@ class Tour:
     @property
     def numero(self):
         return self._numero
-
     @numero.setter
     def numero(self, value):
         self._numero = value
@@ -437,6 +436,23 @@ class Championnat:
             self.ajouter_tour(tour)
             current_date += timedelta(days=7)
 
+    def jouer_tour(self, resultats):
+        print("Tour", tour.numero)
+        i=0
+        for match in tour.matchs:
+            # Simuler les scores aléatoires
+            score_equipe_domicile = resultats[i][0]
+            score_equipe_exterieur = resultats[i][1]
+
+            # Jouer le match
+            match.jouer_match((score_equipe_domicile, score_equipe_exterieur))
+            match.date = datetime.now() + timedelta(days=1)
+            i+=1
+            # Afficher le match avec les résultats simulés
+            print(match.equipe_domicile.nom, score_equipe_domicile, "-", score_equipe_exterieur,
+                  match.equipe_exterieur.nom)
+
+
     def classement(self):
         # Calculer le score de championnat, goal average et nombre de victoires pour chaque club
         scores_clubs = {}
@@ -529,8 +545,6 @@ class Statistiques:
 
 
 if __name__ == "__main__":
-    # Créer les tables
-
 
     # Création d'une instance de Championnat
     championnat = Championnat("Ligue 1")
@@ -564,18 +578,9 @@ if __name__ == "__main__":
     for tour in championnat.tours:
         print("\n")
         print("Tour", tour.numero)
-        for match in tour.matchs:
-            # Simuler les scores aléatoires
-            score_equipe_domicile = random.randint(0, 5)
-            score_equipe_exterieur = random.randint(0, 5)
-
-            # Jouer le match
-            match.jouer_match((score_equipe_domicile, score_equipe_exterieur))
-            match.date = datetime.now() + timedelta(days=1)
-
-            # Afficher le match avec les résultats simulés
-            print(match.equipe_domicile.nom, score_equipe_domicile, "-", score_equipe_exterieur,
-                  match.equipe_exterieur.nom)
+        resultats = [(random.randint(0, 5),random.randint(0, 5)) for _ in tour.matchs]
+        championnat.jouer_tour(resultats)
+        print()
 
     # Exporter le championnat dans la base de données
     championnat.exporter_championnat_bd("championnat.db")

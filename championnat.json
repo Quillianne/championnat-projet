@@ -9,12 +9,12 @@
             "logo": "logo_club1.png",
             "surnom": "PSG",
             "statistiques": {
-                "victoires_domicile": 10,
-                "victoires_exterieur": 6,
+                "victoires_domicile": 7,
+                "victoires_exterieur": 9,
                 "matchs_nuls": 4,
                 "defaites": 10,
                 "score": 52,
-                "goal_average": 19,
+                "goal_average": 20,
                 "matchs_joues": 30
             }
         },
@@ -25,12 +25,12 @@
             "logo": "logo_club2.png",
             "surnom": "OM",
             "statistiques": {
-                "victoires_domicile": 8,
-                "victoires_exterieur": 5,
-                "matchs_nuls": 6,
-                "defaites": 11,
-                "score": 45,
-                "goal_average": 6,
+                "victoires_domicile": 7,
+                "victoires_exterieur": 6,
+                "matchs_nuls": 7,
+                "defaites": 10,
+                "score": 46,
+                "goal_average": -5,
                 "matchs_joues": 30
             }
         },
@@ -42,11 +42,11 @@
             "surnom": "ASM",
             "statistiques": {
                 "victoires_domicile": 5,
-                "victoires_exterieur": 5,
-                "matchs_nuls": 5,
-                "defaites": 15,
-                "score": 35,
-                "goal_average": -16,
+                "victoires_exterieur": 4,
+                "matchs_nuls": 12,
+                "defaites": 9,
+                "score": 39,
+                "goal_average": -3,
                 "matchs_joues": 30
             }
         },
@@ -57,12 +57,12 @@
             "logo": "logo_club4.png",
             "surnom": "SB29",
             "statistiques": {
-                "victoires_domicile": 4,
-                "victoires_exterieur": 7,
-                "matchs_nuls": 4,
-                "defaites": 15,
-                "score": 37,
-                "goal_average": -7,
+                "victoires_domicile": 8,
+                "victoires_exterieur": 8,
+                "matchs_nuls": 3,
+                "defaites": 11,
+                "score": 51,
+                "goal_average": 11,
                 "matchs_joues": 30
             }
         },
@@ -74,11 +74,11 @@
             "surnom": "LOSC",
             "statistiques": {
                 "victoires_domicile": 6,
-                "victoires_exterieur": 7,
+                "victoires_exterieur": 6,
                 "matchs_nuls": 5,
-                "defaites": 12,
-                "score": 44,
-                "goal_average": 13,
+                "defaites": 13,
+                "score": 41,
+                "goal_average": 1,
                 "matchs_joues": 30
             }
         },
@@ -89,12 +89,12 @@
             "logo": "logo_club6.png",
             "surnom": "OL",
             "statistiques": {
-                "victoires_domicile": 8,
-                "victoires_exterieur": 8,
-                "matchs_nuls": 5,
-                "defaites": 9,
-                "score": 53,
-                "goal_average": 16,
+                "victoires_domicile": 3,
+                "victoires_exterieur": 9,
+                "matchs_nuls": 1,
+                "defaites": 17,
+                "score": 37,
+                "goal_average": -17,
                 "matchs_joues": 30
             }
         },
@@ -105,12 +105,12 @@
             "logo": "logo_club7.png",
             "surnom": "SRFC",
             "statistiques": {
-                "victoires_domicile": 5,
-                "victoires_exterieur": 6,
-                "matchs_nuls": 8,
-                "defaites": 11,
-                "score": 41,
-                "goal_average": 4,
+                "victoires_domicile": 10,
+                "victoires_exterieur": 8,
+                "matchs_nuls": 4,
+                "defaites": 8,
+                "score": 58,
+                "goal_average": 23,
                 "matchs_joues": 30
             }
         },
@@ -121,12 +121,12 @@
             "logo": "logo_club8.png",
             "surnom": "RCL",
             "statistiques": {
-                "victoires_domicile": 6,
-                "victoires_exterieur": 5,
-                "matchs_nuls": 4,
-                "defaites": 15,
-                "score": 37,
-                "goal_average": -23,
+                "victoires_domicile": 4,
+                "victoires_exterieur": 4,
+                "matchs_nuls": 9,
+                "defaites": 13,
+                "score": 33,
+                "goal_average": -11,
                 "matchs_joues": 30
             }
         },
@@ -137,12 +137,12 @@
             "logo": "logo_club9.png",
             "surnom": "SDR",
             "statistiques": {
-                "victoires_domicile": 6,
-                "victoires_exterieur": 4,
-                "matchs_nuls": 5,
-                "defaites": 15,
-                "score": 35,
-                "goal_average": -15,
+                "victoires_domicile": 7,
+                "victoires_exterieur": 6,
+                "matchs_nuls": 4,
+                "defaites": 13,
+                "score": 43,
+                "goal_average": 10,
                 "matchs_joues": 30
             }
         },
@@ -153,11 +153,11 @@
             "logo": "logo_club10.png",
             "surnom": "OGCN",
             "statistiques": {
-                "victoires_domicile": 3,
-                "victoires_exterieur": 6,
-                "matchs_nuls": 8,
+                "victoires_domicile": 9,
+                "victoires_exterieur": 5,
+                "matchs_nuls": 3,
                 "defaites": 13,
-                "score": 35,
+                "score": 45,
                 "goal_average": -5,
                 "matchs_joues": 30
             }
@@ -169,12 +169,12 @@
             "logo": "logo_club11.png",
             "surnom": "MHSC",
             "statistiques": {
-                "victoires_domicile": 6,
-                "victoires_exterieur": 8,
-                "matchs_nuls": 7,
-                "defaites": 9,
-                "score": 49,
-                "goal_average": 16,
+                "victoires_domicile": 7,
+                "victoires_exterieur": 6,
+                "matchs_nuls": 5,
+                "defaites": 12,
+                "score": 44,
+                "goal_average": 6,
                 "matchs_joues": 30
             }
         },
@@ -185,12 +185,12 @@
             "logo": "logo_club12.png",
             "surnom": "SCO",
             "statistiques": {
-                "victoires_domicile": 4,
+                "victoires_domicile": 5,
                 "victoires_exterieur": 4,
-                "matchs_nuls": 9,
-                "defaites": 13,
-                "score": 33,
-                "goal_average": -23,
+                "matchs_nuls": 3,
+                "defaites": 18,
+                "score": 30,
+                "goal_average": -14,
                 "matchs_joues": 30
             }
         },
@@ -201,12 +201,12 @@
             "logo": "logo_club13.png",
             "surnom": "FCM",
             "statistiques": {
-                "victoires_domicile": 4,
-                "victoires_exterieur": 6,
-                "matchs_nuls": 7,
+                "victoires_domicile": 5,
+                "victoires_exterieur": 8,
+                "matchs_nuls": 4,
                 "defaites": 13,
-                "score": 37,
-                "goal_average": -4,
+                "score": 43,
+                "goal_average": 3,
                 "matchs_joues": 30
             }
         },
@@ -217,12 +217,12 @@
             "logo": "logo_club14.png",
             "surnom": "RCSA",
             "statistiques": {
-                "victoires_domicile": 9,
+                "victoires_domicile": 7,
                 "victoires_exterieur": 5,
-                "matchs_nuls": 4,
+                "matchs_nuls": 6,
                 "defaites": 12,
-                "score": 46,
-                "goal_average": -6,
+                "score": 42,
+                "goal_average": 1,
                 "matchs_joues": 30
             }
         },
@@ -233,12 +233,12 @@
             "logo": "logo_club15.png",
             "surnom": "FCN",
             "statistiques": {
-                "victoires_domicile": 9,
-                "victoires_exterieur": 4,
-                "matchs_nuls": 5,
-                "defaites": 12,
-                "score": 44,
-                "goal_average": 2,
+                "victoires_domicile": 4,
+                "victoires_exterieur": 8,
+                "matchs_nuls": 4,
+                "defaites": 14,
+                "score": 40,
+                "goal_average": -11,
                 "matchs_joues": 30
             }
         },
@@ -249,12 +249,12 @@
             "logo": "logo_club16.png",
             "surnom": "DFCO",
             "statistiques": {
-                "victoires_domicile": 8,
-                "victoires_exterieur": 8,
-                "matchs_nuls": 4,
-                "defaites": 10,
-                "score": 52,
-                "goal_average": 23,
+                "victoires_domicile": 7,
+                "victoires_exterieur": 3,
+                "matchs_nuls": 6,
+                "defaites": 14,
+                "score": 36,
+                "goal_average": -9,
                 "matchs_joues": 30
             }
         }
@@ -268,72 +268,72 @@
                     "equipe_exterieur": "Dijon FCO",
                     "resultat": [
                         4,
-                        0
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique de Marseille",
                     "equipe_exterieur": "FC Nantes",
                     "resultat": [
                         5,
-                        3
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "AS Monaco",
                     "equipe_exterieur": "RC Strasbourg Alsace",
                     "resultat": [
-                        0,
-                        3
+                        4,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Brestois",
                     "equipe_exterieur": "FC Metz",
                     "resultat": [
-                        4,
-                        2
+                        1,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Lille OSC",
                     "equipe_exterieur": "Angers SCO",
                     "resultat": [
-                        5,
-                        5
+                        2,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique Lyonnais",
                     "equipe_exterieur": "Montpellier HSC",
                     "resultat": [
-                        0,
-                        2
+                        1,
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Rennais FC",
                     "equipe_exterieur": "OGC Nice",
                     "resultat": [
-                        4,
-                        4
+                        0,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Lens",
                     "equipe_exterieur": "Stade de Reims",
                     "resultat": [
                         4,
-                        3
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -344,55 +344,55 @@
                     "equipe_domicile": "Olympique de Marseille",
                     "equipe_exterieur": "Paris Saint-Germain",
                     "resultat": [
-                        1,
-                        3
+                        2,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Dijon FCO",
                     "equipe_exterieur": "AS Monaco",
                     "resultat": [
-                        1,
-                        2
+                        4,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Nantes",
                     "equipe_exterieur": "Stade Brestois",
                     "resultat": [
-                        4,
-                        0
+                        2,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Strasbourg Alsace",
                     "equipe_exterieur": "Lille OSC",
                     "resultat": [
                         1,
-                        0
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Metz",
                     "equipe_exterieur": "Olympique Lyonnais",
                     "resultat": [
-                        1,
-                        3
+                        3,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Angers SCO",
                     "equipe_exterieur": "Stade Rennais FC",
                     "resultat": [
-                        1,
-                        0
+                        5,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Montpellier HSC",
@@ -401,16 +401,16 @@
                         2,
                         0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "OGC Nice",
                     "equipe_exterieur": "Stade de Reims",
                     "resultat": [
-                        0,
-                        1
+                        3,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -421,73 +421,73 @@
                     "equipe_domicile": "Paris Saint-Germain",
                     "equipe_exterieur": "FC Nantes",
                     "resultat": [
-                        4,
-                        3
+                        0,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Dijon FCO",
                     "equipe_exterieur": "RC Strasbourg Alsace",
                     "resultat": [
-                        5,
+                        1,
                         3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique de Marseille",
                     "equipe_exterieur": "FC Metz",
                     "resultat": [
-                        3,
-                        0
+                        4,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "AS Monaco",
                     "equipe_exterieur": "Angers SCO",
                     "resultat": [
-                        5,
-                        4
+                        4,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Brestois",
                     "equipe_exterieur": "Montpellier HSC",
                     "resultat": [
                         0,
-                        0
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Lille OSC",
                     "equipe_exterieur": "OGC Nice",
                     "resultat": [
-                        3,
-                        2
+                        1,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique Lyonnais",
                     "equipe_exterieur": "Stade de Reims",
                     "resultat": [
-                        2,
+                        0,
                         1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Rennais FC",
                     "equipe_exterieur": "RC Lens",
                     "resultat": [
-                        4,
+                        5,
                         1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -498,73 +498,73 @@
                     "equipe_domicile": "AS Monaco",
                     "equipe_exterieur": "Paris Saint-Germain",
                     "resultat": [
-                        5,
-                        3
+                        1,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique de Marseille",
                     "equipe_exterieur": "Stade Brestois",
                     "resultat": [
-                        3,
-                        1
+                        0,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Dijon FCO",
                     "equipe_exterieur": "Lille OSC",
                     "resultat": [
-                        2,
-                        3
+                        0,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Nantes",
                     "equipe_exterieur": "Olympique Lyonnais",
                     "resultat": [
-                        2,
+                        3,
                         4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Strasbourg Alsace",
                     "equipe_exterieur": "Stade Rennais FC",
                     "resultat": [
-                        2,
-                        1
+                        3,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Metz",
                     "equipe_exterieur": "RC Lens",
                     "resultat": [
-                        0,
-                        1
+                        1,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Angers SCO",
                     "equipe_exterieur": "Stade de Reims",
                     "resultat": [
-                        1,
-                        1
+                        2,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Montpellier HSC",
                     "equipe_exterieur": "OGC Nice",
                     "resultat": [
-                        0,
-                        3
+                        5,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -575,73 +575,73 @@
                     "equipe_domicile": "Paris Saint-Germain",
                     "equipe_exterieur": "RC Strasbourg Alsace",
                     "resultat": [
-                        2,
+                        0,
                         0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Nantes",
                     "equipe_exterieur": "FC Metz",
                     "resultat": [
-                        3,
-                        1
+                        0,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Dijon FCO",
                     "equipe_exterieur": "Angers SCO",
                     "resultat": [
-                        4,
-                        4
+                        5,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique de Marseille",
                     "equipe_exterieur": "Montpellier HSC",
                     "resultat": [
-                        0,
-                        0
+                        3,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "AS Monaco",
                     "equipe_exterieur": "OGC Nice",
                     "resultat": [
-                        0,
-                        1
+                        3,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Brestois",
                     "equipe_exterieur": "Stade de Reims",
                     "resultat": [
-                        3,
-                        5
+                        4,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Lille OSC",
                     "equipe_exterieur": "RC Lens",
                     "resultat": [
-                        3,
-                        4
+                        4,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique Lyonnais",
                     "equipe_exterieur": "Stade Rennais FC",
                     "resultat": [
-                        3,
-                        5
+                        0,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -653,72 +653,72 @@
                     "equipe_exterieur": "Paris Saint-Germain",
                     "resultat": [
                         2,
-                        3
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "AS Monaco",
                     "equipe_exterieur": "Lille OSC",
                     "resultat": [
-                        4,
-                        2
+                        5,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique de Marseille",
                     "equipe_exterieur": "Olympique Lyonnais",
                     "resultat": [
-                        2,
-                        5
+                        1,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Dijon FCO",
                     "equipe_exterieur": "Stade Rennais FC",
                     "resultat": [
-                        5,
-                        4
+                        1,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Nantes",
                     "equipe_exterieur": "RC Lens",
                     "resultat": [
                         1,
-                        2
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Strasbourg Alsace",
                     "equipe_exterieur": "Stade de Reims",
                     "resultat": [
-                        1,
+                        2,
                         0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Metz",
                     "equipe_exterieur": "OGC Nice",
                     "resultat": [
-                        5,
-                        1
+                        3,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Angers SCO",
                     "equipe_exterieur": "Montpellier HSC",
                     "resultat": [
-                        4,
-                        4
+                        2,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -729,73 +729,73 @@
                     "equipe_domicile": "Paris Saint-Germain",
                     "equipe_exterieur": "FC Metz",
                     "resultat": [
-                        2,
-                        1
+                        5,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Strasbourg Alsace",
                     "equipe_exterieur": "Angers SCO",
                     "resultat": [
-                        2,
-                        4
+                        4,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Nantes",
                     "equipe_exterieur": "Montpellier HSC",
                     "resultat": [
                         5,
-                        5
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Dijon FCO",
                     "equipe_exterieur": "OGC Nice",
                     "resultat": [
-                        5,
-                        3
+                        3,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique de Marseille",
                     "equipe_exterieur": "Stade de Reims",
                     "resultat": [
-                        4,
-                        1
+                        1,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "AS Monaco",
                     "equipe_exterieur": "RC Lens",
                     "resultat": [
-                        0,
-                        0
+                        3,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Brestois",
                     "equipe_exterieur": "Stade Rennais FC",
                     "resultat": [
-                        1,
-                        3
+                        2,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Lille OSC",
                     "equipe_exterieur": "Olympique Lyonnais",
                     "resultat": [
-                        1,
+                        2,
                         3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -806,73 +806,73 @@
                     "equipe_domicile": "Lille OSC",
                     "equipe_exterieur": "Paris Saint-Germain",
                     "resultat": [
-                        5,
-                        0
+                        4,
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Brestois",
                     "equipe_exterieur": "Olympique Lyonnais",
                     "resultat": [
-                        2,
-                        5
+                        1,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "AS Monaco",
                     "equipe_exterieur": "Stade Rennais FC",
                     "resultat": [
-                        2,
-                        2
+                        0,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique de Marseille",
                     "equipe_exterieur": "RC Lens",
                     "resultat": [
-                        3,
-                        3
+                        2,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Dijon FCO",
                     "equipe_exterieur": "Stade de Reims",
                     "resultat": [
-                        2,
-                        0
+                        4,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Nantes",
                     "equipe_exterieur": "OGC Nice",
                     "resultat": [
-                        0,
-                        3
+                        4,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Strasbourg Alsace",
                     "equipe_exterieur": "Montpellier HSC",
                     "resultat": [
-                        5,
-                        3
+                        4,
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Metz",
                     "equipe_exterieur": "Angers SCO",
                     "resultat": [
-                        4,
-                        4
+                        3,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -883,46 +883,46 @@
                     "equipe_domicile": "Paris Saint-Germain",
                     "equipe_exterieur": "Angers SCO",
                     "resultat": [
-                        5,
-                        0
+                        4,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Metz",
                     "equipe_exterieur": "Montpellier HSC",
                     "resultat": [
-                        2,
+                        0,
                         2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Strasbourg Alsace",
                     "equipe_exterieur": "OGC Nice",
                     "resultat": [
-                        2,
-                        1
+                        4,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Nantes",
                     "equipe_exterieur": "Stade de Reims",
                     "resultat": [
                         5,
-                        1
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Dijon FCO",
                     "equipe_exterieur": "RC Lens",
                     "resultat": [
-                        3,
-                        3
+                        4,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique de Marseille",
@@ -931,25 +931,25 @@
                         2,
                         1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "AS Monaco",
                     "equipe_exterieur": "Olympique Lyonnais",
                     "resultat": [
-                        4,
-                        3
+                        2,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Brestois",
                     "equipe_exterieur": "Lille OSC",
                     "resultat": [
-                        1,
-                        3
+                        2,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -961,72 +961,72 @@
                     "equipe_exterieur": "Paris Saint-Germain",
                     "resultat": [
                         0,
-                        0
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Lille OSC",
                     "equipe_exterieur": "Stade Rennais FC",
                     "resultat": [
-                        4,
-                        0
+                        1,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Brestois",
                     "equipe_exterieur": "RC Lens",
                     "resultat": [
-                        4,
+                        2,
                         2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "AS Monaco",
                     "equipe_exterieur": "Stade de Reims",
                     "resultat": [
                         2,
-                        4
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique de Marseille",
                     "equipe_exterieur": "OGC Nice",
                     "resultat": [
                         3,
-                        0
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Dijon FCO",
                     "equipe_exterieur": "Montpellier HSC",
                     "resultat": [
-                        4,
-                        4
+                        5,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Nantes",
                     "equipe_exterieur": "Angers SCO",
                     "resultat": [
-                        4,
-                        3
+                        1,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Strasbourg Alsace",
                     "equipe_exterieur": "FC Metz",
                     "resultat": [
-                        0,
-                        3
+                        4,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -1038,72 +1038,72 @@
                     "equipe_exterieur": "Montpellier HSC",
                     "resultat": [
                         1,
-                        5
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Angers SCO",
                     "equipe_exterieur": "OGC Nice",
                     "resultat": [
-                        4,
-                        4
+                        1,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Metz",
                     "equipe_exterieur": "Stade de Reims",
                     "resultat": [
-                        3,
+                        1,
                         5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Strasbourg Alsace",
                     "equipe_exterieur": "RC Lens",
                     "resultat": [
                         3,
-                        2
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Nantes",
                     "equipe_exterieur": "Stade Rennais FC",
                     "resultat": [
-                        1,
-                        0
+                        0,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Dijon FCO",
                     "equipe_exterieur": "Olympique Lyonnais",
                     "resultat": [
-                        5,
-                        0
+                        1,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique de Marseille",
                     "equipe_exterieur": "Lille OSC",
                     "resultat": [
-                        1,
+                        4,
                         4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "AS Monaco",
                     "equipe_exterieur": "Stade Brestois",
                     "resultat": [
-                        1,
+                        2,
                         5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -1114,73 +1114,73 @@
                     "equipe_domicile": "Stade Rennais FC",
                     "equipe_exterieur": "Paris Saint-Germain",
                     "resultat": [
-                        0,
-                        1
+                        5,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique Lyonnais",
                     "equipe_exterieur": "RC Lens",
                     "resultat": [
-                        4,
-                        2
+                        5,
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Lille OSC",
                     "equipe_exterieur": "Stade de Reims",
                     "resultat": [
-                        5,
+                        2,
                         5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Brestois",
                     "equipe_exterieur": "OGC Nice",
                     "resultat": [
-                        0,
+                        2,
                         3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "AS Monaco",
                     "equipe_exterieur": "Montpellier HSC",
                     "resultat": [
-                        2,
+                        4,
                         4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique de Marseille",
                     "equipe_exterieur": "Angers SCO",
                     "resultat": [
-                        4,
+                        0,
                         5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Dijon FCO",
                     "equipe_exterieur": "FC Metz",
                     "resultat": [
-                        0,
-                        0
+                        1,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Nantes",
                     "equipe_exterieur": "RC Strasbourg Alsace",
                     "resultat": [
                         4,
-                        2
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -1192,72 +1192,72 @@
                     "equipe_exterieur": "OGC Nice",
                     "resultat": [
                         0,
-                        3
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Montpellier HSC",
                     "equipe_exterieur": "Stade de Reims",
                     "resultat": [
                         3,
-                        1
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Angers SCO",
                     "equipe_exterieur": "RC Lens",
                     "resultat": [
-                        1,
+                        2,
                         3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Metz",
                     "equipe_exterieur": "Stade Rennais FC",
                     "resultat": [
                         0,
-                        3
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Strasbourg Alsace",
                     "equipe_exterieur": "Olympique Lyonnais",
                     "resultat": [
-                        3,
-                        4
+                        4,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Nantes",
                     "equipe_exterieur": "Lille OSC",
                     "resultat": [
-                        5,
-                        3
+                        3,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Dijon FCO",
                     "equipe_exterieur": "Stade Brestois",
                     "resultat": [
-                        0,
+                        3,
                         4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique de Marseille",
                     "equipe_exterieur": "AS Monaco",
                     "resultat": [
-                        3,
-                        2
+                        0,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -1268,73 +1268,73 @@
                     "equipe_domicile": "RC Lens",
                     "equipe_exterieur": "Paris Saint-Germain",
                     "resultat": [
-                        4,
-                        5
+                        0,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Rennais FC",
                     "equipe_exterieur": "Stade de Reims",
                     "resultat": [
-                        4,
-                        3
+                        0,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique Lyonnais",
                     "equipe_exterieur": "OGC Nice",
                     "resultat": [
-                        2,
-                        2
+                        0,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Lille OSC",
                     "equipe_exterieur": "Montpellier HSC",
                     "resultat": [
-                        2,
-                        5
+                        0,
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Brestois",
                     "equipe_exterieur": "Angers SCO",
                     "resultat": [
-                        4,
+                        1,
                         0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "AS Monaco",
                     "equipe_exterieur": "FC Metz",
                     "resultat": [
-                        3,
-                        4
+                        2,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique de Marseille",
                     "equipe_exterieur": "RC Strasbourg Alsace",
                     "resultat": [
-                        3,
-                        0
+                        5,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Dijon FCO",
                     "equipe_exterieur": "FC Nantes",
                     "resultat": [
-                        5,
-                        2
+                        0,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -1345,19 +1345,19 @@
                     "equipe_domicile": "Paris Saint-Germain",
                     "equipe_exterieur": "Stade de Reims",
                     "resultat": [
-                        5,
-                        2
+                        4,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "OGC Nice",
                     "equipe_exterieur": "RC Lens",
                     "resultat": [
-                        5,
+                        2,
                         2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Montpellier HSC",
@@ -1366,52 +1366,52 @@
                         0,
                         2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Angers SCO",
                     "equipe_exterieur": "Olympique Lyonnais",
                     "resultat": [
-                        4,
+                        0,
                         3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Metz",
                     "equipe_exterieur": "Lille OSC",
                     "resultat": [
-                        1,
-                        4
+                        2,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Strasbourg Alsace",
                     "equipe_exterieur": "Stade Brestois",
                     "resultat": [
-                        2,
-                        1
+                        1,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Nantes",
                     "equipe_exterieur": "AS Monaco",
                     "resultat": [
                         2,
-                        0
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Dijon FCO",
                     "equipe_exterieur": "Olympique de Marseille",
                     "resultat": [
-                        5,
-                        3
+                        0,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -1422,73 +1422,73 @@
                     "equipe_domicile": "Stade de Reims",
                     "equipe_exterieur": "Paris Saint-Germain",
                     "resultat": [
-                        5,
-                        4
+                        3,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Lens",
                     "equipe_exterieur": "OGC Nice",
                     "resultat": [
-                        0,
-                        5
+                        5,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Rennais FC",
                     "equipe_exterieur": "Montpellier HSC",
                     "resultat": [
                         1,
-                        5
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique Lyonnais",
                     "equipe_exterieur": "Angers SCO",
                     "resultat": [
-                        5,
-                        2
+                        4,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Lille OSC",
                     "equipe_exterieur": "FC Metz",
                     "resultat": [
-                        2,
-                        1
+                        4,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Brestois",
                     "equipe_exterieur": "RC Strasbourg Alsace",
                     "resultat": [
-                        2,
-                        3
+                        5,
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "AS Monaco",
                     "equipe_exterieur": "FC Nantes",
                     "resultat": [
-                        0,
-                        1
+                        4,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique de Marseille",
                     "equipe_exterieur": "Dijon FCO",
                     "resultat": [
-                        0,
-                        1
+                        5,
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -1499,19 +1499,19 @@
                     "equipe_domicile": "Paris Saint-Germain",
                     "equipe_exterieur": "RC Lens",
                     "resultat": [
-                        1,
-                        2
+                        2,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade de Reims",
                     "equipe_exterieur": "Stade Rennais FC",
                     "resultat": [
-                        4,
-                        4
+                        3,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "OGC Nice",
@@ -1520,52 +1520,52 @@
                         1,
                         3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Montpellier HSC",
                     "equipe_exterieur": "Lille OSC",
                     "resultat": [
-                        2,
-                        1
+                        1,
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Angers SCO",
                     "equipe_exterieur": "Stade Brestois",
                     "resultat": [
-                        4,
-                        2
+                        5,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Metz",
                     "equipe_exterieur": "AS Monaco",
                     "resultat": [
                         2,
-                        0
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Strasbourg Alsace",
                     "equipe_exterieur": "Olympique de Marseille",
                     "resultat": [
-                        0,
-                        0
+                        5,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Nantes",
                     "equipe_exterieur": "Dijon FCO",
                     "resultat": [
-                        0,
-                        4
+                        1,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -1576,73 +1576,73 @@
                     "equipe_domicile": "OGC Nice",
                     "equipe_exterieur": "Paris Saint-Germain",
                     "resultat": [
-                        0,
-                        5
+                        5,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade de Reims",
                     "equipe_exterieur": "Montpellier HSC",
                     "resultat": [
-                        0,
-                        5
+                        4,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Lens",
                     "equipe_exterieur": "Angers SCO",
                     "resultat": [
-                        5,
+                        1,
                         5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Rennais FC",
                     "equipe_exterieur": "FC Metz",
                     "resultat": [
-                        4,
+                        0,
                         4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique Lyonnais",
                     "equipe_exterieur": "RC Strasbourg Alsace",
                     "resultat": [
-                        1,
-                        2
+                        2,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Lille OSC",
                     "equipe_exterieur": "FC Nantes",
                     "resultat": [
-                        3,
-                        4
+                        2,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Brestois",
                     "equipe_exterieur": "Dijon FCO",
                     "resultat": [
-                        2,
-                        4
+                        4,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "AS Monaco",
                     "equipe_exterieur": "Olympique de Marseille",
                     "resultat": [
-                        2,
-                        4
+                        3,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -1653,55 +1653,55 @@
                     "equipe_domicile": "Paris Saint-Germain",
                     "equipe_exterieur": "Stade Rennais FC",
                     "resultat": [
-                        1,
-                        3
+                        0,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Lens",
                     "equipe_exterieur": "Olympique Lyonnais",
                     "resultat": [
                         2,
-                        1
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade de Reims",
                     "equipe_exterieur": "Lille OSC",
                     "resultat": [
                         2,
-                        5
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "OGC Nice",
                     "equipe_exterieur": "Stade Brestois",
                     "resultat": [
-                        0,
+                        5,
                         2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Montpellier HSC",
                     "equipe_exterieur": "AS Monaco",
                     "resultat": [
-                        4,
-                        3
+                        5,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Angers SCO",
                     "equipe_exterieur": "Olympique de Marseille",
                     "resultat": [
-                        3,
-                        4
+                        1,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Metz",
@@ -1710,16 +1710,16 @@
                         1,
                         0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Strasbourg Alsace",
                     "equipe_exterieur": "FC Nantes",
                     "resultat": [
-                        1,
-                        2
+                        4,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -1731,72 +1731,72 @@
                     "equipe_exterieur": "Paris Saint-Germain",
                     "resultat": [
                         2,
-                        1
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "OGC Nice",
                     "equipe_exterieur": "Angers SCO",
                     "resultat": [
                         2,
-                        3
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade de Reims",
                     "equipe_exterieur": "FC Metz",
                     "resultat": [
-                        0,
-                        3
+                        5,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Lens",
                     "equipe_exterieur": "RC Strasbourg Alsace",
                     "resultat": [
-                        4,
+                        3,
                         3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Rennais FC",
                     "equipe_exterieur": "FC Nantes",
                     "resultat": [
-                        3,
-                        2
+                        5,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique Lyonnais",
                     "equipe_exterieur": "Dijon FCO",
                     "resultat": [
-                        4,
-                        3
+                        1,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Lille OSC",
                     "equipe_exterieur": "Olympique de Marseille",
                     "resultat": [
-                        2,
-                        2
+                        4,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Brestois",
                     "equipe_exterieur": "AS Monaco",
                     "resultat": [
-                        4,
-                        4
+                        3,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -1807,73 +1807,73 @@
                     "equipe_domicile": "Paris Saint-Germain",
                     "equipe_exterieur": "Olympique Lyonnais",
                     "resultat": [
-                        0,
+                        2,
                         0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Rennais FC",
                     "equipe_exterieur": "Lille OSC",
                     "resultat": [
-                        2,
-                        2
+                        3,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Lens",
                     "equipe_exterieur": "Stade Brestois",
                     "resultat": [
-                        2,
-                        3
+                        0,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade de Reims",
                     "equipe_exterieur": "AS Monaco",
                     "resultat": [
-                        4,
-                        0
+                        1,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "OGC Nice",
                     "equipe_exterieur": "Olympique de Marseille",
                     "resultat": [
-                        5,
-                        5
+                        2,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Montpellier HSC",
                     "equipe_exterieur": "Dijon FCO",
                     "resultat": [
-                        2,
-                        5
+                        5,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Angers SCO",
                     "equipe_exterieur": "FC Nantes",
                     "resultat": [
-                        4,
-                        4
+                        0,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Metz",
                     "equipe_exterieur": "RC Strasbourg Alsace",
                     "resultat": [
                         5,
-                        5
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -1887,70 +1887,70 @@
                         0,
                         5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Montpellier HSC",
                     "equipe_exterieur": "FC Metz",
                     "resultat": [
-                        0,
-                        2
+                        2,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "OGC Nice",
                     "equipe_exterieur": "RC Strasbourg Alsace",
                     "resultat": [
-                        2,
-                        2
+                        1,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade de Reims",
                     "equipe_exterieur": "FC Nantes",
                     "resultat": [
-                        0,
-                        3
+                        4,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Lens",
                     "equipe_exterieur": "Dijon FCO",
                     "resultat": [
-                        1,
-                        2
+                        5,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Rennais FC",
                     "equipe_exterieur": "Olympique de Marseille",
                     "resultat": [
-                        2,
-                        0
+                        1,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique Lyonnais",
                     "equipe_exterieur": "AS Monaco",
                     "resultat": [
-                        5,
-                        5
+                        2,
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Lille OSC",
                     "equipe_exterieur": "Stade Brestois",
                     "resultat": [
                         3,
-                        2
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -1961,55 +1961,55 @@
                     "equipe_domicile": "Paris Saint-Germain",
                     "equipe_exterieur": "Lille OSC",
                     "resultat": [
-                        4,
-                        2
+                        3,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique Lyonnais",
                     "equipe_exterieur": "Stade Brestois",
                     "resultat": [
-                        5,
+                        1,
                         2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Rennais FC",
                     "equipe_exterieur": "AS Monaco",
                     "resultat": [
-                        4,
+                        5,
                         5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Lens",
                     "equipe_exterieur": "Olympique de Marseille",
                     "resultat": [
-                        0,
-                        4
+                        1,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade de Reims",
                     "equipe_exterieur": "Dijon FCO",
                     "resultat": [
-                        3,
+                        1,
                         2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "OGC Nice",
                     "equipe_exterieur": "FC Nantes",
                     "resultat": [
-                        1,
-                        0
+                        4,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Montpellier HSC",
@@ -2018,16 +2018,16 @@
                         5,
                         2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Angers SCO",
                     "equipe_exterieur": "FC Metz",
                     "resultat": [
-                        2,
-                        4
+                        4,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -2038,73 +2038,73 @@
                     "equipe_domicile": "FC Metz",
                     "equipe_exterieur": "Paris Saint-Germain",
                     "resultat": [
-                        1,
-                        1
+                        3,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Angers SCO",
                     "equipe_exterieur": "RC Strasbourg Alsace",
                     "resultat": [
-                        5,
-                        4
+                        3,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Montpellier HSC",
                     "equipe_exterieur": "FC Nantes",
                     "resultat": [
-                        5,
-                        5
+                        3,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "OGC Nice",
                     "equipe_exterieur": "Dijon FCO",
                     "resultat": [
-                        4,
-                        3
+                        2,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade de Reims",
                     "equipe_exterieur": "Olympique de Marseille",
                     "resultat": [
-                        4,
+                        1,
                         1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Lens",
                     "equipe_exterieur": "AS Monaco",
                     "resultat": [
-                        1,
-                        5
+                        2,
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Rennais FC",
                     "equipe_exterieur": "Stade Brestois",
                     "resultat": [
                         3,
-                        3
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique Lyonnais",
                     "equipe_exterieur": "Lille OSC",
                     "resultat": [
-                        5,
-                        2
+                        0,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -2116,72 +2116,72 @@
                     "equipe_exterieur": "Stade Brestois",
                     "resultat": [
                         5,
-                        4
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Lille OSC",
                     "equipe_exterieur": "AS Monaco",
                     "resultat": [
-                        3,
-                        4
+                        5,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique Lyonnais",
                     "equipe_exterieur": "Olympique de Marseille",
                     "resultat": [
                         4,
-                        5
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Rennais FC",
                     "equipe_exterieur": "Dijon FCO",
                     "resultat": [
-                        1,
-                        5
+                        5,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Lens",
                     "equipe_exterieur": "FC Nantes",
                     "resultat": [
                         3,
-                        1
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade de Reims",
                     "equipe_exterieur": "RC Strasbourg Alsace",
                     "resultat": [
-                        0,
-                        2
+                        3,
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "OGC Nice",
                     "equipe_exterieur": "FC Metz",
                     "resultat": [
-                        1,
-                        4
+                        2,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Montpellier HSC",
                     "equipe_exterieur": "Angers SCO",
                     "resultat": [
-                        2,
-                        4
+                        5,
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -2192,73 +2192,73 @@
                     "equipe_domicile": "RC Strasbourg Alsace",
                     "equipe_exterieur": "Paris Saint-Germain",
                     "resultat": [
-                        5,
-                        4
+                        3,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Metz",
                     "equipe_exterieur": "FC Nantes",
                     "resultat": [
-                        4,
-                        3
+                        3,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Angers SCO",
                     "equipe_exterieur": "Dijon FCO",
                     "resultat": [
                         0,
-                        5
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Montpellier HSC",
                     "equipe_exterieur": "Olympique de Marseille",
                     "resultat": [
-                        1,
-                        2
+                        2,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "OGC Nice",
                     "equipe_exterieur": "AS Monaco",
                     "resultat": [
-                        1,
-                        1
+                        5,
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade de Reims",
                     "equipe_exterieur": "Stade Brestois",
                     "resultat": [
-                        0,
-                        1
+                        1,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Lens",
                     "equipe_exterieur": "Lille OSC",
                     "resultat": [
-                        0,
-                        5
+                        4,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Rennais FC",
                     "equipe_exterieur": "Olympique Lyonnais",
                     "resultat": [
-                        5,
-                        1
+                        3,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -2270,72 +2270,72 @@
                     "equipe_exterieur": "AS Monaco",
                     "resultat": [
                         5,
-                        0
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Brestois",
                     "equipe_exterieur": "Olympique de Marseille",
                     "resultat": [
-                        4,
-                        3
+                        0,
+                        1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Lille OSC",
                     "equipe_exterieur": "Dijon FCO",
                     "resultat": [
-                        4,
+                        5,
                         1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique Lyonnais",
                     "equipe_exterieur": "FC Nantes",
                     "resultat": [
-                        5,
-                        2
+                        3,
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Rennais FC",
                     "equipe_exterieur": "RC Strasbourg Alsace",
                     "resultat": [
-                        2,
-                        2
+                        1,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Lens",
                     "equipe_exterieur": "FC Metz",
                     "resultat": [
-                        3,
-                        0
+                        0,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade de Reims",
                     "equipe_exterieur": "Angers SCO",
                     "resultat": [
-                        5,
-                        3
+                        2,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "OGC Nice",
                     "equipe_exterieur": "Montpellier HSC",
                     "resultat": [
-                        2,
-                        3
+                        5,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -2347,72 +2347,72 @@
                     "equipe_exterieur": "Paris Saint-Germain",
                     "resultat": [
                         2,
-                        2
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Strasbourg Alsace",
                     "equipe_exterieur": "Dijon FCO",
                     "resultat": [
-                        0,
-                        3
+                        1,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Metz",
                     "equipe_exterieur": "Olympique de Marseille",
                     "resultat": [
-                        4,
-                        4
+                        2,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Angers SCO",
                     "equipe_exterieur": "AS Monaco",
                     "resultat": [
                         3,
-                        5
+                        2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Montpellier HSC",
                     "equipe_exterieur": "Stade Brestois",
                     "resultat": [
-                        3,
-                        4
+                        0,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "OGC Nice",
                     "equipe_exterieur": "Lille OSC",
                     "resultat": [
-                        2,
+                        1,
                         2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade de Reims",
                     "equipe_exterieur": "Olympique Lyonnais",
                     "resultat": [
                         4,
-                        4
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Lens",
                     "equipe_exterieur": "Stade Rennais FC",
                     "resultat": [
-                        5,
+                        4,
                         4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -2423,73 +2423,73 @@
                     "equipe_domicile": "Paris Saint-Germain",
                     "equipe_exterieur": "Olympique de Marseille",
                     "resultat": [
-                        3,
-                        2
+                        2,
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "AS Monaco",
                     "equipe_exterieur": "Dijon FCO",
                     "resultat": [
-                        4,
+                        3,
                         3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Brestois",
                     "equipe_exterieur": "FC Nantes",
                     "resultat": [
-                        2,
+                        1,
                         2
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Lille OSC",
                     "equipe_exterieur": "RC Strasbourg Alsace",
                     "resultat": [
-                        1,
-                        2
+                        5,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Olympique Lyonnais",
                     "equipe_exterieur": "FC Metz",
                     "resultat": [
-                        2,
-                        0
+                        0,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade Rennais FC",
                     "equipe_exterieur": "Angers SCO",
                     "resultat": [
                         4,
-                        4
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Lens",
                     "equipe_exterieur": "Montpellier HSC",
                     "resultat": [
-                        0,
-                        2
+                        2,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade de Reims",
                     "equipe_exterieur": "OGC Nice",
                     "resultat": [
-                        2,
-                        2
+                        3,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         },
@@ -2500,73 +2500,73 @@
                     "equipe_domicile": "Dijon FCO",
                     "equipe_exterieur": "Paris Saint-Germain",
                     "resultat": [
-                        2,
+                        3,
                         1
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Nantes",
                     "equipe_exterieur": "Olympique de Marseille",
                     "resultat": [
-                        5,
-                        3
+                        0,
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "RC Strasbourg Alsace",
                     "equipe_exterieur": "AS Monaco",
                     "resultat": [
-                        4,
+                        5,
                         3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "FC Metz",
                     "equipe_exterieur": "Stade Brestois",
                     "resultat": [
                         3,
-                        4
+                        0
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Angers SCO",
                     "equipe_exterieur": "Lille OSC",
                     "resultat": [
-                        1,
-                        2
+                        0,
+                        3
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Montpellier HSC",
                     "equipe_exterieur": "Olympique Lyonnais",
                     "resultat": [
                         2,
-                        3
+                        4
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "OGC Nice",
                     "equipe_exterieur": "Stade Rennais FC",
                     "resultat": [
                         0,
-                        2
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 },
                 {
                     "equipe_domicile": "Stade de Reims",
                     "equipe_exterieur": "RC Lens",
                     "resultat": [
-                        4,
-                        2
+                        5,
+                        5
                     ],
-                    "date": "2024-06-05"
+                    "date": "2024-06-06"
                 }
             ]
         }

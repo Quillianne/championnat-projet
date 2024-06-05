@@ -3,7 +3,7 @@ import main as champ
 import scrollableframe
 from pathlib import Path
 import choose_date
-
+import sqlite3
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"assets")
@@ -59,7 +59,7 @@ class MatchBox(BoxBox):     #Box pour les matchs avec un bouton modifier et le t
 
 class ClubBox(BoxBox):      #Box pour les clubs avec un bouton modifier et supprimer et le surnom du club (logo à ajouter)
     def __init__(self, parent, club, x, y, clubgui):
-        super().__init__(parent, x,y, ["supprimer.png","modifier.png"], [lambda: self.delete(),lambda: club_gui.modifier_equipe(club)])
+        super().__init__(parent, x,y, ["supprimer.png","modifier.png"], [lambda: self.delete(),lambda: champ_gui.club_gui.modifier_equipe(club)])
         self.club = club
         self.place(x=x, y=y)
         self.clubgui = clubgui
@@ -72,7 +72,20 @@ class ClubBox(BoxBox):      #Box pour les clubs avec un bouton modifier et suppr
     def delete(self):
         self.clubgui.championnat.supprimer_club(self.club)
         self.clubgui.update()
+        champ_gui.update_championnat()
     
+class ChampBox(BoxBox):      #Box pour les clubs avec un bouton modifier et supprimer et le surnom du club (logo à ajouter)
+    def __init__(self, parent, id_champ, x, y, champgui):
+        super().__init__(parent, x,y, ["ouvrir.png"], [lambda: champgui.ouvrir(id_champ)])
+        self.champ = id_champ
+        self.place(x=x, y=y)
+
+
+        self.create_text(30, 30, anchor="nw", text=f"{self.champ[0]}", fill="#000000", font=("DelaGothicOne Regular", 12 * -1))
+
+
+
+
 
 
 
@@ -96,7 +109,7 @@ class TourBox(Canvas):      #Box dans lequel on met toutes les boxs match d'un t
                 x = 10
                 y += 220
                 
-        self.configure(height=y)
+        self.configure(height=y+450)
 
 
 
@@ -189,7 +202,7 @@ class NewClubGui(Canvas):   #Gui quand on créer un nouveau club
         self.championnat.ajouter_participant(self.club)
         print(len(self.championnat.participants))
         self.pack_forget()
-        club_gui.update()
+        champ_gui.club_gui.update()
         #self.destroy()
 
     def cancel_creation(self):
@@ -215,7 +228,7 @@ class ModifyClubGui(NewClubGui):    #Gui pour modifier un club
         self.club.logo = self.club_logo.get()
         self.club.nom = self.club_name.get()
         self.pack_forget()
-        club_gui.update()
+        champ_gui.club_gui.update()
 
 
 class ClubGui(Canvas):      #Gui où on affiche tous les clubs du championnat
@@ -300,7 +313,7 @@ class ClubGui(Canvas):      #Gui où on affiche tous les clubs du championnat
             image=self.button_match_image,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: (tour_gui.update(),tour_gui.place(x=0,y=0), club_gui.place_forget()),
+            command=lambda: (champ_gui.tour_gui.update(),champ_gui.tour_gui.place(x=0,y=0), champ_gui.club_gui.place_forget()),
             relief="flat"
         )
         button_match.place(
@@ -341,7 +354,7 @@ class ClubGui(Canvas):      #Gui où on affiche tous les clubs du championnat
                 x = 10
                 y += 220
                 
-        self.club_canvas.configure(height=y)
+        self.club_canvas.configure(height=y+450)
 
     def ajouter_equipe(self):
         #self.pack_forget()
@@ -454,7 +467,7 @@ class TourGui(Canvas):      #Gui où on affiche tous les tours du championnat
             image=self.button_club_image,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: (club_gui.update(), tour_gui.place_forget(), club_gui.place(x=0,y=0)),
+            command=lambda: (champ_gui.club_gui.update(), champ_gui.tour_gui.place_forget(), champ_gui.club_gui.place(x=0,y=0)),
             relief="flat"
         )
         button_club.place(
@@ -509,9 +522,140 @@ class TourGui(Canvas):      #Gui où on affiche tous les tours du championnat
     def generer_calendrier_et_update(self):
         self.championnat.generer_calendrier()
         self.update()
+        champ_gui.update_championnat()
 
 
+class ChampGui(Canvas):
+    def __init__(self, window, filename = "championnat.db"):
+        super().__init__(window, bg="#3485FF", height=650, width=900, bd=0, highlightthickness=0, relief="ridge")
+        self.window = window
+        self.filename = filename
 
+        self.place(x=0,y=0)
+
+        self.create_rectangle(0, 0, 900, 650, fill="#3485FF", outline="")
+
+        self.create_text(20, 10, anchor="nw", text="Championnats", fill="#FFFFFF", font=("DelaGothicOne Regular", 21 * -1))
+
+        #On place aussi la ligne en dessous du titre
+        self.line = self.create_rectangle(
+            20.0,
+            40.0,
+            147.0,
+            44.0,
+            fill="#FFFFFF",
+            outline="")
+    
+        self.scroll_canvas = Canvas(self,bg="#3485FF", height=450, width=900, bd=0, highlightthickness=0, relief="ridge")
+        self.scroll_canvas.place(x=0,y=100)
+
+        self.champ_frame = scrollableframe.ScrollableFrame(self.scroll_canvas, bg="#3485FF")
+        self.champ_frame.place(x=0, y=0, relwidth=1, relheight=1)
+
+
+        self.button_import_image = PhotoImage(
+            file=relative_to_assets("import.png"))
+        self.button_import = Button(
+            image=self.button_import_image,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: print("button_3 clicked"),
+            relief="flat"
+        )
+        self.button_import.place(
+            x=47.0,
+            y=590.0,
+            width=250.0,
+            height=35.0
+        )
+
+        self.button_create_image = PhotoImage(
+            file=relative_to_assets("create.png"))
+        self.button_create = Button(
+            image=self.button_create_image,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.create_champ(),
+            relief="flat"
+        )
+        self.button_create.place(
+            x=600.0,
+            y=590.0,
+            width=250.0,
+            height=35.0
+        )
+        self.boxes = []
+
+        self.champ_canvas = Canvas(self.champ_frame.scrollable_frame, bg="#3485FF", height=500, width=900, bd=0, highlightthickness=0, relief="ridge")
+        self.champ_canvas.pack(pady=0)
+        self.champ_canvas.update_idletasks()  # Forcer la mise à jour de la géométrie
+
+        x, y = 10, 40
+
+        for champ in self.obtenir_championnats():
+
+            #MatchBox(self, match, x, y)
+            self.boxes.append(ChampBox(self.champ_canvas, champ, x, y, self))
+            x += 220
+            if x + 220 > self.champ_canvas.winfo_width():  # Nouvelle ligne si la largeur est dépassée
+                x = 10
+                y += 220
+                
+        self.champ_canvas.configure(height=y+450)
+
+    def obtenir_championnats(self):
+        conn = sqlite3.connect(self.filename)
+        cursor = conn.cursor()
+        
+        # Exécuter la requête pour obtenir les championnats et leurs dates de début
+        cursor.execute("SELECT nom, date_debut FROM championnat")
+        
+        championnats = cursor.fetchall()
+        
+        conn.close()
+        
+        return championnats
+
+    def create_champ(self):
+        #self.pack_forget()
+        self.new_club_gui = NewClubGui(self.window, self.championnat)
+
+
+    def modifier_champ(self, championnat):
+        #self.pack_forget()
+        self.new_club_gui = ModifyClubGui(self.window, self.championnat, club)
+
+    def update(self):
+        for box in self.boxes:
+            box.pack_forget()
+            box.destroy()
+        self.boxes.clear()
+
+
+        x, y = 10, 40
+
+        for champ in self.obtenir_championnats():
+
+            #MatchBox(self, match, x, y)
+            self.boxes.append(ChampBox(self.champ_canvas, champ, x, y, self))
+            x += 220
+            if x + 220 > self.champ_canvas.winfo_width():  # Nouvelle ligne si la largeur est dépassée
+                x = 10
+                y += 220
+                
+        self.champ_canvas.configure(height=y+450)
+
+    def ouvrir(self, id_champ):
+
+        self.championnat = champ.ImportExport().importer_championnat_db(id_champ[0], id_champ[1])
+        self.club_gui = ClubGui(window, self.championnat)
+        self.tour_gui = TourGui(window, self.championnat)
+
+        self.tour_gui.place_forget()
+
+    def update_championnat(self):
+        if self.championnat:
+            champ.ImportExport().update_championnat_db(self.championnat)
 
 
 if __name__ == "__main__":
@@ -545,11 +689,10 @@ if __name__ == "__main__":
         championnat.ajouter_participant(club)
 
     
-    club_gui = ClubGui(window, championnat)
-    tour_gui = TourGui(window, championnat)
-    
-    tour_gui.place_forget()
-    
+
+    champ_gui = ChampGui(window)
+
+
     #TextEntryBox(window, 100, 200)
 
     window.mainloop()

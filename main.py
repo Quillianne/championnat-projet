@@ -156,6 +156,7 @@ class ImportExport:
             score INTEGER,
             goal_average INTEGER,
             matchs_joues INTEGER,
+            historique TEXT,
             FOREIGN KEY (club_id) REFERENCES club (id)
         )''')
 
@@ -202,8 +203,9 @@ class ImportExport:
             )
             club_id = cursor.lastrowid
             club_ids[club.nom] = club_id
+
             cursor.execute(
-                "INSERT INTO statistiques (club_id, victoires_domicile, victoires_exterieur, matchs_nuls, defaites, score, goal_average, matchs_joues) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO statistiques (club_id, victoires_domicile, victoires_exterieur, matchs_nuls, defaites, score, goal_average, matchs_joues, historique) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 (
                     club_id,
                     club.statistique.victoires_domicile,
@@ -212,7 +214,8 @@ class ImportExport:
                     club.statistique.defaites,
                     club.statistique.score,
                     club.statistique.goal_average,
-                    club.statistique.matchs_joues
+                    club.statistique.matchs_joues,
+                    json.dumps(club.statistique.historique)  # Assuming historique is a list or dict
                 )
             )
 
@@ -285,7 +288,7 @@ class ImportExport:
             json.dump(championnat_data, file, indent=4, ensure_ascii=False)
 
     def importer_championnat_json(self, filename):
-        with open(filename, 'r') as file:
+        with open(filename, 'r', encoding='utf-8') as file:
             data = json.load(file)
 
         # Réinitialiser les participants et les tours actuels
@@ -306,14 +309,14 @@ class ImportExport:
                 surnom=club_data["surnom"]
             )
             club.statistique = Statistiques()
-            club.statistique.classement=club_data["statistiques"]["classement"],
-            club.statistique._victoires_domicilevictoires_domicile=club_data["statistiques"]["victoires_domicile"],
-            club.statistique._victoires_exterieur=club_data["statistiques"]["victoires_exterieur"],
-            club.statistique._matchs_nuls=club_data["statistiques"]["matchs_nuls"],
-            club.statistique._defaites=club_data["statistiques"]["defaites"],
-            club.statistique._score=club_data["statistiques"]["score"],
-            club.statistique._goal_average=club_data["statistiques"]["goal_average"],
-            club.statistique._matchs_joues=club_data["statistiques"]["matchs_joues"],
+            club.statistique.classement=club_data["statistiques"]["classement"]
+            club.statistique._victoires_domicile=club_data["statistiques"]["victoires_domicile"]
+            club.statistique._victoires_exterieur=club_data["statistiques"]["victoires_exterieur"]
+            club.statistique._matchs_nuls=club_data["statistiques"]["matchs_nuls"]
+            club.statistique._defaites=club_data["statistiques"]["defaites"]
+            club.statistique._score=club_data["statistiques"]["score"]
+            club.statistique._goal_average=club_data["statistiques"]["goal_average"]
+            club.statistique._matchs_joues=club_data["statistiques"]["matchs_joues"]
             club.statistique.historique=club_data["statistiques"]["historique"]
 
             self.championnat.ajouter_participant(club)
@@ -333,6 +336,73 @@ class ImportExport:
                 tour.ajouter_match(match)
             self.championnat.ajouter_tour(tour)
 
+        return self.championnat
+
+    def importer_championnat_db(self, nom, date_debut, db_filename="championnat.db"):
+        conn = sqlite3.connect(db_filename)
+        cursor = conn.cursor()
+
+        # Récupérer les informations du championnat
+        cursor.execute("SELECT nom, date_debut FROM championnat WHERE nom = ? AND date_debut = ?", (nom, date_debut))
+        championnat_data = cursor.fetchone()
+        if not championnat_data:
+            conn.close()
+            raise ValueError("Championnat non trouvé.")
+
+        self.championnat = Championnat(None)
+        self.championnat.nom = championnat_data[0]
+        self.championnat.date_debut = datetime.strptime(championnat_data[1], "%Y-%m-%d %H:%M:%S")
+
+        # Récupérer les clubs et leurs statistiques
+        self.championnat._participants = []
+        cursor.execute("SELECT id, nom, emplacement, entraineur, logo, surnom FROM club WHERE championnat_nom = ? AND championnat_date_debut = ?", (nom, date_debut))
+        clubs_data = cursor.fetchall()
+        club_ids = {}
+        for club_data in clubs_data:
+            club_id, nom, emplacement, entraineur, logo, surnom = club_data
+            club = Club(nom=nom, emplacement=emplacement, entraineur=entraineur, logo=logo, surnom=surnom)
+            club_ids[club_id] = club
+
+            # Récupérer les statistiques du club
+            cursor.execute("SELECT victoires_domicile, victoires_exterieur, matchs_nuls, defaites, score, goal_average, matchs_joues, historique FROM statistiques WHERE club_id = ?", (club_id,))
+            stats_data = cursor.fetchone()
+            if stats_data:
+                club.statistique = Statistiques()
+                club.statistique._victoires_domicile = int(stats_data[0])
+                club.statistique._victoires_exterieur = stats_data[1]
+                club.statistique._matchs_nuls = stats_data[2]
+                club.statistique._defaites = stats_data[3]
+                club.statistique._score = stats_data[4]
+                club.statistique._goal_average = stats_data[5]
+                club.statistique._matchs_joues = stats_data[6]
+                historique = stats_data[7]
+                club.statistique.historique = json.loads(historique)  # Assuming historique is stored as JSON
+
+            self.championnat.ajouter_participant(club)
+
+        # Récupérer les tours et les matchs
+        self.championnat._tours = []
+        cursor.execute("SELECT id, numero FROM tour WHERE championnat_nom = ? AND championnat_date_debut = ?", (nom, date_debut))
+        tours_data = cursor.fetchall()
+        for tour_data in tours_data:
+            tour_id, numero = tour_data
+            tour = Tour(numero)
+
+            # Récupérer les matchs du tour
+            cursor.execute("SELECT equipe_domicile_id, equipe_exterieur_id, resultat_domicile, resultat_exterieur, date FROM match WHERE tour_id = ?", (tour_id,))
+            matchs_data = cursor.fetchall()
+            for match_data in matchs_data:
+                equipe_domicile_id, equipe_exterieur_id, resultat_domicile, resultat_exterieur, date = match_data
+                equipe_domicile = club_ids[equipe_domicile_id]
+                equipe_exterieur = club_ids[equipe_exterieur_id]
+                match = Match(equipe_domicile, equipe_exterieur)
+                match.resultat = (resultat_domicile, resultat_exterieur)
+                match.date = datetime.strptime(date, "%Y-%m-%d") if date else None
+                tour.ajouter_match(match)
+
+            self.championnat.ajouter_tour(tour)
+
+        conn.close()
         return self.championnat
 
 
@@ -599,7 +669,8 @@ if __name__ == "__main__":
             f"{i}. {club.nom} - Victoires : {club.statistique.victoires_domicile + club.statistique.victoires_exterieur} - Nuls : {club.statistique.matchs_nuls} - Défaites : {club.statistique.defaites} -  Score : {club.statistique.score} - Goalaverage : {club.statistique.goal_average}")
 
     #ImportExport().exporter_championnat_json(championnat,"championnat.json")
-    championnat = ImportExport().importer_championnat_json("championnat.json")
+    # championnat = ImportExport().importer_championnat_json("championnat.json")
+
 
     if ImportExport().update_championnat_db(championnat):
         print(f"Championnat: {championnat.nom}, Date: {championnat.date_debut} | mis à jour")

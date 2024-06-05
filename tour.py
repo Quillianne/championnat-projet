@@ -1,9 +1,11 @@
-from tkinter import Tk, Canvas, Button, PhotoImage, Entry
+from tkinter import Tk, Canvas, Button, PhotoImage, Entry, filedialog
 import main as champ
 import scrollableframe
 from pathlib import Path
 import choose_date
 import sqlite3
+from datetime import datetime
+
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"assets")
@@ -12,8 +14,18 @@ ASSETS_PATH = OUTPUT_PATH / Path(r"assets")
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
+def exporter_championnat(championnat):
+    file_path = filedialog.asksaveasfilename(
+        title="Sélectionner le chemin pour le nouveau fichier",
+        defaultextension=".json",
+        filetypes=[("Fichiers JSON", "*.json"), ("Tous les fichiers", "*.*")]
+    )
 
-
+    # Afficher le chemin du fichier sélectionné
+    if file_path:
+        champ.ImportExport().exporter_championnat_json(championnat, filename=file_path)
+    else:
+        print("Aucun chemin de fichier sélectionné")
 
 
 class BoxBox(Canvas):    #Box de base où on peut ajouter des boutons avec des commandes
@@ -102,15 +114,16 @@ class TourBox(Canvas):      #Box dans lequel on met toutes les boxs match d'un t
 
         x, y = 10, 40
         for match in tour.matchs:
-            MatchBox(self, match, x, y)
-            #TextEntryBox(self, x, y)
-            #ClubBox(self, match.equipe_domicile, x, y)
-            x += 220
             if x + 220 > self.winfo_width():  # Nouvelle ligne si la largeur est dépassée
                 x = 10
                 y += 220
                 
-        self.configure(height=y+450)
+            MatchBox(self, match, x, y)
+            #TextEntryBox(self, x, y)
+            #ClubBox(self, match.equipe_domicile, x, y)
+            x += 220
+
+        self.configure(height=y+220)
 
 
 
@@ -201,9 +214,82 @@ class NewClubGui(Canvas):   #Gui quand on créer un nouveau club
     def create_club(self):
         self.club = champ.Club(self.club_name.get(), self.club_city.get(), self.club_entraineur.get(), self.club_logo.get(), self.club_surname.get())
         self.championnat.ajouter_participant(self.club)
-        print(len(self.championnat.participants))
         self.pack_forget()
         champ_gui.club_gui.update()
+        #self.destroy()
+
+    def cancel_creation(self):
+        self.pack_forget()
+        #self.destroy()
+
+class NewChampGui(Canvas):   #Gui quand on créer un nouveau club
+    def __init__(self, window):
+        super().__init__(window, bg="#3485FF", height=650, width=900, bd=0, highlightthickness=0, relief="ridge")
+
+        self.window = window
+
+        self.pack()
+
+        self.create_rectangle(0, 0, 900, 650, fill="#3485FF", outline="")
+
+        self.create_text(20, 10, anchor="nw", text="Nouveau Championnat", fill="#FFFFFF", font=("DelaGothicOne Regular", 21 * -1))
+
+        #On place aussi la ligne en dessous du titre
+        self.line = self.create_rectangle(
+            20.0,
+            40.0,
+            147.0,
+            44.0,
+            fill="#FFFFFF",
+            outline="")
+    
+        
+        self.champ_name = TextEntryBox(self,270,180,"Nom")
+        self.champ_date = TextEntryBox(self,270,260,"Date (JJ/MM/AAAA)")
+
+
+
+
+
+        # Store reference to the image
+        self.button_ok_image = PhotoImage(file=relative_to_assets("ok.png"))
+        self.button_ok = Button(self,
+            image=self.button_ok_image,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.create_champ(),
+            relief="flat"
+        )
+        self.button_ok.place(
+            x=320.0,
+            y=565.0,
+            width=250.0,
+            height=35.0
+        )
+
+        self.button_cancel_image = PhotoImage(file=relative_to_assets("cancel.png"))
+        self.button_cancel = Button(self,
+            image=self.button_cancel_image,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.cancel_creation(),
+            relief="flat"
+        )
+        self.button_cancel.place(
+            x=320.0,
+            y=605.0,
+            width=250.0,
+            height=35.0
+        )
+
+    def create_champ(self):
+        self.name = self.champ_name.get()
+        date_format = "%d/%m/%Y"
+        self.date = datetime.strptime(self.champ_date.get(), date_format).date()
+        self.new_champ = champ.Championnat(self.champ_name.get(),self.date)
+        champ.ImportExport().exporter_championnat_db(self.new_champ)
+        self.pack_forget()
+        champ_gui.update()
         #self.destroy()
 
     def cancel_creation(self):
@@ -267,11 +353,29 @@ class ClubGui(Canvas):      #Gui où on affiche tous les clubs du championnat
             image=self.button_export,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("exporter clicked"),
+            command=lambda: exporter_championnat(self.championnat),
             relief="flat"
         )
         button_export.place(
             x=600.0,
+            y=15.0,
+            width=250.0,
+            height=35.0
+        )
+
+
+
+        # Store reference to the image
+        self.button_retour = PhotoImage(file=relative_to_assets("retour.png"))
+        button_retour = Button(self,
+            image=self.button_retour,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: (champ_gui.club_gui.place_forget(),champ_gui.tour_gui.place_forget()),
+            relief="flat"
+        )
+        button_retour.place(
+            x=340.0,
             y=15.0,
             width=250.0,
             height=35.0
@@ -350,13 +454,14 @@ class ClubGui(Canvas):      #Gui où on affiche tous les clubs du championnat
 
         for club in self.championnat.participants:
             #MatchBox(self, match, x, y)
-            self.boxes.append(ClubBox(self.club_canvas, club, x, y, self))
-            x += 220
             if x + 220 > self.club_canvas.winfo_width():  # Nouvelle ligne si la largeur est dépassée
                 x = 10
                 y += 220
+            self.boxes.append(ClubBox(self.club_canvas, club, x, y, self))
+            x += 220
+
                 
-        self.club_canvas.configure(height=y+450)
+        self.club_canvas.configure(height=max(y+220,450))
 
     def ajouter_equipe(self):
         #self.pack_forget()
@@ -372,19 +477,20 @@ class ClubGui(Canvas):      #Gui où on affiche tous les clubs du championnat
             box.pack_forget()
             box.destroy()
         self.boxes.clear()
-        print(len(self.championnat.participants))
+
 
         x, y = 10, 40
 
         for club in self.championnat.participants:
             #MatchBox(self, match, x, y)
-            self.boxes.append(ClubBox(self.club_canvas, club, x, y, self))
-            x += 220
             if x + 220 > self.club_canvas.winfo_width():  # Nouvelle ligne si la largeur est dépassée
                 x = 10
                 y += 220
+            self.boxes.append(ClubBox(self.club_canvas, club, x, y, self))
+            x += 220
+
                 
-        self.club_canvas.configure(height=y+450)
+        self.club_canvas.configure(height=max(y+220,450))
 
 
 
@@ -423,11 +529,29 @@ class TourGui(Canvas):      #Gui où on affiche tous les tours du championnat
             image=self.button_export,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("exporter clicked"),
+            command=lambda: exporter_championnat(self.championnat),
             relief="flat"
         )
         button_export.place(
             x=600.0,
+            y=15.0,
+            width=250.0,
+            height=35.0
+        )
+
+
+
+        # Store reference to the image
+        self.button_retour = PhotoImage(file=relative_to_assets("retour.png"))
+        button_retour = Button(self,
+            image=self.button_retour,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: (champ_gui.club_gui.place_forget(),champ_gui.tour_gui.place_forget()),
+            relief="flat"
+        )
+        button_retour.place(
+            x=340.0,
             y=15.0,
             width=250.0,
             height=35.0
@@ -561,7 +685,7 @@ class ChampGui(Canvas):
             image=self.button_import_image,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_3 clicked"),
+            command=lambda: self.import_championnat(),
             relief="flat"
         )
         self.button_import.place(
@@ -597,35 +721,38 @@ class ChampGui(Canvas):
         for champ in self.obtenir_championnats():
 
             #MatchBox(self, match, x, y)
-            self.boxes.append(ChampBox(self.champ_canvas, champ, x, y, self))
-            x += 220
             if x + 220 > self.champ_canvas.winfo_width():  # Nouvelle ligne si la largeur est dépassée
                 x = 10
                 y += 220
                 
-        self.champ_canvas.configure(height=y+450)
+            self.boxes.append(ChampBox(self.champ_canvas, champ, x, y, self))
+            x += 220
+        self.champ_canvas.configure(height=max(y+220,450))
 
     def obtenir_championnats(self):
-        conn = sqlite3.connect(self.filename)
-        cursor = conn.cursor()
-        
-        # Exécuter la requête pour obtenir les championnats et leurs dates de début
-        cursor.execute("SELECT nom, date_debut FROM championnat")
-        
-        championnats = cursor.fetchall()
-        
-        conn.close()
+        try:
+            conn = sqlite3.connect(self.filename)
+            cursor = conn.cursor()
+            
+            # Exécuter la requête pour obtenir les championnats et leurs dates de début
+            cursor.execute("SELECT nom, date_debut FROM championnat")
+            
+            championnats = cursor.fetchall()
+            
+            conn.close()
+        except:
+            championnats = []
         
         return championnats
 
     def create_champ(self):
         #self.pack_forget()
-        self.new_club_gui = NewClubGui(self.window, self.championnat)
+        self.new_champ_gui = NewChampGui(self.window)
 
 
-    def modifier_champ(self, championnat):
-        #self.pack_forget()
-        self.new_club_gui = ModifyClubGui(self.window, self.championnat, club)
+    # def modifier_champ(self, championnat):
+    #     #self.pack_forget()
+    #     self.new_club_gui = ModifyClubGui(self.window, self.championnat, club)
 
     def update(self):
         for box in self.boxes:
@@ -639,13 +766,14 @@ class ChampGui(Canvas):
         for champ in self.obtenir_championnats():
 
             #MatchBox(self, match, x, y)
-            self.boxes.append(ChampBox(self.champ_canvas, champ, x, y, self))
-            x += 220
             if x + 220 > self.champ_canvas.winfo_width():  # Nouvelle ligne si la largeur est dépassée
                 x = 10
                 y += 220
+            self.boxes.append(ChampBox(self.champ_canvas, champ, x, y, self))
+            x += 220
+
                 
-        self.champ_canvas.configure(height=y+450)
+        self.champ_canvas.configure(height=max(y+220,450))
 
     def ouvrir(self, id_champ):
 
@@ -659,6 +787,15 @@ class ChampGui(Canvas):
         if self.championnat:
             champ.ImportExport().update_championnat_db(self.championnat)
 
+    def import_championnat(self):
+        file_path = filedialog.askopenfilename(
+            title="Sélectionner un fichier JSON",
+            filetypes=[("Fichiers JSON", "*.json")]
+        )
+        if file_path:
+            championnat = champ.ImportExport().importer_championnat_json(file_path)
+            champ.ImportExport().update_championnat_db(championnat)
+            self.update()
 
 if __name__ == "__main__":
     window = Tk()
@@ -666,29 +803,29 @@ if __name__ == "__main__":
     window.configure(bg="#FFFFFF")
     window.resizable(False, False)
 
-    championnat = champ.Championnat("Ligue 1")
+    # championnat = champ.Championnat("Ligue 1")
 
-    clubs = [
-        champ.Club("Paris Saint-Germain", "Paris", "Mauricio Pochettino", "logo_club1.png", "PSG"),
-        champ.Club("Olympique de Marseille", "Marseille", "Jorge Sampaoli", "logo_club2.png", "OM"),
-        champ.Club("AS Monaco", "Monaco", "Niko Kovač", "logo_club3.png", "ASM"),
-        champ.Club("Stade Brestois", "Brest", "Quentin Dutailly", "logo_club4.png", "SB29"),
-        champ.Club("Lille OSC", "Lille", "Christophe Galtier", "logo_club5.png", "LOSC"),
-        champ.Club("Olympique Lyonnais", "Lyon", "Rudi Garcia", "logo_club6.png", "OL"),
-        champ.Club("Stade Rennais FC", "Rennes", "Kilian Barantal", "logo_club7.png", "SRFC"),
-        champ.Club("RC Lens", "Lens", "Franck Haise", "logo_club8.png", "RCL"),
-        champ.Club("Stade de Reims", "Reims", "David Guion", "logo_club9.png", "SDR"),
-        champ.Club("OGC Nice", "Nice", "Adrian Ursea", "logo_club10.png", "OGCN"),
-        champ.Club("Montpellier HSC", "Montpellier", "Michel Der Zakarian", "logo_club11.png", "MHSC"),
-        champ.Club("Angers SCO", "Angers", "Gérald Baticle", "logo_club12.png", "SCO"),
-        champ.Club("FC Metz", "Metz", "Frédéric Antonetti", "logo_club13.png", "FCM"),
-        champ.Club("RC Strasbourg Alsace", "Strasbourg", "Thierry Laurey", "logo_club14.png", "RCSA"),
-        champ.Club("FC Nantes", "Nantes", "Antoine Kombouaré", "logo_club15.png", "FCN"),
-        champ.Club("Dijon FCO", "Dijon", "David Linarès", "logo_club16.png", "DFCO")
-    ]
+    # clubs = [
+    #     champ.Club("Paris Saint-Germain", "Paris", "Mauricio Pochettino", "logo_club1.png", "PSG"),
+    #     champ.Club("Olympique de Marseille", "Marseille", "Jorge Sampaoli", "logo_club2.png", "OM"),
+    #     champ.Club("AS Monaco", "Monaco", "Niko Kovač", "logo_club3.png", "ASM"),
+    #     champ.Club("Stade Brestois", "Brest", "Quentin Dutailly", "logo_club4.png", "SB29"),
+    #     champ.Club("Lille OSC", "Lille", "Christophe Galtier", "logo_club5.png", "LOSC"),
+    #     champ.Club("Olympique Lyonnais", "Lyon", "Rudi Garcia", "logo_club6.png", "OL"),
+    #     champ.Club("Stade Rennais FC", "Rennes", "Kilian Barantal", "logo_club7.png", "SRFC"),
+    #     champ.Club("RC Lens", "Lens", "Franck Haise", "logo_club8.png", "RCL"),
+    #     champ.Club("Stade de Reims", "Reims", "David Guion", "logo_club9.png", "SDR"),
+    #     champ.Club("OGC Nice", "Nice", "Adrian Ursea", "logo_club10.png", "OGCN"),
+    #     champ.Club("Montpellier HSC", "Montpellier", "Michel Der Zakarian", "logo_club11.png", "MHSC"),
+    #     champ.Club("Angers SCO", "Angers", "Gérald Baticle", "logo_club12.png", "SCO"),
+    #     champ.Club("FC Metz", "Metz", "Frédéric Antonetti", "logo_club13.png", "FCM"),
+    #     champ.Club("RC Strasbourg Alsace", "Strasbourg", "Thierry Laurey", "logo_club14.png", "RCSA"),
+    #     champ.Club("FC Nantes", "Nantes", "Antoine Kombouaré", "logo_club15.png", "FCN"),
+    #     champ.Club("Dijon FCO", "Dijon", "David Linarès", "logo_club16.png", "DFCO")
+    # ]
 
-    for club in clubs:
-        championnat.ajouter_participant(club)
+    # for club in clubs:
+    #     championnat.ajouter_participant(club)
 
     
 

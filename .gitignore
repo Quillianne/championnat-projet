@@ -6,4 +6,4 @@ __pycache__/
 championnat.db
 
 # Exclude the JSON file
-championnat.json
+*.json

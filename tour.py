@@ -229,6 +229,7 @@ class ModifyClubGui(NewClubGui):    #Gui pour modifier un club
         self.club.nom = self.club_name.get()
         self.pack_forget()
         champ_gui.club_gui.update()
+        champ_gui.update_championnat()
 
 
 class ClubGui(Canvas):      #Gui où on affiche tous les clubs du championnat

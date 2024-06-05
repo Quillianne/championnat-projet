@@ -339,11 +339,13 @@ class ImportExport:
         return self.championnat
 
     def importer_championnat_db(self, nom, date_debut, db_filename="championnat.db"):
+        self.nom = nom
+        self.date_debut = date_debut
         conn = sqlite3.connect(db_filename)
         cursor = conn.cursor()
 
         # Récupérer les informations du championnat
-        cursor.execute("SELECT nom, date_debut FROM championnat WHERE nom = ? AND date_debut = ?", (nom, date_debut))
+        cursor.execute("SELECT nom, date_debut FROM championnat WHERE nom = ? AND date_debut = ?", (self.nom, self.date_debut))
         championnat_data = cursor.fetchone()
         if not championnat_data:
             conn.close()
@@ -355,7 +357,7 @@ class ImportExport:
 
         # Récupérer les clubs et leurs statistiques
         self.championnat._participants = []
-        cursor.execute("SELECT id, nom, emplacement, entraineur, logo, surnom FROM club WHERE championnat_nom = ? AND championnat_date_debut = ?", (nom, date_debut))
+        cursor.execute("SELECT id, nom, emplacement, entraineur, logo, surnom FROM club WHERE championnat_nom = ? AND championnat_date_debut = ?", (self.nom, self.date_debut))
         clubs_data = cursor.fetchall()
         club_ids = {}
         for club_data in clubs_data:
@@ -382,7 +384,7 @@ class ImportExport:
 
         # Récupérer les tours et les matchs
         self.championnat._tours = []
-        cursor.execute("SELECT id, numero FROM tour WHERE championnat_nom = ? AND championnat_date_debut = ?", (nom, date_debut))
+        cursor.execute("SELECT id, numero FROM tour WHERE championnat_nom = ? AND championnat_date_debut = ?", (self.nom, self.date_debut))
         tours_data = cursor.fetchall()
         for tour_data in tours_data:
             tour_id, numero = tour_data
@@ -396,9 +398,10 @@ class ImportExport:
                 equipe_domicile = club_ids[equipe_domicile_id]
                 equipe_exterieur = club_ids[equipe_exterieur_id]
                 match = Match(equipe_domicile, equipe_exterieur)
-                match.resultat = (resultat_domicile, resultat_exterieur)
+                match._resultat = (resultat_domicile, resultat_exterieur)
                 match.date = datetime.strptime(date, "%Y-%m-%d") if date else None
                 tour.ajouter_match(match)
+
 
             self.championnat.ajouter_tour(tour)
 

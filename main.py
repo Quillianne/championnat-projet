@@ -156,6 +156,7 @@ class ImportExport:
             score INTEGER,
             goal_average INTEGER,
             matchs_joues INTEGER,
+            historique TEXT,
             FOREIGN KEY (club_id) REFERENCES club (id)
         )''')
 
@@ -183,8 +184,10 @@ class ImportExport:
         conn.commit()
         conn.close()
 
-    def exporter_championnat_bd(self, championnat, db_filename="championnat.db"):
+    def exporter_championnat_db(self, championnat, db_filename="championnat.db"):
         self.championnat = championnat
+        self.creer_tables(db_filename)  # Créer les tables si elles n'existent pas
+
         conn = sqlite3.connect(db_filename)
         cursor = conn.cursor()
 
@@ -200,8 +203,9 @@ class ImportExport:
             )
             club_id = cursor.lastrowid
             club_ids[club.nom] = club_id
+
             cursor.execute(
-                "INSERT INTO statistiques (club_id, victoires_domicile, victoires_exterieur, matchs_nuls, defaites, score, goal_average, matchs_joues) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO statistiques (club_id, victoires_domicile, victoires_exterieur, matchs_nuls, defaites, score, goal_average, matchs_joues, historique) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 (
                     club_id,
                     club.statistique.victoires_domicile,
@@ -210,7 +214,8 @@ class ImportExport:
                     club.statistique.defaites,
                     club.statistique.score,
                     club.statistique.goal_average,
-                    club.statistique.matchs_joues
+                    club.statistique.matchs_joues,
+                    json.dumps(club.statistique.historique)  # Assuming historique is a list or dict
                 )
             )
 
@@ -279,11 +284,11 @@ class ImportExport:
             ]
         }
 
-        with open(filename, 'w') as file:
+        with open(filename, 'w',encoding="utf-8") as file:
             json.dump(championnat_data, file, indent=4, ensure_ascii=False)
 
     def importer_championnat_json(self, filename):
-        with open(filename, 'r') as file:
+        with open(filename, 'r', encoding='utf-8') as file:
             data = json.load(file)
 
         # Réinitialiser les participants et les tours actuels
@@ -304,14 +309,14 @@ class ImportExport:
                 surnom=club_data["surnom"]
             )
             club.statistique = Statistiques()
-            club.statistique.classement=club_data["statistiques"]["classement"],
-            club.statistique._victoires_domicilevictoires_domicile=club_data["statistiques"]["victoires_domicile"],
-            club.statistique._victoires_exterieur=club_data["statistiques"]["victoires_exterieur"],
-            club.statistique._matchs_nuls=club_data["statistiques"]["matchs_nuls"],
-            club.statistique._defaites=club_data["statistiques"]["defaites"],
-            club.statistique._score=club_data["statistiques"]["score"],
-            club.statistique._goal_average=club_data["statistiques"]["goal_average"],
-            club.statistique._matchs_joues=club_data["statistiques"]["matchs_joues"],
+            club.statistique.classement=club_data["statistiques"]["classement"]
+            club.statistique._victoires_domicile=club_data["statistiques"]["victoires_domicile"]
+            club.statistique._victoires_exterieur=club_data["statistiques"]["victoires_exterieur"]
+            club.statistique._matchs_nuls=club_data["statistiques"]["matchs_nuls"]
+            club.statistique._defaites=club_data["statistiques"]["defaites"]
+            club.statistique._score=club_data["statistiques"]["score"]
+            club.statistique._goal_average=club_data["statistiques"]["goal_average"]
+            club.statistique._matchs_joues=club_data["statistiques"]["matchs_joues"]
             club.statistique.historique=club_data["statistiques"]["historique"]
 
             self.championnat.ajouter_participant(club)
@@ -333,33 +338,115 @@ class ImportExport:
 
         return self.championnat
 
-
-    def importer_championnat_db(self, championnat, db_filename="championnat.db"):
+    def importer_championnat_db(self, nom, date_debut, db_filename="championnat.db"):
+        self.nom = nom
+        self.date_debut = date_debut
         conn = sqlite3.connect(db_filename)
         cursor = conn.cursor()
 
-        # Vérifier si le championnat existe déjà
-        cursor.execute("SELECT * FROM championnat WHERE nom = ? AND date_debut = ?", (championnat.nom, championnat.date_debut.strftime("%Y-%m-%d %H:%M:%S")))
-        exists = cursor.fetchone()
-
-        if exists:
+        # Récupérer les informations du championnat
+        cursor.execute("SELECT nom, date_debut FROM championnat WHERE nom = ? AND date_debut = ?", (self.nom, self.date_debut))
+        championnat_data = cursor.fetchone()
+        if not championnat_data:
             conn.close()
-            return False
+            raise ValueError("Championnat non trouvé.")
 
-        # Insérer le championnat
-        self.exporter_championnat_bd(championnat, db_filename)
+        self.championnat = Championnat(None)
+        self.championnat.nom = championnat_data[0]
+        self.championnat.date_debut = datetime.strptime(championnat_data[1], "%Y-%m-%d %H:%M:%S")
+
+        # Récupérer les clubs et leurs statistiques
+        self.championnat._participants = []
+        cursor.execute("SELECT id, nom, emplacement, entraineur, logo, surnom FROM club WHERE championnat_nom = ? AND championnat_date_debut = ?", (self.nom, self.date_debut))
+        clubs_data = cursor.fetchall()
+        club_ids = {}
+        for club_data in clubs_data:
+            club_id, nom, emplacement, entraineur, logo, surnom = club_data
+            club = Club(nom=nom, emplacement=emplacement, entraineur=entraineur, logo=logo, surnom=surnom)
+            club_ids[club_id] = club
+
+            # Récupérer les statistiques du club
+            cursor.execute("SELECT victoires_domicile, victoires_exterieur, matchs_nuls, defaites, score, goal_average, matchs_joues, historique FROM statistiques WHERE club_id = ?", (club_id,))
+            stats_data = cursor.fetchone()
+            if stats_data:
+                club.statistique = Statistiques()
+                club.statistique._victoires_domicile = int(stats_data[0])
+                club.statistique._victoires_exterieur = stats_data[1]
+                club.statistique._matchs_nuls = stats_data[2]
+                club.statistique._defaites = stats_data[3]
+                club.statistique._score = stats_data[4]
+                club.statistique._goal_average = stats_data[5]
+                club.statistique._matchs_joues = stats_data[6]
+                historique = stats_data[7]
+                club.statistique.historique = json.loads(historique)  # Assuming historique is stored as JSON
+
+            self.championnat.ajouter_participant(club)
+
+        # Récupérer les tours et les matchs
+        self.championnat._tours = []
+        cursor.execute("SELECT id, numero FROM tour WHERE championnat_nom = ? AND championnat_date_debut = ?", (self.nom, self.date_debut))
+        tours_data = cursor.fetchall()
+        for tour_data in tours_data:
+            tour_id, numero = tour_data
+            tour = Tour(numero)
+
+            # Récupérer les matchs du tour
+            cursor.execute("SELECT equipe_domicile_id, equipe_exterieur_id, resultat_domicile, resultat_exterieur, date FROM match WHERE tour_id = ?", (tour_id,))
+            matchs_data = cursor.fetchall()
+            for match_data in matchs_data:
+                equipe_domicile_id, equipe_exterieur_id, resultat_domicile, resultat_exterieur, date = match_data
+                equipe_domicile = club_ids[equipe_domicile_id]
+                equipe_exterieur = club_ids[equipe_exterieur_id]
+                match = Match(equipe_domicile, equipe_exterieur)
+                match._resultat = (resultat_domicile, resultat_exterieur)
+                match.date = datetime.strptime(date, "%Y-%m-%d") if date else None
+                tour.ajouter_match(match)
+
+
+            self.championnat.ajouter_tour(tour)
 
         conn.close()
-        return True
+        return self.championnat
+
 
     def update_championnat_db(self, championnat, db_filename="championnat.db"):
+        self.creer_tables(db_filename)
         conn = sqlite3.connect(db_filename)
         cursor = conn.cursor()
 
         # Vérifier si le championnat existe déjà
         cursor.execute("SELECT * FROM championnat WHERE nom = ? AND date_debut = ?", (championnat.nom, championnat.date_debut.strftime("%Y-%m-%d %H:%M:%S")))
         exists = cursor.fetchone()
+        if not exists:
+            conn.close()
+            self.exporter_championnat_db(championnat=championnat, db_filename=db_filename)
+            return False
 
+        # Supprimer le championnat existant
+        cursor.execute("DELETE FROM match WHERE tour_id IN (SELECT id FROM tour WHERE championnat_nom = ? AND championnat_date_debut = ?)", (championnat.nom, championnat.date_debut.strftime("%Y-%m-%d %H:%M:%S")))
+        cursor.execute("DELETE FROM tour WHERE championnat_nom = ? AND championnat_date_debut = ?", (championnat.nom, championnat.date_debut.strftime("%Y-%m-%d %H:%M:%S")))
+        cursor.execute("DELETE FROM statistiques WHERE club_id IN (SELECT id FROM club WHERE championnat_nom = ? AND championnat_date_debut = ?)", (championnat.nom, championnat.date_debut.strftime("%Y-%m-%d %H:%M:%S")))
+        cursor.execute("DELETE FROM club WHERE championnat_nom = ? AND championnat_date_debut = ?", (championnat.nom, championnat.date_debut.strftime("%Y-%m-%d %H:%M:%S")))
+        cursor.execute("DELETE FROM championnat WHERE nom = ? AND date_debut = ?", (championnat.nom, championnat.date_debut.strftime("%Y-%m-%d %H:%M:%S")))
+
+
+
+
+        # Insérer les nouvelles données du championnat
+        conn.commit()
+        conn.close()
+        self.exporter_championnat_db(championnat, db_filename)
+
+
+        return True
+    
+    def delete_championnat_db(self, championnat, db_filename="championnat.db"):
+        conn = sqlite3.connect(db_filename)
+        cursor = conn.cursor()
+
+        # Vérifier si le championnat existe déjà
+        cursor.execute("SELECT * FROM championnat WHERE nom = ? AND date_debut = ?", (championnat.nom, championnat.date_debut.strftime("%Y-%m-%d %H:%M:%S")))
+        exists = cursor.fetchone()
         if not exists:
             conn.close()
             return False
@@ -371,9 +458,10 @@ class ImportExport:
         cursor.execute("DELETE FROM club WHERE championnat_nom = ? AND championnat_date_debut = ?", (championnat.nom, championnat.date_debut.strftime("%Y-%m-%d %H:%M:%S")))
         cursor.execute("DELETE FROM championnat WHERE nom = ? AND date_debut = ?", (championnat.nom, championnat.date_debut.strftime("%Y-%m-%d %H:%M:%S")))
 
-        # Insérer les nouvelles données du championnat
+
+        conn.commit()
         conn.close()
-        self.exporter_championnat_bd(championnat, db_filename)
+
 
 
         return True
@@ -442,7 +530,7 @@ class Championnat:
             self.ajouter_tour(tour)
             current_date += timedelta(days=7)
 
-    def jouer_tour(self, resultats):
+    def jouer_tour(self, resultats, tour):
         i=0
         for match in tour.matchs:
             # Simuler les scores aléatoires
@@ -456,12 +544,14 @@ class Championnat:
             # Afficher le match avec les résultats simulés
             print(match.equipe_domicile.nom, score_equipe_domicile, "-", score_equipe_exterieur,
                   match.equipe_exterieur.nom)
+        self.mettre_a_jour_classement()
 
     def mettre_a_jour_classement(self):
         classement = self.classement()
         for i, (club, _) in enumerate(classement, 1):
             club.statistique.classement = i
-            club.statistique.historique_tour_par_tour()
+            club.statistique.historique.append((club.statistique.classement, club.statistique.score))
+
 
     def classement(self):
         # Calculer le score de championnat, goal average et nombre de victoires pour chaque club
@@ -550,8 +640,8 @@ class Statistiques:
     def mettre_a_jour_goal_average(self, difference_goals):
         self._goal_average += difference_goals
 
-    def historique_tour_par_tour(self):
-        self.historique.append((self.classement, self.score))
+
+        
 
 if __name__ == "__main__":
 
@@ -588,8 +678,7 @@ if __name__ == "__main__":
         print("\n")
         print("Tour", tour.numero)
         resultats = [(random.randint(0, 5),random.randint(0, 5)) for _ in tour.matchs]
-        championnat.jouer_tour(resultats)
-        championnat.mettre_a_jour_classement()
+        championnat.jouer_tour(resultats, tour)
         classement_championnat = championnat.classement()
         # Afficher le classement des clubs
         print("\nClassement des clubs à l'issue du tour:", tour.numero)
@@ -609,26 +698,13 @@ if __name__ == "__main__":
         print(
             f"{i}. {club.nom} - Victoires : {club.statistique.victoires_domicile + club.statistique.victoires_exterieur} - Nuls : {club.statistique.matchs_nuls} - Défaites : {club.statistique.defaites} -  Score : {club.statistique.score} - Goalaverage : {club.statistique.goal_average}")
 
-    #ImportExport().exporter_championnat_json(championnat,"championnat.json")
-    championnat = ImportExport().importer_championnat_json("championnat.json")
+    ImportExport().exporter_championnat_json(championnat,"ligue1.json")
 
-    #ImportExport().update_championnat_db(championnat)
 
-    # #Exporter les données du championnat
-    # ImportExport.exporter_championnat_json("championnat.json")
-    #
-    # #Importer les données du championnat
-    # nouveau_championnat = Championnat("Ligue 1")
-    # nouveau_championnat.importer_championnat_json("championnat.json")
-    #
-    # #Afficher les informations importées pour vérifier
-    # print("\nStatistiques des clubs importés:")
-    # for club in nouveau_championnat.participants:
-    #     print("\n")
-    #     club.afficher_statistiques_club()
-    #
-    # print("\nClassement des clubs importés:")
-    # classement_nouveau_championnat = nouveau_championnat.classement()
-    # for i, (club, _) in enumerate(classement_nouveau_championnat, 1):
-    #     print(
-    #         f"{i}. {club.nom} - Victoires : {club.statistique.victoires_domicile + club.statistique.victoires_exterieur} - Nuls : {club.statistique.matchs_nuls} - Défaites : {club.statistique.defaites} - Score : {club.statistique.score} - Goalaverage : {club.statistique.goal_average}")
+    # championnat = ImportExport().importer_championnat_json("championnat.json")
+
+
+    # if ImportExport().update_championnat_db(championnat):
+    #     print(f"Championnat: {championnat.nom}, Date: {championnat.date_debut} | mis à jour")
+    # else:
+    #     print(f"Championnat: {championnat.nom}, Date: {championnat.date_debut} | créé")

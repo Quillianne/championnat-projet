@@ -1,4 +1,8 @@
 import sqlite3
+import random
+import json
+from datetime import datetime
+
 
 def transform_list(lst):
     if len(lst) < 2:
@@ -26,69 +30,58 @@ def transform_list(lst):
     return result
 
 
-import sqlite3
 
 
-def creer_tables(db_filename):
-    conn = sqlite3.connect(db_filename)
-    cursor = conn.cursor()
+def generate_real_club_data():
+    # Liste de clubs avec des noms de clubs et villes réelles
+    clubs = [
+        {"nom": "Paris Saint-Germain", "ville": "Paris", "entraineur": "Christophe Galtier", "logo": "logo_psg.png", "abbreviation": "PSG"},
+        {"nom": "Olympique de Marseille", "ville": "Marseille", "entraineur": "Igor Tudor", "logo": "logo_om.png", "abbreviation": "OM"},
+        {"nom": "AS Monaco", "ville": "Monaco", "entraineur": "Philippe Clement", "logo": "logo_asm.png", "abbreviation": "ASM"},
+        {"nom": "Stade Brestois", "ville": "Brest", "entraineur": "Michel Der Zakarian", "logo": "logo_sb29.png", "abbreviation": "SB29"},
+        {"nom": "Lille OSC", "ville": "Lille", "entraineur": "Paulo Fonseca", "logo": "logo_losc.png", "abbreviation": "LOSC"},
+        {"nom": "Olympique Lyonnais", "ville": "Lyon", "entraineur": "Laurent Blanc", "logo": "logo_ol.png", "abbreviation": "OL"},
+        {"nom": "Stade Rennais FC", "ville": "Rennes", "entraineur": "Bruno Génésio", "logo": "logo_srf.png", "abbreviation": "SRFC"},
+        {"nom": "RC Lens", "ville": "Lens", "entraineur": "Franck Haise", "logo": "logo_rcl.png", "abbreviation": "RCL"},
+        {"nom": "Stade de Reims", "ville": "Reims", "entraineur": "Oscar Garcia", "logo": "logo_sdr.png", "abbreviation": "SDR"},
+        {"nom": "OGC Nice", "ville": "Nice", "entraineur": "Lucien Favre", "logo": "logo_ogcn.png", "abbreviation": "OGCN"},
+        {"nom": "Montpellier HSC", "ville": "Montpellier", "entraineur": "Olivier Dall'Oglio", "logo": "logo_mhsc.png", "abbreviation": "MHSC"},
+        {"nom": "Angers SCO", "ville": "Angers", "entraineur": "Gérald Baticle", "logo": "logo_sco.png", "abbreviation": "SCO"},
+        {"nom": "FC Metz", "ville": "Metz", "entraineur": "Laszlo Bölöni", "logo": "logo_fcm.png", "abbreviation": "FCM"},
+        {"nom": "RC Strasbourg Alsace", "ville": "Strasbourg", "entraineur": "Julien Stéphan", "logo": "logo_rcsa.png", "abbreviation": "RCSA"},
+        {"nom": "FC Nantes", "ville": "Nantes", "entraineur": "Antoine Kombouaré", "logo": "logo_fcn.png", "abbreviation": "FCN"},
+        {"nom": "Dijon FCO", "ville": "Dijon", "entraineur": "David Linarès", "logo": "logo_dfco.png", "abbreviation": "DFCO"},
+        # Ajoutez plus de clubs de Ligue 1, Ligue 2, La Liga, etc.
+    ]
+    return clubs
 
-    cursor.execute('''CREATE TABLE IF NOT EXISTS championnat (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nom TEXT,
-        date_debut TEXT
-    )''')
+def generate_fake_championships(num_championships, num_teams_per_championship):
+    all_clubs = generate_real_club_data()
+    
+    for i in range(num_championships):
+        championnat_name = f"Championnat_{i+1}"
+        championnat = Championnat(championnat_name)
 
-    cursor.execute('''CREATE TABLE IF NOT EXISTS club (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nom TEXT,
-        emplacement TEXT,
-        entraineur TEXT,
-        logo TEXT,
-        surnom TEXT,
-        championnat_id INTEGER,
-        FOREIGN KEY (championnat_id) REFERENCES championnat (id)
-    )''')
+        selected_clubs = random.sample(all_clubs, num_teams_per_championship)
+        
+        clubs = [
+            Club(club_data["nom"], club_data["ville"], club_data["entraineur"], club_data["logo"], club_data["abbreviation"])
+            for club_data in selected_clubs
+        ]
 
-    cursor.execute('''CREATE TABLE IF NOT EXISTS statistiques (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        club_id INTEGER,
-        victoires_domicile INTEGER,
-        victoires_exterieur INTEGER,
-        matchs_nuls INTEGER,
-        defaites INTEGER,
-        score INTEGER,
-        goal_average INTEGER,
-        matchs_joues INTEGER,
-        FOREIGN KEY (club_id) REFERENCES club (id)
-    )''')
+        for club in clubs:
+            championnat.ajouter_participant(club)
 
-    cursor.execute('''CREATE TABLE IF NOT EXISTS tour (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        numero INTEGER,
-        championnat_id INTEGER,
-        FOREIGN KEY (championnat_id) REFERENCES championnat (id)
-    )''')
+        championnat.generer_calendrier()
 
-    cursor.execute('''CREATE TABLE IF NOT EXISTS match (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        equipe_domicile_id INTEGER,
-        equipe_exterieur_id INTEGER,
-        resultat_domicile INTEGER,
-        resultat_exterieur INTEGER,
-        date TEXT,
-        tour_id INTEGER,
-        FOREIGN KEY (equipe_domicile_id) REFERENCES club (id),
-        FOREIGN KEY (equipe_exterieur_id) REFERENCES club (id),
-        FOREIGN KEY (tour_id) REFERENCES tour (id)
-    )''')
+        for tour in championnat.tours:
+            resultats = [(random.randint(0, 5), random.randint(0, 5)) for _ in tour.matchs]
+            championnat.jouer_tour(resultats, tour)
 
-    conn.commit()
-    conn.close()
-
-
-# Appel de la fonction pour créer les tables
-
+        # Exporter le championnat au format JSON
+        file_name = f"{championnat_name}.json"
+        ImportExport().exporter_championnat_json(championnat, file_name)
 
 if __name__ == "__main__":
-    creer_tables("championnat.db")
+    from main import *
+    generate_fake_championships(10, 4)

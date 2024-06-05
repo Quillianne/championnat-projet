@@ -1,0 +1,9 @@
+# Exclude Python cache directories
+__pycache__/
+*.py[cod]
+
+# Exclude the database file
+championnat.db
+
+# Exclude the JSON file
+championnat.json

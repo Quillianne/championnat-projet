@@ -53,6 +53,7 @@ class MatchBox(BoxBox):     #Box pour les matchs avec un bouton modifier et le t
         new_date = choose_date.DateDialog(window, 'Choisir horaire', self.match.date).selected_date
         self.match.date = new_date
         self.itemconfig(self.date, text=f"{self.match.date.strftime('%d/%m/%Y')}")
+        champ_gui.update_championnat()
         #self.itemconfig(self.hour, text=f"{self.match.date.strftime('%HH%M')}")
 
     

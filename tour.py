@@ -60,13 +60,15 @@ class MatchBox(BoxBox):
 
 class ClubBox(BoxBox):
     def __init__(self, parent, club, x, y, clubgui):
-        super().__init__(parent, x,y, ["supprimer.png","modifier.png"], [lambda: self.delete(),lambda: print("modifier clicked")])
+        super().__init__(parent, x,y, ["supprimer.png","modifier.png"], [lambda: self.delete(),lambda: club_gui.modifier_equipe(club)])
         self.club = club
         self.place(x=x, y=y)
         self.clubgui = clubgui
 
 
         self.create_text(30, 30, anchor="nw", text=f"{club.surnom}", fill="#000000", font=("DelaGothicOne Regular", 12 * -1))
+
+
 
     def delete(self):
         self.clubgui.championnat.supprimer_club(self.club)
@@ -156,14 +158,14 @@ class NewClubGui(Canvas):
 
                 # Store reference to the image
         self.button_ok_image = PhotoImage(file=relative_to_assets("ok.png"))
-        button_ok = Button(self,
+        self.button_ok = Button(self,
             image=self.button_ok_image,
             borderwidth=0,
             highlightthickness=0,
             command=lambda: self.create_club(),
             relief="flat"
         )
-        button_ok.place(
+        self.button_ok.place(
             x=320.0,
             y=565.0,
             width=250.0,
@@ -171,14 +173,14 @@ class NewClubGui(Canvas):
         )
 
         self.button_cancel_image = PhotoImage(file=relative_to_assets("cancel.png"))
-        button_cancel = Button(self,
+        self.button_cancel = Button(self,
             image=self.button_cancel_image,
             borderwidth=0,
             highlightthickness=0,
             command=lambda: self.cancel_creation(),
             relief="flat"
         )
-        button_cancel.place(
+        self.button_cancel.place(
             x=320.0,
             y=605.0,
             width=250.0,
@@ -197,7 +199,26 @@ class NewClubGui(Canvas):
         self.pack_forget()
         #self.destroy()
 
+class ModifyClubGui(NewClubGui):
+    def __init__(self, window, championnat, club):
+        super().__init__(window, championnat)
+        self.club = club
 
+        self.club_surname = TextEntryBox(self,270,180,"SURNOM",self.club.surnom)
+        self.club_city = TextEntryBox(self,270,260,"VILLE",self.club.emplacement)
+        self.club_entraineur = TextEntryBox(self,270,340,"ENTRAINEUR",self.club.entraineur)
+        self.club_logo = TextEntryBox(self,270,420,"LOGO",self.club.logo)
+        self.club_name = TextEntryBox(self,270,100,"NOM DU CLUB",self.club.nom)
+        self.button_ok.configure(command=lambda: self.modify_club())
+
+    def modify_club(self):
+        self.club.surnom = self.club_surname.get()
+        self.club.emplacement = self.club_city.get()
+        self.club.entraineur = self.club_entraineur.get()
+        self.club.logo = self.club_logo.get()
+        self.club.nom = self.club_name.get()
+        self.pack_forget()
+        club_gui.update()
 
 
 class ClubGui(Canvas):
@@ -329,6 +350,10 @@ class ClubGui(Canvas):
         #self.pack_forget()
         self.new_club_gui = NewClubGui(self.window, self.championnat)
 
+
+    def modifier_equipe(self, club):
+        #self.pack_forget()
+        self.new_club_gui = ModifyClubGui(self.window, self.championnat, club)
 
     def update(self):
         for box in self.boxes:

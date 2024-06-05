@@ -68,8 +68,6 @@ class MatchBox(BoxBox):     #Box pour les matchs avec un bouton modifier et le t
         champ_gui.update_championnat()
         #self.itemconfig(self.hour, text=f"{self.match.date.strftime('%HH%M')}")
 
-    
-
 class ClubBox(BoxBox):      #Box pour les clubs avec un bouton modifier et supprimer et le surnom du club (logo à ajouter)
     def __init__(self, parent, club, x, y, clubgui):
         super().__init__(parent, x,y, ["supprimer.png","modifier.png"], [lambda: self.delete(),lambda: champ_gui.club_gui.modifier_equipe(club)])
@@ -78,7 +76,7 @@ class ClubBox(BoxBox):      #Box pour les clubs avec un bouton modifier et suppr
         self.clubgui = clubgui
 
 
-        self.create_text(30, 30, anchor="nw", text=f"{club.surnom}", fill="#000000", font=("DelaGothicOne Regular", 12 * -1))
+        self.create_text(30, 30, anchor="nw", text=f"{club.nom}", fill="#000000", font=("DelaGothicOne Regular", 12 * -1))
 
 
 
@@ -89,16 +87,12 @@ class ClubBox(BoxBox):      #Box pour les clubs avec un bouton modifier et suppr
     
 class ChampBox(BoxBox):      #Box pour les clubs avec un bouton modifier et supprimer et le surnom du club (logo à ajouter)
     def __init__(self, parent, id_champ, x, y, champgui):
-        super().__init__(parent, x,y, ["ouvrir.png"], [lambda: champgui.ouvrir(id_champ)])
+        super().__init__(parent, x,y, ["ouvrir.png","supprimer.png"], [lambda: champgui.ouvrir(id_champ), lambda: champgui.delete(id_champ)])
         self.champ = id_champ
         self.place(x=x, y=y)
 
 
         self.create_text(30, 30, anchor="nw", text=f"{self.champ[0]}", fill="#000000", font=("DelaGothicOne Regular", 12 * -1))
-
-
-
-
 
 
 
@@ -124,9 +118,6 @@ class TourBox(Canvas):      #Box dans lequel on met toutes les boxs match d'un t
             x += 220
 
         self.configure(height=y+220)
-
-
-
 
 class TextEntryBox(Canvas): #Box pour champ de saisie de texte
     def __init__(self, parent, x, y, text, default_text=""):
@@ -318,7 +309,6 @@ class ModifyClubGui(NewClubGui):    #Gui pour modifier un club
         champ_gui.club_gui.update()
         champ_gui.update_championnat()
 
-
 class ClubGui(Canvas):      #Gui où on affiche tous les clubs du championnat
     def __init__(self, window, championnat):
         super().__init__(window, bg="#3485FF", height=650, width=900, bd=0, highlightthickness=0, relief="ridge")
@@ -492,8 +482,6 @@ class ClubGui(Canvas):      #Gui où on affiche tous les clubs du championnat
                 
         self.club_canvas.configure(height=max(y+220,450))
 
-
-
 class TourGui(Canvas):      #Gui où on affiche tous les tours du championnat
     def __init__(self, window, championnat):
         super().__init__(window, bg="#3485FF", height=650, width=900, bd=0, highlightthickness=0, relief="ridge")
@@ -650,7 +638,6 @@ class TourGui(Canvas):      #Gui où on affiche tous les tours du championnat
         self.update()
         champ_gui.update_championnat()
 
-
 class ChampGui(Canvas):
     def __init__(self, window, filename = "championnat.db"):
         super().__init__(window, bg="#3485FF", height=650, width=900, bd=0, highlightthickness=0, relief="ridge")
@@ -783,6 +770,11 @@ class ChampGui(Canvas):
 
         self.tour_gui.place_forget()
 
+    def delete(self, id_champ):
+        champi = champ.ImportExport().importer_championnat_db(id_champ[0], id_champ[1])
+        champ.ImportExport().delete_championnat_db(champi)
+        self.update()
+
     def update_championnat(self):
         if self.championnat:
             champ.ImportExport().update_championnat_db(self.championnat)
@@ -796,6 +788,57 @@ class ChampGui(Canvas):
             championnat = champ.ImportExport().importer_championnat_json(file_path)
             champ.ImportExport().update_championnat_db(championnat)
             self.update()
+
+class LaunchChamp(Canvas):
+    def __init__(self, window, championnat):
+        super().__init__(window, bg="#3485FF", height=650, width=900, bd=0, highlightthickness=0, relief="ridge")
+        self.window = window
+        self.championnat = championnat
+
+        self.place(x=0,y=0)
+
+        self.create_rectangle(0, 0, 900, 650, fill="#3485FF", outline="")
+
+        self.create_text(20, 10, anchor="nw", text=f"{self.championnat.nom}", fill="#FFFFFF", font=("DelaGothicOne Regular", 21 * -1))
+
+        #On place aussi la ligne en dessous du titre
+        self.line = self.create_rectangle(
+            20.0,
+            40.0,
+            147.0,
+            44.0,
+            fill="#FFFFFF",
+            outline="")
+        
+        self.current_tour = 0
+    
+
+    def afficher_tour(self):
+
+        self.scroll_canvas = Canvas(self,bg="#3485FF", height=450, width=900, bd=0, highlightthickness=0, relief="ridge")
+        self.scroll_canvas.place(x=0,y=100)
+
+        self.champ_frame = scrollableframe.ScrollableFrame(self.scroll_canvas, bg="#3485FF")
+        self.champ_frame.place(x=0, y=0, relwidth=1, relheight=1)
+
+
+
+        self.champ_canvas = Canvas(self.champ_frame.scrollable_frame, bg="#3485FF", height=500, width=900, bd=0, highlightthickness=0, relief="ridge")
+        self.champ_canvas.pack(pady=0)
+        self.champ_canvas.update_idletasks()  # Forcer la mise à jour de la géométrie
+
+        x, y = 10, 40
+
+        for champ in self.obtenir_championnats():
+
+            #MatchBox(self, match, x, y)
+            if x + 220 > self.champ_canvas.winfo_width():  # Nouvelle ligne si la largeur est dépassée
+                x = 10
+                y += 220
+                
+            self.boxes.append(ChampBox(self.champ_canvas, champ, x, y, self))
+            x += 220
+        self.champ_canvas.configure(height=max(y+220,450))
 
 if __name__ == "__main__":
     window = Tk()

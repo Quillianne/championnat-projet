@@ -51,6 +51,7 @@ class Club:
         print(f"Victoires à l'extérieur: {self.statistique.victoires_exterieur}")
         print(f"Matchs nuls: {self.statistique.matchs_nuls}")
         print(f"Goal Average: {self.statistique.goal_average}")
+        print(f"Historique tour par tour: {self.statistique.historique}")
 
 class Match:
     def __init__(self, equipe_domicile, equipe_exterieur):
@@ -119,7 +120,7 @@ class Tour:
         self._matchs.append(match)
 
 
-class ImportExport():
+class ImportExport:
     def __init__(self):
         pass
     
@@ -367,9 +368,10 @@ class ImportExport():
         cursor.execute("DELETE FROM championnat WHERE nom = ? AND date_debut = ?", (championnat.nom, championnat.date_debut.strftime("%Y-%m-%d %H:%M:%S")))
 
         # Insérer les nouvelles données du championnat
+        conn.close()
         self.exporter_championnat_bd(championnat, db_filename)
 
-        conn.close()
+
         return True
 
 class Championnat:
@@ -437,7 +439,6 @@ class Championnat:
             current_date += timedelta(days=7)
 
     def jouer_tour(self, resultats):
-        print("Tour", tour.numero)
         i=0
         for match in tour.matchs:
             # Simuler les scores aléatoires
@@ -452,6 +453,11 @@ class Championnat:
             print(match.equipe_domicile.nom, score_equipe_domicile, "-", score_equipe_exterieur,
                   match.equipe_exterieur.nom)
 
+    def mettre_a_jour_classement(self):
+        classement = self.classement()
+        for i, (club, _) in enumerate(classement, 1):
+            club.statistique.classement = i
+            club.statistique.historique_tour_par_tour()
 
     def classement(self):
         # Calculer le score de championnat, goal average et nombre de victoires pour chaque club
@@ -543,7 +549,6 @@ class Statistiques:
     def historique_tour_par_tour(self):
         self.historique.append((self.classement, self.score))
 
-
 if __name__ == "__main__":
 
     # Création d'une instance de Championnat
@@ -580,26 +585,44 @@ if __name__ == "__main__":
         print("Tour", tour.numero)
         resultats = [(random.randint(0, 5),random.randint(0, 5)) for _ in tour.matchs]
         championnat.jouer_tour(resultats)
-        print()
+        championnat.mettre_a_jour_classement()
+        classement_championnat = championnat.classement()
+        # Afficher le classement des clubs
+        print("\nClassement des clubs à l'issue du tour:", tour.numero)
+        for i, (club, _) in enumerate(classement_championnat, 1):
+            print(
+                f"{i}. {club.nom} - Score : {club.statistique.score} ")
 
-    # Exporter le championnat dans la base de données
-    championnat.exporter_championnat_bd("championnat.db")
-
-    # Exporter les données du championnat
-    championnat.exporter_championnat_json("championnat.json")
-
-    # Importer les données du championnat
-    nouveau_championnat = Championnat("Ligue 1")
-    nouveau_championnat.importer_championnat_json("championnat.json")
-
-    # Afficher les informations importées pour vérifier
-    print("\nStatistiques des clubs importés:")
-    for club in nouveau_championnat.participants:
+    print("\nStatistiques des clubs:")
+    for club in championnat.participants:
         print("\n")
         club.afficher_statistiques_club()
 
-    print("\nClassement des clubs importés:")
-    classement_nouveau_championnat = nouveau_championnat.classement()
-    for i, (club, _) in enumerate(classement_nouveau_championnat, 1):
+    classement_championnat = championnat.classement()
+    # Afficher le classement des clubs
+    print("\nClassement des clubs:")
+    for i, (club, _) in enumerate(classement_championnat, 1):
         print(
-            f"{i}. {club.nom} - Victoires : {club.statistique.victoires_domicile + club.statistique.victoires_exterieur} - Nuls : {club.statistique.matchs_nuls} - Défaites : {club.statistique.defaites} - Score : {club.statistique.score} - Goalaverage : {club.statistique.goal_average}")
+            f"{i}. {club.nom} - Victoires : {club.statistique.victoires_domicile + club.statistique.victoires_exterieur} - Nuls : {club.statistique.matchs_nuls} - Défaites : {club.statistique.defaites} -  Score : {club.statistique.score} - Goalaverage : {club.statistique.goal_average}")
+
+
+    ImportExport().update_championnat_db(championnat)
+
+    # #Exporter les données du championnat
+    # ImportExport.exporter_championnat_json("championnat.json")
+    #
+    # #Importer les données du championnat
+    # nouveau_championnat = Championnat("Ligue 1")
+    # nouveau_championnat.importer_championnat_json("championnat.json")
+    #
+    # #Afficher les informations importées pour vérifier
+    # print("\nStatistiques des clubs importés:")
+    # for club in nouveau_championnat.participants:
+    #     print("\n")
+    #     club.afficher_statistiques_club()
+    #
+    # print("\nClassement des clubs importés:")
+    # classement_nouveau_championnat = nouveau_championnat.classement()
+    # for i, (club, _) in enumerate(classement_nouveau_championnat, 1):
+    #     print(
+    #         f"{i}. {club.nom} - Victoires : {club.statistique.victoires_domicile + club.statistique.victoires_exterieur} - Nuls : {club.statistique.matchs_nuls} - Défaites : {club.statistique.defaites} - Score : {club.statistique.score} - Goalaverage : {club.statistique.goal_average}")

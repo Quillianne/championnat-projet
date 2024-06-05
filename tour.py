@@ -16,7 +16,7 @@ def relative_to_assets(path: str) -> Path:
 
 
 
-class BoxBox(Canvas):
+class BoxBox(Canvas):    #Box de base où on peut ajouter des boutons avec des commandes
     def __init__(self, parent, x, y, button_images, button_commands):
         super().__init__(parent, bg="#3485FF", height=300, width=220, bd=0, highlightthickness=0, relief="ridge")
         self.place(x=x, y=y)
@@ -38,7 +38,7 @@ class BoxBox(Canvas):
             self.bouton[i].place(x=32, y=140-38*i,width=158.0,height=34.0)
 
 
-class MatchBox(BoxBox):
+class MatchBox(BoxBox):     #Box pour les matchs avec un bouton modifier et le texte pour le match en question
     def __init__(self, parent, match, x, y):
         super().__init__(parent, x,y, ["modifier.png"], [lambda: self.modifier_horaire()])
         self.match = match
@@ -57,8 +57,7 @@ class MatchBox(BoxBox):
 
     
 
-
-class ClubBox(BoxBox):
+class ClubBox(BoxBox):      #Box pour les clubs avec un bouton modifier et supprimer et le surnom du club (logo à ajouter)
     def __init__(self, parent, club, x, y, clubgui):
         super().__init__(parent, x,y, ["supprimer.png","modifier.png"], [lambda: self.delete(),lambda: club_gui.modifier_equipe(club)])
         self.club = club
@@ -77,9 +76,7 @@ class ClubBox(BoxBox):
 
 
 
-
-
-class TourBox(Canvas):
+class TourBox(Canvas):      #Box dans lequel on met toutes les boxs match d'un tour
     def __init__(self, parent, tour):
         super().__init__(parent, bg="#3485FF", height=500, width=900, bd=0, highlightthickness=0, relief="ridge")
         self.tour = tour
@@ -104,7 +101,7 @@ class TourBox(Canvas):
 
 
 
-class TextEntryBox(Canvas):
+class TextEntryBox(Canvas): #Box pour champ de saisie de texte
     def __init__(self, parent, x, y, text, default_text=""):
         super().__init__(parent, bg="#3485FF", height=80, width=365, bd=0, highlightthickness=0, relief="ridge")
         self.place(x=x, y=y)
@@ -127,7 +124,7 @@ class TextEntryBox(Canvas):
 
 
 
-class NewClubGui(Canvas):
+class NewClubGui(Canvas):   #Gui quand on créer un nouveau club
     def __init__(self, window, championnat):
         super().__init__(window, bg="#3485FF", height=650, width=900, bd=0, highlightthickness=0, relief="ridge")
 
@@ -199,7 +196,7 @@ class NewClubGui(Canvas):
         self.pack_forget()
         #self.destroy()
 
-class ModifyClubGui(NewClubGui):
+class ModifyClubGui(NewClubGui):    #Gui pour modifier un club
     def __init__(self, window, championnat, club):
         super().__init__(window, championnat)
         self.club = club
@@ -221,7 +218,7 @@ class ModifyClubGui(NewClubGui):
         club_gui.update()
 
 
-class ClubGui(Canvas):
+class ClubGui(Canvas):      #Gui où on affiche tous les clubs du championnat
     def __init__(self, window, championnat):
         super().__init__(window, bg="#3485FF", height=650, width=900, bd=0, highlightthickness=0, relief="ridge")
         self.window = window
@@ -376,7 +373,7 @@ class ClubGui(Canvas):
 
 
 
-class TourGui(Canvas):
+class TourGui(Canvas):      #Gui où on affiche tous les tours du championnat
     def __init__(self, window, championnat):
         super().__init__(window, bg="#3485FF", height=650, width=900, bd=0, highlightthickness=0, relief="ridge")
         self.window = window

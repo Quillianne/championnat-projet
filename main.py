@@ -183,8 +183,10 @@ class ImportExport:
         conn.commit()
         conn.close()
 
-    def exporter_championnat_bd(self, championnat, db_filename="championnat.db"):
+    def exporter_championnat_db(self, championnat, db_filename="championnat.db"):
         self.championnat = championnat
+        self.creer_tables(db_filename)  # Créer les tables si elles n'existent pas
+
         conn = sqlite3.connect(db_filename)
         cursor = conn.cursor()
 
@@ -330,34 +332,17 @@ class ImportExport:
     
 
 
-    def importer_championnat_db(self, championnat, db_filename="championnat.db"):
-        conn = sqlite3.connect(db_filename)
-        cursor = conn.cursor()
-
-        # Vérifier si le championnat existe déjà
-        cursor.execute("SELECT * FROM championnat WHERE nom = ? AND date_debut = ?", (championnat.nom, championnat.date_debut.strftime("%Y-%m-%d %H:%M:%S")))
-        exists = cursor.fetchone()
-
-        if exists:
-            conn.close()
-            return False
-
-        # Insérer le championnat
-        self.exporter_championnat_bd(championnat, db_filename)
-
-        conn.close()
-        return True
-
     def update_championnat_db(self, championnat, db_filename="championnat.db"):
+        self.creer_tables(db_filename)
         conn = sqlite3.connect(db_filename)
         cursor = conn.cursor()
 
         # Vérifier si le championnat existe déjà
         cursor.execute("SELECT * FROM championnat WHERE nom = ? AND date_debut = ?", (championnat.nom, championnat.date_debut.strftime("%Y-%m-%d %H:%M:%S")))
         exists = cursor.fetchone()
-
         if not exists:
             conn.close()
+            self.exporter_championnat_db(championnat=championnat, db_filename=db_filename)
             return False
 
         # Supprimer le championnat existant
@@ -367,9 +352,13 @@ class ImportExport:
         cursor.execute("DELETE FROM club WHERE championnat_nom = ? AND championnat_date_debut = ?", (championnat.nom, championnat.date_debut.strftime("%Y-%m-%d %H:%M:%S")))
         cursor.execute("DELETE FROM championnat WHERE nom = ? AND date_debut = ?", (championnat.nom, championnat.date_debut.strftime("%Y-%m-%d %H:%M:%S")))
 
+
+
+
         # Insérer les nouvelles données du championnat
+        conn.commit()
         conn.close()
-        self.exporter_championnat_bd(championnat, db_filename)
+        self.exporter_championnat_db(championnat, db_filename)
 
 
         return True
@@ -606,7 +595,10 @@ if __name__ == "__main__":
             f"{i}. {club.nom} - Victoires : {club.statistique.victoires_domicile + club.statistique.victoires_exterieur} - Nuls : {club.statistique.matchs_nuls} - Défaites : {club.statistique.defaites} -  Score : {club.statistique.score} - Goalaverage : {club.statistique.goal_average}")
 
 
-    ImportExport().update_championnat_db(championnat)
+    if ImportExport().update_championnat_db(championnat):
+        print(f"Championnat: {championnat.nom}, Date: {championnat.date_debut} | mis à jour")
+    else:
+        print(f"Championnat: {championnat.nom}, Date: {championnat.date_debut} | créé")
 
     # #Exporter les données du championnat
     # ImportExport.exporter_championnat_json("championnat.json")

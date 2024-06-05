@@ -249,13 +249,15 @@ class ImportExport:
                     "logo": club.logo,
                     "surnom": club.surnom,
                     "statistiques": {
+                        "classement": club.statistique.classement,
                         "victoires_domicile": club.statistique.victoires_domicile,
                         "victoires_exterieur": club.statistique.victoires_exterieur,
                         "matchs_nuls": club.statistique.matchs_nuls,
                         "defaites": club.statistique.defaites,
                         "score": club.statistique.score,
                         "goal_average": club.statistique.goal_average,
-                        "matchs_joues": club.statistique.matchs_joues
+                        "matchs_joues": club.statistique.matchs_joues,
+                        "historique": club.statistique.historique
                     }
                 }
                 for club in self.championnat.participants
@@ -284,11 +286,11 @@ class ImportExport:
         with open(filename, 'r') as file:
             data = json.load(file)
 
+        # Réinitialiser les participants et les tours actuels
         self.championnat = Championnat(None)
-        self.championnat._nom = data["nom"]
+        self.championnat.nom = data["nom"]
         self.championnat.date_debut = datetime.strptime(data["date_debut"], "%Y-%m-%d %H:%M:%S")
 
-        # Réinitialiser les participants et les tours actuels
         self.championnat._participants = []
         self.championnat._tours = []
 
@@ -302,17 +304,20 @@ class ImportExport:
                 surnom=club_data["surnom"]
             )
             club.statistique = Statistiques()
-            club.statistique._victoires_domicile = club_data["statistiques"]["victoires_domicile"]
-            club.statistique._victoires_exterieur = club_data["statistiques"]["victoires_exterieur"]
-            club.statistique._matchs_nuls = club_data["statistiques"]["matchs_nuls"]
-            club.statistique._defaites = club_data["statistiques"]["defaites"]
-            club.statistique._score = club_data["statistiques"]["score"]
-            club.statistique._goal_average = club_data["statistiques"]["goal_average"]
-            club.statistique._matchs_joues = club_data["statistiques"]["matchs_joues"]
+            club.statistique.classement=club_data["statistiques"]["classement"],
+            club.statistique._victoires_domicilevictoires_domicile=club_data["statistiques"]["victoires_domicile"],
+            club.statistique._victoires_exterieur=club_data["statistiques"]["victoires_exterieur"],
+            club.statistique._matchs_nuls=club_data["statistiques"]["matchs_nuls"],
+            club.statistique._defaites=club_data["statistiques"]["defaites"],
+            club.statistique._score=club_data["statistiques"]["score"],
+            club.statistique._goal_average=club_data["statistiques"]["goal_average"],
+            club.statistique._matchs_joues=club_data["statistiques"]["matchs_joues"],
+            club.statistique.historique=club_data["statistiques"]["historique"]
+
             self.championnat.ajouter_participant(club)
 
         # Dictionnaire pour retrouver les clubs par leur nom
-        clubs_by_nom = {club.nom: club for club in self.championnat._participants}
+        clubs_by_nom = {club.nom: club for club in self.championnat.participants}
 
         # Importer les tours et les matchs
         for tour_data in data["tours"]:
@@ -327,7 +332,6 @@ class ImportExport:
             self.championnat.ajouter_tour(tour)
 
         return self.championnat
-    
 
 
     def importer_championnat_db(self, championnat, db_filename="championnat.db"):
@@ -447,7 +451,7 @@ class Championnat:
 
             # Jouer le match
             match.jouer_match((score_equipe_domicile, score_equipe_exterieur))
-            match.date = datetime.now() + timedelta(days=1)
+
             i+=1
             # Afficher le match avec les résultats simulés
             print(match.equipe_domicile.nom, score_equipe_domicile, "-", score_equipe_exterieur,
@@ -605,8 +609,10 @@ if __name__ == "__main__":
         print(
             f"{i}. {club.nom} - Victoires : {club.statistique.victoires_domicile + club.statistique.victoires_exterieur} - Nuls : {club.statistique.matchs_nuls} - Défaites : {club.statistique.defaites} -  Score : {club.statistique.score} - Goalaverage : {club.statistique.goal_average}")
 
+    #ImportExport().exporter_championnat_json(championnat,"championnat.json")
+    championnat = ImportExport().importer_championnat_json("championnat.json")
 
-    ImportExport().update_championnat_db(championnat)
+    #ImportExport().update_championnat_db(championnat)
 
     # #Exporter les données du championnat
     # ImportExport.exporter_championnat_json("championnat.json")

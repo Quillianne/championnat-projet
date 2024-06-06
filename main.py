@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 import sqlite3
 import json
 
+
 class Club:
     def __init__(self, nom, emplacement, entraineur, logo, surnom = None):
         self._nom = nom
@@ -57,7 +58,7 @@ class Match:
     def __init__(self, equipe_domicile, equipe_exterieur):
         self._equipe_domicile = equipe_domicile
         self._equipe_exterieur = equipe_exterieur
-        self._resultat = None
+        self._resultat = (-1,-1)
         self.date = None
 
     def __str__(self):
@@ -542,8 +543,8 @@ class Championnat:
 
             i+=1
             # Afficher le match avec les résultats simulés
-            print(match.equipe_domicile.nom, score_equipe_domicile, "-", score_equipe_exterieur,
-                  match.equipe_exterieur.nom)
+            #print(match.equipe_domicile.nom, score_equipe_domicile, "-", score_equipe_exterieur,
+            #      match.equipe_exterieur.nom)
         self.mettre_a_jour_classement()
 
     def mettre_a_jour_classement(self):

@@ -1,10 +1,12 @@
-from tkinter import Tk, Canvas, Button, PhotoImage, Entry, filedialog
+from tkinter import Tk, Canvas, Button, PhotoImage, Entry, filedialog, ttk, messagebox, Toplevel, Frame, Scrollbar, END, Text
 import main as champ
 import scrollableframe
 from pathlib import Path
 import choose_date
 import sqlite3
 from datetime import datetime
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib.pyplot as plt
 
 
 OUTPUT_PATH = Path(__file__).parent
@@ -26,6 +28,33 @@ def exporter_championnat(championnat):
         champ.ImportExport().exporter_championnat_json(championnat, filename=file_path)
     else:
         print("Aucun chemin de fichier sélectionné")
+
+
+class EntryWithPlaceholder(Entry):
+    def __init__(self, master=None, placeholder="PLACEHOLDER", color='grey', **kwargs):
+        super().__init__(master, **kwargs)
+
+        self.placeholder = placeholder
+        self.placeholder_color = color
+        self.default_fg_color = self['fg']
+
+        self.bind("<FocusIn>", self.foc_in)
+        self.bind("<FocusOut>", self.foc_out)
+
+        self.put_placeholder()
+
+    def put_placeholder(self):
+        self.insert(0, self.placeholder)
+        self['fg'] = self.placeholder_color
+
+    def foc_in(self, *args):
+        if self['fg'] == self.placeholder_color:
+            self.delete('0', 'end')
+            self['fg'] = self.default_fg_color
+
+    def foc_out(self, *args):
+        if not self.get():
+            self.put_placeholder()
 
 
 class BoxBox(Canvas):    #Box de base où on peut ajouter des boutons avec des commandes
@@ -85,6 +114,96 @@ class ClubBox(BoxBox):      #Box pour les clubs avec un bouton modifier et suppr
         self.clubgui.update()
         champ_gui.update_championnat()
     
+class PetiteClubBox(Canvas):
+    def __init__(self, parent, x, y, club, score):
+        super().__init__(parent, bg="#F6F7F9", height=180, width=126, bd=0, highlightthickness=0, relief="ridge")
+        self.place(x=x, y=y)
+        self.club = club
+        self.parent = parent
+        self.image_image_1 = PhotoImage(
+            file=relative_to_assets("petite_box.png"))
+        self.image_1 = self.create_image(
+            126/2,
+            180/2,
+            image=self.image_image_1
+        )
+
+        self.create_text(30, 30, anchor="nw", text=f"{self.club.surnom}", fill="#000000", font=("DelaGothicOne Regular", 12 * -1))
+
+        if score == -1:
+            self.token_entry = EntryWithPlaceholder(self, bd=0, bg="#F6F7F9", fg="#000716", highlightthickness=0, placeholder="SCORE")
+        else:
+            self.token_entry = Entry(self, bd=0, bg="#F6F7F9", fg="#000716", highlightthickness=0)
+            self.token_entry.insert(0, score)
+        self.token_entry.place(x=30, y=120, width=70.0, height=25)
+        
+
+
+        self.bouton_images = PhotoImage(file=relative_to_assets("stats.png"))
+        self.bouton = Button(self, image=self.bouton_images, borderwidth=0, highlightthickness=0, command=lambda: self.afficher_stats(), relief="flat")
+        self.bouton.place(x=3, y=150,width=120.0,height=25.0)
+
+    def afficher_stats(self):
+        fenetre = Tk()
+        fenetre.title("Statistiques du Club")
+
+        label_titre = ttk.Label(fenetre, text=f"Statistiques pour le club {self.club.nom}:", font=("Helvetica", 16))
+        label_titre.pack(pady=10)
+
+        label_matchs_joues = ttk.Label(fenetre, text=f"Nombre de matchs joués: {self.club.statistique.matchs_joues}")
+        label_matchs_joues.pack(pady=5)
+
+        label_score = ttk.Label(fenetre, text=f"Matchs score: {self.club.statistique.score}")
+        label_score.pack(pady=5)
+
+        label_victoires_domicile = ttk.Label(fenetre, text=f"Victoires à domicile: {self.club.statistique.victoires_domicile}")
+        label_victoires_domicile.pack(pady=5)
+
+        label_victoires_exterieur = ttk.Label(fenetre, text=f"Victoires à l'extérieur: {self.club.statistique.victoires_exterieur}")
+        label_victoires_exterieur.pack(pady=5)
+
+        label_matchs_nuls = ttk.Label(fenetre, text=f"Matchs nuls: {self.club.statistique.matchs_nuls}")
+        label_matchs_nuls.pack(pady=5)
+
+        label_goal_average = ttk.Label(fenetre, text=f"Goal Average: {self.club.statistique.goal_average}")
+        label_goal_average.pack(pady=5)
+
+        bouton_quitter = ttk.Button(fenetre, text="Fermer", command=fenetre.destroy)
+        bouton_quitter.pack(pady=20)
+
+        fenetre.mainloop()
+
+class VSBox(Canvas):
+    def __init__(self, parent, match, x, y, launchgui):
+        super().__init__(parent, bg="#3485FF", height=300, width=900, bd=0, highlightthickness=0, relief="ridge")
+        self.match = match
+        self.place(x=x,y=y)
+
+        self.create_text(430, 80, anchor="nw", text=f"VS", fill="#FFFFFF", font=("DelaGothicOne Regular", 12 * -1))
+
+
+
+        if self.match.resultat != (None, None) and self.match.resultat != None:
+            self.res_dom = self.match.resultat[0]
+            self.res_ext = self.match.resultat[1]
+        else:
+            self.res_dom = 0
+            self.res_ext = 0
+
+        self.equipedomicilebox = PetiteClubBox(self, 250, 0, self.match.equipe_domicile, self.res_dom)
+        self.equipeexterieurbox = PetiteClubBox(self, 500, 0, self.match.equipe_exterieur, self.res_ext)
+    def get_res(self):
+        self.res_dom = self.equipedomicilebox.token_entry.get()
+        self.res_ext = self.equipeexterieurbox.token_entry.get()
+        if self.res_dom != "SCORE" and self.res_ext != "SCORE":
+            return (int(self.res_dom),int(self.res_ext))
+        else:
+            return False
+
+        
+
+
+
 class ChampBox(BoxBox):      #Box pour les clubs avec un bouton modifier et supprimer et le surnom du club (logo à ajouter)
     def __init__(self, parent, id_champ, x, y, champgui):
         super().__init__(parent, x,y, ["ouvrir.png","supprimer.png"], [lambda: champgui.ouvrir(id_champ), lambda: champgui.delete(id_champ)])
@@ -120,7 +239,7 @@ class TourBox(Canvas):      #Box dans lequel on met toutes les boxs match d'un t
         self.configure(height=y+220)
 
 class TextEntryBox(Canvas): #Box pour champ de saisie de texte
-    def __init__(self, parent, x, y, text, default_text=""):
+    def __init__(self, parent, x, y, text, default_text="", focus = False):
         super().__init__(parent, bg="#3485FF", height=80, width=365, bd=0, highlightthickness=0, relief="ridge")
         self.place(x=x, y=y)
 
@@ -135,7 +254,8 @@ class TextEntryBox(Canvas): #Box pour champ de saisie de texte
             20, 20.0, text=text, fill="#515486",
             font=("Arial-BoldMT", int(13.0)), anchor="w")
         
-        self.token_entry.focus()
+        if focus:
+            self.token_entry.focus()
 
     def get(self):
         return self.token_entry.get()
@@ -165,11 +285,12 @@ class NewClubGui(Canvas):   #Gui quand on créer un nouveau club
             outline="")
     
         
+        self.club_name = TextEntryBox(self,270,100,"NOM DU CLUB", focus=True)
         self.club_surname = TextEntryBox(self,270,180,"SURNOM")
         self.club_city = TextEntryBox(self,270,260,"VILLE")
         self.club_entraineur = TextEntryBox(self,270,340,"ENTRAINEUR")
         self.club_logo = TextEntryBox(self,270,420,"LOGO")
-        self.club_name = TextEntryBox(self,270,100,"NOM DU CLUB")
+        
 
                 # Store reference to the image
         self.button_ok_image = PhotoImage(file=relative_to_assets("ok.png"))
@@ -207,6 +328,7 @@ class NewClubGui(Canvas):   #Gui quand on créer un nouveau club
         self.championnat.ajouter_participant(self.club)
         self.pack_forget()
         champ_gui.club_gui.update()
+        champ_gui.update_championnat()
         #self.destroy()
 
     def cancel_creation(self):
@@ -292,11 +414,12 @@ class ModifyClubGui(NewClubGui):    #Gui pour modifier un club
         super().__init__(window, championnat)
         self.club = club
 
+        self.club_name = TextEntryBox(self,270,100,"NOM DU CLUB",self.club.nom, focus = True)
         self.club_surname = TextEntryBox(self,270,180,"SURNOM",self.club.surnom)
         self.club_city = TextEntryBox(self,270,260,"VILLE",self.club.emplacement)
         self.club_entraineur = TextEntryBox(self,270,340,"ENTRAINEUR",self.club.entraineur)
         self.club_logo = TextEntryBox(self,270,420,"LOGO",self.club.logo)
-        self.club_name = TextEntryBox(self,270,100,"NOM DU CLUB",self.club.nom)
+        
         self.button_ok.configure(command=lambda: self.modify_club())
 
     def modify_club(self):
@@ -377,7 +500,7 @@ class ClubGui(Canvas):      #Gui où on affiche tous les clubs du championnat
             image=self.button_image_10,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_10 clicked"),
+            command=lambda: champ_gui.lancer_championnat(self.championnat),
             relief="flat"
         )
         button_10.place(
@@ -551,7 +674,7 @@ class TourGui(Canvas):      #Gui où on affiche tous les tours du championnat
             image=self.button_image_10,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_10 clicked"),
+            command=lambda: champ_gui.lancer_championnat(self.championnat),
             relief="flat"
         )
         button_10.place(
@@ -644,6 +767,9 @@ class ChampGui(Canvas):
         self.window = window
         self.filename = filename
 
+
+        self.window.protocol("WM_DELETE_WINDOW", lambda: self.window.quit())
+
         self.place(x=0,y=0)
 
         self.create_rectangle(0, 0, 900, 650, fill="#3485FF", outline="")
@@ -668,7 +794,7 @@ class ChampGui(Canvas):
 
         self.button_import_image = PhotoImage(
             file=relative_to_assets("import.png"))
-        self.button_import = Button(
+        self.button_import = Button(self,
             image=self.button_import_image,
             borderwidth=0,
             highlightthickness=0,
@@ -684,7 +810,7 @@ class ChampGui(Canvas):
 
         self.button_create_image = PhotoImage(
             file=relative_to_assets("create.png"))
-        self.button_create = Button(
+        self.button_create = Button(self,
             image=self.button_create_image,
             borderwidth=0,
             highlightthickness=0,
@@ -789,17 +915,23 @@ class ChampGui(Canvas):
             champ.ImportExport().update_championnat_db(championnat)
             self.update()
 
+    def lancer_championnat(self, championnat):
+        self.club_gui.place_forget()
+        self.tour_gui.place_forget()
+        self.launch_champ_gui = LaunchChamp(window, championnat, self)
+
 class LaunchChamp(Canvas):
-    def __init__(self, window, championnat):
+    def __init__(self, window, championnat, parent):
         super().__init__(window, bg="#3485FF", height=650, width=900, bd=0, highlightthickness=0, relief="ridge")
         self.window = window
+        self.parent = parent
         self.championnat = championnat
 
         self.place(x=0,y=0)
 
         self.create_rectangle(0, 0, 900, 650, fill="#3485FF", outline="")
 
-        self.create_text(20, 10, anchor="nw", text=f"{self.championnat.nom}", fill="#FFFFFF", font=("DelaGothicOne Regular", 21 * -1))
+        self.text_tour = self.create_text(20, 10, anchor="nw", text=f"Tour 1", fill="#FFFFFF", font=("DelaGothicOne Regular", 21 * -1))
 
         #On place aussi la ligne en dessous du titre
         self.line = self.create_rectangle(
@@ -810,35 +942,195 @@ class LaunchChamp(Canvas):
             fill="#FFFFFF",
             outline="")
         
-        self.current_tour = 0
-    
 
-    def afficher_tour(self):
+        self.button_next_image = PhotoImage(
+            file=relative_to_assets("next.png"))
+        self.button_next = Button(self,
+            image=self.button_next_image,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.next_tour(),
+            relief="flat"
+        )
+        self.button_next.place(
+            x=596.0,
+            y=590.0,
+            width=250.0,
+            height=35.0
+        )
+
+        # self.button_past_image = PhotoImage(
+        #     file=relative_to_assets("past.png"))
+        # self.button_past = Button(
+        #     image=self.button_past_image,
+        #     borderwidth=0,
+        #     highlightthickness=0,
+        #     command=lambda: self.past_tour(),
+        #     relief="flat"
+        # )
+        # self.button_past.place(
+        #     x=53.0,
+        #     y=590.0,
+        #     width=250.0,
+        #     height=35.0
+        # )
+
+        self.button_classement_image = PhotoImage(
+            file=relative_to_assets("classement.png"))
+        self.button_classement = Button(self,
+            image=self.button_classement_image,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.afficher_classement(),
+            relief="flat"
+        )
+        self.button_classement.place(
+            x=325.0,
+            y=590.0,
+            width=250.0,
+            height=35.0
+        )
+
 
         self.scroll_canvas = Canvas(self,bg="#3485FF", height=450, width=900, bd=0, highlightthickness=0, relief="ridge")
         self.scroll_canvas.place(x=0,y=100)
 
-        self.champ_frame = scrollableframe.ScrollableFrame(self.scroll_canvas, bg="#3485FF")
-        self.champ_frame.place(x=0, y=0, relwidth=1, relheight=1)
+        self.launch_frame = scrollableframe.ScrollableFrame(self.scroll_canvas, bg="#3485FF")
+        self.launch_frame.place(x=0, y=0, relwidth=1, relheight=1)
 
 
 
-        self.champ_canvas = Canvas(self.champ_frame.scrollable_frame, bg="#3485FF", height=500, width=900, bd=0, highlightthickness=0, relief="ridge")
-        self.champ_canvas.pack(pady=0)
-        self.champ_canvas.update_idletasks()  # Forcer la mise à jour de la géométrie
+        self.launch_canvas = Canvas(self.launch_frame.scrollable_frame, bg="#3485FF", height=500, width=900, bd=0, highlightthickness=0, relief="ridge")
+        self.launch_canvas.pack(pady=0)
+        self.launch_canvas.update_idletasks()  # Forcer la mise à jour de la géométrie
 
-        x, y = 10, 40
+        self.current_tour = 0
+        ex = False
+        for i in championnat.tours:
+            for j in i.matchs:
+                if j.resultat == (-1,-1):
+                    ex = True
+            if ex == True:
+                break
+            self.current_tour +=1
 
-        for champ in self.obtenir_championnats():
+        self.afficher_tour()
+    
+    def next_tour(self):
+        resultats = []
+        accept = True
+        for i in range(len(self.boxes)):
+            if self.boxes[i].get_res() == False:
+                accept = False
+            resultats.append(self.boxes[i].get_res())
+        
+        if accept == True:
+            self.championnat.jouer_tour(resultats,self.championnat.tours[self.current_tour])
+            self.parent.update_championnat()
 
-            #MatchBox(self, match, x, y)
-            if x + 220 > self.champ_canvas.winfo_width():  # Nouvelle ligne si la largeur est dépassée
-                x = 10
-                y += 220
+            if self.current_tour < len(self.championnat.tours)-1:
+                self.current_tour += 1
+                self.afficher_tour()
+            else:
                 
-            self.boxes.append(ChampBox(self.champ_canvas, champ, x, y, self))
-            x += 220
-        self.champ_canvas.configure(height=max(y+220,450))
+                self.afficher_classement_final()
+        else:
+            messagebox.showerror("Erreur", "Un champ est vide!")
+
+    def past_tour(self):
+        resultats = []
+        accept = True
+        for i in range(len(self.boxes)):
+            if self.boxes[i].get_res() == False:
+                accept = False
+            resultats.append(self.boxes[i].get_res())
+        
+        if accept == True:
+            self.championnat.jouer_tour(resultats,self.championnat.tours[self.current_tour])
+            self.parent.update_championnat()
+
+        if self.current_tour > 0:
+            self.current_tour -= 1
+            self.afficher_tour()
+
+
+    def afficher_tour(self):
+        if self.current_tour>=len(self.championnat.tours):
+            self.itemconfig(self.text_tour, text = f"CLASSEMENT FINAL")
+            self.afficher_classement_final()
+        else:
+            self.tour = self.championnat.tours[self.current_tour]
+            self.itemconfig(self.text_tour, text = f"Tour {self.current_tour+1}")
+
+            x, y = 0, 40
+            self.boxes = []
+            for match in self.tour.matchs:
+                self.boxes.append(VSBox(self.launch_canvas, match, x, y, self))
+
+                y += 250
+
+
+
+            self.launch_canvas.configure(height=max(y+250,450))
+
+    def afficher_classement_final(self):
+        messagebox.showwarning("Championnat terminé", "Voici les statistiques de la saison")
+
+        self.place_forget()
+        fenetre_graphique = Toplevel(self)
+        fenetre_graphique.title("Évolution des Scores par Tour")
+        fenetre_graphique.geometry("700x500")
+
+
+
+        fig, ax = plt.subplots()
+
+        # Tracer les scores pour chaque club
+        for club in self.championnat.participants:
+            tours = [tour for tour, (classement, score) in enumerate(club.statistique.historique)]
+            scores = [score for classement, score in club.statistique.historique]
+            ax.plot(tours, scores, label=club.nom)
+
+        ax.set_xlabel("Tours")
+        ax.set_ylabel("Score")
+        ax.set_title("Évolution des Scores par Tour")
+        ax.legend()
+        ax.grid(True)
+
+        # Intégrer le graphique dans la fenêtre Tkinter
+        canvas = FigureCanvasTkAgg(fig, master=fenetre_graphique)
+        canvas.draw()
+        canvas.get_tk_widget().pack(expand=True, fill='both')
+        self.afficher_classement()
+        
+
+
+
+    def afficher_classement(self):
+        # Créer une nouvelle fenêtre pour afficher le classement
+        fenetre_classement = Toplevel(self)
+        fenetre_classement.title("Classement des Clubs")
+        fenetre_classement.geometry("500x400")
+
+        # Cadre de texte pour afficher le classement
+        text_frame = Frame(fenetre_classement)
+        text_frame.pack(expand=True, fill='both', padx=10, pady=10)
+
+        scrollbar = Scrollbar(text_frame)
+        scrollbar.pack(side='right', fill='y')
+
+        classement_text = Text(text_frame, yscrollcommand=scrollbar.set, wrap='word', font=("Helvetica", 12))
+        classement_text.pack(expand=True, fill='both')
+        scrollbar.config(command=classement_text.yview)
+
+        # Générer le classement
+        i = 0
+        for club, stats in self.championnat.classement():
+            classement_text.insert(END, f"{i+1}: {club.surnom} - score: {stats[0]} | goal average: {stats[1]} | victoires: {stats[2]}\n")
+            i += 1
+
+        classement_text.config(state='disabled') 
+        
 
 if __name__ == "__main__":
     window = Tk()
